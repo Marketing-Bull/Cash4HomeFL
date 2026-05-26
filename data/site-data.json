@@ -1,0 +1,636 @@
+{
+  "site": {
+    "name": "cash4homefl.com",
+    "stack": [
+      "Next.js App Router",
+      "Tailwind CSS",
+      "MDX/Markdown",
+      "JSON data files",
+      "next-sitemap"
+    ],
+    "launch_strategy": "Index only the strongest pages first; keep thin pages noindex until unique.",
+    "api_policy": "No new third-party APIs required for launch."
+  },
+  "counties": [
+    {
+      "name": "Palm Beach County",
+      "slug": "palm-beach-county",
+      "priority": 1,
+      "cities": [
+        {
+          "name": "West Palm Beach",
+          "slug": "west-palm-beach",
+          "priority": 1,
+          "zips": [
+            "33401",
+            "33405",
+            "33406",
+            "33407",
+            "33409"
+          ],
+          "market_angle": "Investor-heavy, older housing stock, strong distress lead potential",
+          "featured_neighborhoods": [
+            "Northwood",
+            "Roosevelt Estates",
+            "Pleasant City",
+            "Flamingo Park"
+          ]
+        },
+        {
+          "name": "Boca Raton",
+          "slug": "boca-raton",
+          "priority": 2,
+          "zips": [
+            "33431",
+            "33432",
+            "33433",
+            "33434"
+          ],
+          "market_angle": "Higher-value homes, cash buyers, downsizing, inherited property",
+          "featured_neighborhoods": [
+            "Boca Del Mar",
+            "Mizner Park",
+            "West Boca",
+            "Royal Palm Yacht"
+          ]
+        },
+        {
+          "name": "Delray Beach",
+          "slug": "delray-beach",
+          "priority": 2,
+          "zips": [
+            "33444",
+            "33445",
+            "33446",
+            "33483"
+          ],
+          "market_angle": "Mixed coastal and inland inventory, good for inherited and as-is sales",
+          "featured_neighborhoods": [
+            "Lake Ida",
+            "Tropic Isle",
+            "Delray Beach Village"
+          ]
+        },
+        {
+          "name": "Boynton Beach",
+          "slug": "boynton-beach",
+          "priority": 2,
+          "zips": [
+            "33424",
+            "33425",
+            "33426",
+            "33435",
+            "33436"
+          ],
+          "market_angle": "Strong move-up and downsizing market with older homes and rentals",
+          "featured_neighborhoods": [
+            "Leisureville",
+            "Chapel Hill",
+            "Palm Shores"
+          ]
+        },
+        {
+          "name": "Palm Beach Gardens",
+          "slug": "palm-beach-gardens",
+          "priority": 2,
+          "zips": [
+            "33410",
+            "33418"
+          ],
+          "market_angle": "Higher-income market with HOA and probate opportunities",
+          "featured_neighborhoods": [
+            "PGA National",
+            "Mirasol",
+            "BallenIsles"
+          ]
+        },
+        {
+          "name": "Lake Worth Beach",
+          "slug": "lake-worth-beach",
+          "priority": 2,
+          "zips": [
+            "33460",
+            "33461",
+            "33462",
+            "33463",
+            "33467"
+          ],
+          "market_angle": "Older homes, investor activity, and distressed seller opportunity",
+          "featured_neighborhoods": [
+            "College Park",
+            "Parrot Cove",
+            "Lake Worth Beach Historic District"
+          ]
+        },
+        {
+          "name": "Riviera Beach",
+          "slug": "riviera-beach",
+          "priority": 2,
+          "zips": [
+            "33403",
+            "33404",
+            "33407"
+          ],
+          "market_angle": "Value-driven, older stock, and strong as-is seller appeal",
+          "featured_neighborhoods": []
+        },
+        {
+          "name": "Wellington",
+          "slug": "wellington",
+          "priority": 3,
+          "zips": [
+            "33414"
+          ],
+          "market_angle": "Family-oriented and higher-value move-up / probate leads",
+          "featured_neighborhoods": []
+        },
+        {
+          "name": "Royal Palm Beach",
+          "slug": "royal-palm-beach",
+          "priority": 3,
+          "zips": [
+            "33411"
+          ],
+          "market_angle": "Suburban value market with owner and investor overlap",
+          "featured_neighborhoods": []
+        },
+        {
+          "name": "Jupiter",
+          "slug": "jupiter",
+          "priority": 2,
+          "zips": [
+            "33458",
+            "33477"
+          ],
+          "market_angle": "Higher-end market with inherited, downsizing, and cash sale opportunities",
+          "featured_neighborhoods": []
+        },
+        {
+          "name": "Greenacres",
+          "slug": "greenacres",
+          "priority": 3,
+          "zips": [
+            "33413",
+            "33463"
+          ],
+          "market_angle": "Working-family market with older homes and rental turnover",
+          "featured_neighborhoods": []
+        },
+        {
+          "name": "Lantana",
+          "slug": "lantana",
+          "priority": 4,
+          "zips": [
+            "33462"
+          ],
+          "market_angle": "Small local market with as-is and inherited opportunities",
+          "featured_neighborhoods": []
+        },
+        {
+          "name": "Belle Glade",
+          "slug": "belle-glade",
+          "priority": 4,
+          "zips": [
+            "33430"
+          ],
+          "market_angle": "Smaller market suited for direct local messaging",
+          "featured_neighborhoods": []
+        },
+        {
+          "name": "Pahokee",
+          "slug": "pahokee",
+          "priority": 4,
+          "zips": [
+            "33476"
+          ],
+          "market_angle": "Smaller market suited for direct local messaging",
+          "featured_neighborhoods": []
+        }
+      ]
+    },
+    {
+      "name": "Broward County",
+      "slug": "broward-county",
+      "priority": 1,
+      "cities": [
+        {
+          "name": "Fort Lauderdale",
+          "slug": "fort-lauderdale",
+          "priority": 1,
+          "zips": [
+            "33301",
+            "33304",
+            "33305",
+            "33308",
+            "33311",
+            "33312"
+          ],
+          "market_angle": "High-intent metro market with strong cash buyer demand",
+          "featured_neighborhoods": [
+            "Las Olas",
+            "Victoria Park",
+            "Rio Vista",
+            "Coral Ridge"
+          ]
+        },
+        {
+          "name": "Hollywood",
+          "slug": "hollywood",
+          "priority": 2,
+          "zips": [
+            "33020",
+            "33021",
+            "33022",
+            "33023",
+            "33024"
+          ],
+          "market_angle": "Older homes, mixed inventory, and good distressed-seller opportunity",
+          "featured_neighborhoods": [
+            "Hollywood Lakes",
+            "Emerald Hills",
+            "Hollywood Hills"
+          ]
+        },
+        {
+          "name": "Pembroke Pines",
+          "slug": "pembroke-pines",
+          "priority": 2,
+          "zips": [
+            "33025",
+            "33026",
+            "33027",
+            "33028",
+            "33029"
+          ],
+          "market_angle": "Large suburban market with probate, downsizing, and rental turnover",
+          "featured_neighborhoods": []
+        },
+        {
+          "name": "Miramar",
+          "slug": "miramar",
+          "priority": 2,
+          "zips": [
+            "33023",
+            "33025",
+            "33027"
+          ],
+          "market_angle": "Strong family and investor overlap",
+          "featured_neighborhoods": []
+        },
+        {
+          "name": "Coral Springs",
+          "slug": "coral-springs",
+          "priority": 2,
+          "zips": [
+            "33065",
+            "33067",
+            "33071",
+            "33073",
+            "33076"
+          ],
+          "market_angle": "Suburban value market with strong homeowner trust angle",
+          "featured_neighborhoods": []
+        },
+        {
+          "name": "Pompano Beach",
+          "slug": "pompano-beach",
+          "priority": 2,
+          "zips": [
+            "33060",
+            "33062",
+            "33064",
+            "33069"
+          ],
+          "market_angle": "Investor-heavy, older stock, and coastal as-is opportunities",
+          "featured_neighborhoods": []
+        },
+        {
+          "name": "Davie",
+          "slug": "davie",
+          "priority": 3,
+          "zips": [
+            "33312",
+            "33314"
+          ],
+          "market_angle": "Mixed residential / equestrian pockets with higher-value leads",
+          "featured_neighborhoods": []
+        },
+        {
+          "name": "Plantation",
+          "slug": "plantation",
+          "priority": 3,
+          "zips": [
+            "33313",
+            "33317",
+            "33322",
+            "33324"
+          ],
+          "market_angle": "Suburban market suitable for downsizing and inherited property pages",
+          "featured_neighborhoods": []
+        },
+        {
+          "name": "Sunrise",
+          "slug": "sunrise",
+          "priority": 3,
+          "zips": [
+            "33313",
+            "33322",
+            "33323"
+          ],
+          "market_angle": "Good service-area page and neighborhood-based local landing pages",
+          "featured_neighborhoods": []
+        },
+        {
+          "name": "Tamarac",
+          "slug": "tamarac",
+          "priority": 3,
+          "zips": [
+            "33319",
+            "33320"
+          ],
+          "market_angle": "Older HOA and condo inventory with cash-buyer potential",
+          "featured_neighborhoods": []
+        },
+        {
+          "name": "Deerfield Beach",
+          "slug": "deerfield-beach",
+          "priority": 3,
+          "zips": [
+            "33441",
+            "33442"
+          ],
+          "market_angle": "Coastal pockets and older properties suitable for as-is messaging",
+          "featured_neighborhoods": []
+        },
+        {
+          "name": "Lauderhill",
+          "slug": "lauderhill",
+          "priority": 3,
+          "zips": [
+            "33311",
+            "33313"
+          ],
+          "market_angle": "Working-family market with rental and distress lead potential",
+          "featured_neighborhoods": []
+        },
+        {
+          "name": "Coconut Creek",
+          "slug": "coconut-creek",
+          "priority": 3,
+          "zips": [
+            "33063",
+            "33066"
+          ],
+          "market_angle": "Suburban service area with HOA-heavy sellers",
+          "featured_neighborhoods": []
+        },
+        {
+          "name": "Margate",
+          "slug": "margate",
+          "priority": 3,
+          "zips": [
+            "33063",
+            "33068"
+          ],
+          "market_angle": "Value market with older homes and local trust opportunities",
+          "featured_neighborhoods": []
+        },
+        {
+          "name": "Weston",
+          "slug": "weston",
+          "priority": 3,
+          "zips": [
+            "33326",
+            "33327"
+          ],
+          "market_angle": "Higher-income suburban market with downsizing and inherited leads",
+          "featured_neighborhoods": []
+        }
+      ]
+    }
+  ],
+  "zipPages": [
+    {
+      "zip": "33401",
+      "slug": "33401",
+      "county": "Palm Beach County",
+      "primaryCity": "West Palm Beach",
+      "priority": 1
+    },
+    {
+      "zip": "33403",
+      "slug": "33403",
+      "county": "Palm Beach County",
+      "primaryCity": "Riviera Beach",
+      "priority": 2
+    },
+    {
+      "zip": "33404",
+      "slug": "33404",
+      "county": "Palm Beach County",
+      "primaryCity": "Riviera Beach",
+      "priority": 2
+    },
+    {
+      "zip": "33405",
+      "slug": "33405",
+      "county": "Palm Beach County",
+      "primaryCity": "West Palm Beach",
+      "priority": 1
+    },
+    {
+      "zip": "33406",
+      "slug": "33406",
+      "county": "Palm Beach County",
+      "primaryCity": "West Palm Beach",
+      "priority": 1
+    },
+    {
+      "zip": "33407",
+      "slug": "33407",
+      "county": "Palm Beach County",
+      "primaryCity": "West Palm Beach",
+      "priority": 1
+    },
+    {
+      "zip": "33409",
+      "slug": "33409",
+      "county": "Palm Beach County",
+      "primaryCity": "West Palm Beach",
+      "priority": 2
+    },
+    {
+      "zip": "33410",
+      "slug": "33410",
+      "county": "Palm Beach County",
+      "primaryCity": "Palm Beach Gardens",
+      "priority": 2
+    },
+    {
+      "zip": "33411",
+      "slug": "33411",
+      "county": "Palm Beach County",
+      "primaryCity": "Royal Palm Beach",
+      "priority": 2
+    },
+    {
+      "zip": "33020",
+      "slug": "33020",
+      "county": "Broward County",
+      "primaryCity": "Hollywood",
+      "priority": 1
+    },
+    {
+      "zip": "33021",
+      "slug": "33021",
+      "county": "Broward County",
+      "primaryCity": "Hollywood",
+      "priority": 1
+    },
+    {
+      "zip": "33022",
+      "slug": "33022",
+      "county": "Broward County",
+      "primaryCity": "Hollywood",
+      "priority": 1
+    },
+    {
+      "zip": "33023",
+      "slug": "33023",
+      "county": "Broward County",
+      "primaryCity": "Hollywood",
+      "priority": 1
+    },
+    {
+      "zip": "33024",
+      "slug": "33024",
+      "county": "Broward County",
+      "primaryCity": "Hollywood",
+      "priority": 1
+    },
+    {
+      "zip": "33025",
+      "slug": "33025",
+      "county": "Broward County",
+      "primaryCity": "Pembroke Pines",
+      "priority": 1
+    },
+    {
+      "zip": "33026",
+      "slug": "33026",
+      "county": "Broward County",
+      "primaryCity": "Pembroke Pines",
+      "priority": 1
+    },
+    {
+      "zip": "33027",
+      "slug": "33027",
+      "county": "Broward County",
+      "primaryCity": "Miramar",
+      "priority": 1
+    },
+    {
+      "zip": "33028",
+      "slug": "33028",
+      "county": "Broward County",
+      "primaryCity": "Pembroke Pines",
+      "priority": 1
+    },
+    {
+      "zip": "33029",
+      "slug": "33029",
+      "county": "Broward County",
+      "primaryCity": "Pembroke Pines",
+      "priority": 1
+    },
+    {
+      "zip": "33301",
+      "slug": "33301",
+      "county": "Broward County",
+      "primaryCity": "Fort Lauderdale",
+      "priority": 1
+    },
+    {
+      "zip": "33304",
+      "slug": "33304",
+      "county": "Broward County",
+      "primaryCity": "Fort Lauderdale",
+      "priority": 1
+    },
+    {
+      "zip": "33305",
+      "slug": "33305",
+      "county": "Broward County",
+      "primaryCity": "Fort Lauderdale",
+      "priority": 1
+    },
+    {
+      "zip": "33308",
+      "slug": "33308",
+      "county": "Broward County",
+      "primaryCity": "Fort Lauderdale",
+      "priority": 1
+    },
+    {
+      "zip": "33311",
+      "slug": "33311",
+      "county": "Broward County",
+      "primaryCity": "Lauderhill",
+      "priority": 2
+    },
+    {
+      "zip": "33312",
+      "slug": "33312",
+      "county": "Broward County",
+      "primaryCity": "Fort Lauderdale / Sunrise corridor",
+      "priority": 2
+    }
+  ],
+  "situations": [
+    {
+      "slug": "foreclosure",
+      "title": "Foreclosure"
+    },
+    {
+      "slug": "probate",
+      "title": "Probate / Inherited"
+    },
+    {
+      "slug": "divorce",
+      "title": "Divorce"
+    },
+    {
+      "slug": "damaged",
+      "title": "Damaged Property"
+    },
+    {
+      "slug": "liens",
+      "title": "Liens / Debt"
+    },
+    {
+      "slug": "rental",
+      "title": "Rental / Tenant Issues"
+    },
+    {
+      "slug": "as-is",
+      "title": "Sell As-Is"
+    }
+  ],
+  "propertyTypes": [
+    "condo",
+    "townhouse",
+    "multifamily",
+    "vacant-land",
+    "mobile-home"
+  ],
+  "faqQuestions": [
+    "How fast can you close?",
+    "Do I have to make repairs?",
+    "Are there any fees or commissions?",
+    "How do you determine the offer?",
+    "What if I have a mortgage?",
+    "Can you buy a house in probate?",
+    "Do you buy condos and townhomes?",
+    "Can you buy rental property with tenants?"
+  ]
+}
