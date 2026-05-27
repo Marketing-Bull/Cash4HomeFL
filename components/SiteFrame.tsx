@@ -40,13 +40,31 @@ export function SiteFrame({ children }: { children: ReactNode }) {
         <div className="container footer__grid">
           <div>
             <Link className="brand brand--footer" href="/">
-              cash4homefl.com
+              Cash4HomeFL
             </Link>
             <p className="muted">
-              A South Florida cash home buyer focused on Palm Beach County and Broward.
+              A South Florida cash home buyer focused on Palm Beach County and Broward. We buy houses as-is — no repairs, no commissions, no hassle.
             </p>
-            <a className="phone-link phone-link--footer" href="tel:+19543639076">
-              (954) 363-9076
+            <div className="footer__contact">
+              <a className="phone-link phone-link--footer" href="tel:+19543639076">
+                (954) 363-9076
+              </a>
+              <span className="footer__sep" aria-hidden="true">·</span>
+              <a className="footer__email" href="mailto:hello@cash4homefl.com">
+                hello@cash4homefl.com
+              </a>
+            </div>
+            <div className="footer__address">
+              Serving Palm Beach County &amp; Broward County, Florida
+            </div>
+            <a
+              className="footer__gbp"
+              href="https://business.google.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="View our Google Business Profile"
+            >
+              ★★★★★ View on Google
             </a>
           </div>
 

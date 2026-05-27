@@ -1,5 +1,29 @@
 import Link from 'next/link';
-import type { ArticleTemplateProps } from '@/lib/page-types';
+import type { ArticleTemplateProps, Review } from '@/lib/page-types';
+
+function ReviewCard({ review }: { review: Review }) {
+  return (
+    <div className="review-card">
+      <div className="review-card__header">
+        <div className="review-card__avatar" aria-hidden="true">
+          {review.name.charAt(0)}
+        </div>
+        <div>
+          <div className="review-card__name">{review.name}</div>
+          <div className="review-card__meta">
+            <span className="review-card__city">{review.city}</span>
+            <span className="review-card__dot" aria-hidden="true">·</span>
+            <span className="review-card__situation">{review.situation}</span>
+          </div>
+        </div>
+      </div>
+      <blockquote className="review-card__quote">&ldquo;{review.quote}&rdquo;</blockquote>
+      <div className="review-card__outcome">
+        <strong>Outcome:</strong> {review.outcome}
+      </div>
+    </div>
+  );
+}
 
 export function ArticleTemplate({
   eyebrow,
@@ -10,6 +34,7 @@ export function ArticleTemplate({
   relatedLinks,
   ctaLabel,
   ctaHref,
+  reviews,
 }: ArticleTemplateProps) {
   return (
     <main className="page-shell">
@@ -54,6 +79,17 @@ export function ArticleTemplate({
               </Link>
             </div>
           ) : null}
+
+          {reviews && reviews.length > 0 && (
+            <section className="reviews-section">
+              <h2 className="section-title section-title--small">Seller stories</h2>
+              <div className="reviews-grid">
+                {reviews.map((review) => (
+                  <ReviewCard key={review.name + review.city} review={review} />
+                ))}
+              </div>
+            </section>
+          )}
         </div>
       </section>
     </main>
