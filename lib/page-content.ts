@@ -429,7 +429,7 @@ export function buildContactPageProps(searchParams?: Record<string, string | str
     lead: 'Use the form below or call/text if that is faster. We will review the property and get back to you.',
     trust: ['Call or text', 'South Florida', 'No obligation'],
     stats: [
-      { label: 'Phone', value: '(954) 363-9076' },
+      { label: 'Phone', value: '(561) 220-9399' },
       { label: 'Email', value: 'hello@cash4homefl.com' },
       { label: 'Coverage', value: 'Palm Beach County and Broward' },
     ],

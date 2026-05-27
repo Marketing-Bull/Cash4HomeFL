@@ -17,7 +17,7 @@ export function SiteFrame({ children }: { children: ReactNode }) {
       <header className="topbar">
         <div className="container topbar__inner">
           <Link className="brand" href="/">
-            cash4homefl.com
+            Cash4HomeFL
           </Link>
 
           <nav className="nav" aria-label="Primary navigation">
@@ -28,8 +28,8 @@ export function SiteFrame({ children }: { children: ReactNode }) {
             ))}
           </nav>
 
-          <a className="phone-link" href="tel:+19543639076">
-            (954) 363-9076
+          <a className="phone-link" href="tel:+15612209399">
+            (561) 220-9399
           </a>
         </div>
       </header>
@@ -46,8 +46,8 @@ export function SiteFrame({ children }: { children: ReactNode }) {
               A South Florida cash home buyer focused on Palm Beach County and Broward. We buy houses as-is — no repairs, no commissions, no hassle.
             </p>
             <div className="footer__contact">
-              <a className="phone-link phone-link--footer" href="tel:+19543639076">
-                (954) 363-9076
+              <a className="phone-link phone-link--footer" href="tel:+15612209399">
+                (561) 220-9399
               </a>
               <span className="footer__sep" aria-hidden="true">·</span>
               <a className="footer__email" href="mailto:hello@cash4homefl.com">

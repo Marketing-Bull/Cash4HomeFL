@@ -170,8 +170,8 @@ export function PageTemplate({
             <Link className="button" href={contactHref ?? '/contact'}>
               {ctaLabel ?? 'Get My Cash Offer'}
             </Link>
-            <a className="button button--ghost" href="tel:+19543639076">
-              Call (954) 363-9076
+            <a className="button button--ghost" href="tel:+15612209399">
+              Call (561) 220-9399
             </a>
           </div>
         </div>
