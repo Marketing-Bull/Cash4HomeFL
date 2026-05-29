@@ -3,7 +3,7 @@ import { blogPosts, getBlogParams } from '@/lib/page-content';
 import { getAllCounties, getCityParams, getSituationParams, getZipParams } from '@/lib/site-data';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const base = 'https://cash4homefl.com';
+  const base = 'https://cash4homefl.vercel.app';
   const urls: MetadataRoute.Sitemap = [
     { url: `${base}/`, changeFrequency: 'weekly', priority: 1 },
     { url: `${base}/we-buy-houses`, changeFrequency: 'weekly', priority: 0.95 },
