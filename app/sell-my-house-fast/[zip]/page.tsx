@@ -8,8 +8,9 @@ export function generateStaticParams() {
   return getZipParams();
 }
 
-export function generateMetadata({ params }: { params: { zip: string } }): Metadata {
-  const page = buildZipPageProps(params.zip);
+export async function generateMetadata({ params }: { params: Promise<{ zip: string }> }): Promise<Metadata> {
+  const { zip } = await params;
+  const page = buildZipPageProps(zip);
   if (!page) {
     return { title: 'Zip not found' };
   }
@@ -20,8 +21,9 @@ export function generateMetadata({ params }: { params: { zip: string } }): Metad
   };
 }
 
-export default function ZipPage({ params }: { params: { zip: string } }) {
-  const page = buildZipPageProps(params.zip);
+export default async function ZipPage({ params }: { params: Promise<{ zip: string }> }) {
+  const { zip } = await params;
+  const page = buildZipPageProps(zip);
   if (!page) notFound();
   return <PageTemplate {...page} />;
 }
