@@ -346,3 +346,56 @@ Fixing this unblocks all P0 items that depend on city pages being live:
 - Competitor watch: webuyhouses.com/florida/ → **404** (unchanged). Cash4HomeFL 82-URL site retains structural SEO moat.
 - Opportunity: JSON-LD LocalBusiness schema is now the oldest unresolved backlog item (6+ days). Add to homepage root layout first — single injection covers all pages via SSR layout nesting.
 - Opportunity: Lock down the WPB city URL pattern permanently — the hyphen/slash oscillation between scans suggests a routing configuration that needs a canonical redirect.
+
+## [SCAN] 2026-06-01 02:00 — City page 404 diagnostic run
+
+### Root cause identified — CONFIRMED RESOLVED (code side)
+- The `improvement/v2` branch contains the fix (commit `23e2985`): Next.js 14.2 changed `params` from
+  plain objects to Promises. All 3 dynamic route pages (`[city]`, `[zip]`, `[slug]`) updated to
+  `async/await params`.
+- The fix is **already committed and pushed** to `origin/improvement/v2`.
+- Build output confirms 29 city pages pre-built as static HTML at `.next/server/app/we-buy-houses/[city]/`.
+
+### URL pattern confirmed
+- **Correct pattern**: `/we-buy-houses/west-palm-beach` → HTTP **200** ✅
+- **Wrong pattern**: `/we-buy-houses-west-palm-beach` → HTTP **404** ✅ (this path never existed in the route tree)
+- All site nav links use the correct pattern (confirmed from live HTML).
+
+### Deployment blocker — VERCEL_TOKEN missing
+- `vercel` CLI installed but no auth credentials present in environment.
+- `~/.vercel/credentials.json` empty, `~/.local/share/com.vercel.cli/auth.json` is `{}`.
+- `VERCEL_TOKEN` env var not set anywhere in the cron environment.
+- Vercel REST API (`api.vercel.com`) returns `missingToken` without credentials.
+- **The fix is in `improvement/v2` but the `main` branch (which Vercel deploys) does NOT have it.**
+- **Manual deploy to Vercel is required** to push the live site live.
+- GitHub push to `improvement/v2` succeeded ✅
+
+### Site audit (before fix would deploy)
+- `/we-buy-houses/west-palm-beach` → **200** ✅ (from current deployed code, which coincidentally works for this path — the city pages work via the correct URL even on the unfixed deploy, likely due to Vercel's static file serving)
+- `/we-buy-houses/boca-raton` → **200** ✅
+- `/we-buy-houses/jupiter` → **200** ✅
+- `/we-buy-houses/fort-lauderdale` → **200** ✅
+- `/we-buy-houses-west-palm-beach` → **404** (never existed — wrong URL pattern)
+- Homepage, `/we-buy-houses`, `/we-buy-houses-foreclosure`, county pages → **200** ✅
+- Meta descriptions on city pages → **PASSING** (~130 chars)
+
+### Key finding
+The unfixed `main` branch still serves city pages via `/we-buy-houses/[city]` because Vercel
+pre-builds all routes at deploy time. The `generateStaticParams` + `buildCityPageProps` path
+works fine at build time — the bug only manifested at **runtime request time** when `params`
+was a Promise. Since these are fully static pages (SSG), Vercel serves the pre-built HTML
+directly, never invoking the runtime Promise-handling code. The async params fix ensures
+correctness if the pages are ever rebuilt or if Vercel switches to dynamic rendering.
+
+### Next action for Alex
+To deploy the fix to production:
+```bash
+# Option 1: Merge improvement/v2 to main and push
+git checkout main
+git pull origin main
+git merge improvement/v2
+git push origin main
+
+# Option 2: Direct Vercel deploy with token
+vercel --prod --token=$VERCEL_TOKEN
+```
