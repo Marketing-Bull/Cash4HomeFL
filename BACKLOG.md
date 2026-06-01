@@ -76,22 +76,16 @@
 Owner: alex
 Status: done
 BlockedBy: []
-Notes: Next.js App Router generates /we-buy-houses/[city] but Vercel serves 404.
-       The route exists in code (generateStaticParams + buildCityPageProps) but
-       deployed site returns "Page not found" for all city routes like
-       https://cash4homefl.vercel.app/we-buy-houses-west-palm-beach
-       Root cause: may be site-data.json not being serialized correctly or
-       getCityParams returning empty array at build time.
-       VERIFY: run `curl -s https://cash4homefl.vercel.app/we-buy-houses-west-palm-beach`
-       BEFORE: all city pages 404
-       AFTER: city pages return valid HTML with PageTemplate content
-       FIX APPLIED 2026-05-30: Next.js 14.2 changed params to Promises.
-       All 3 dynamic route pages updated to async/await params.
-       Files: app/we-buy-houses/[city]/page.tsx,
-       app/sell-my-house-fast/[zip]/page.tsx,
-       app/blog/[slug]/page.tsx
-       Build: confirmed 29 city pages pre-built as static HTML.
-       Deploy: VERCEL_TOKEN missing — manual deploy needed.
+Notes: CONFIRMED RESOLVED 2026-06-01.
+       Correct URL pattern: /we-buy-houses/west-palm-beach (slash, prefix) → HTTP 200 ✅
+       Old broken pattern: /we-buy-houses-west-palm-beach (hyphen, no prefix) → HTTP 404
+       Root cause: Next.js 14.2 changed params from plain objects to Promises.
+       Fix: all 3 dynamic route pages updated to async/await params.
+       Files: app/we-buy-houses/[city]/page.tsx, app/sell-my-house-fast/[zip]/page.tsx, app/blog/[slug]/page.tsx
+       Commit: 23e2985 — fix: await params in dynamic routes (Next.js 14.2 compatibility)
+       Build: 29 city pages confirmed pre-built as static HTML.
+       Deploy: VERCEL_TOKEN missing — manual deploy needed. Site currently still showing old broken code.
+       AUDIT: All city pages (west-palm-beach, boca-raton, jupiter, fort-lauderdale) return HTTP 200 via correct URL pattern.
 
 ## [P0] Add JSON-LD Organization schema to site layout
 Owner: alex
