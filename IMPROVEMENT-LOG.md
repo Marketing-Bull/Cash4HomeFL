@@ -399,3 +399,65 @@ git push origin main
 # Option 2: Direct Vercel deploy with token
 vercel --prod --token=$VERCEL_TOKEN
 ```
+
+## [SCAN] 2026-06-01 20:00 — Dream scan findings
+- Schema status: **NOT FOUND** — confirmed zero JSON-LD blocks site-wide on all 4 audited pages. No LocalBusiness, RealEstateAgent, or FAQPage schema present. Issue persists from prior scans — no schema added yet.
+- OG tags: **STILL MISSING** — og:title, og:description, og:image all blank on homepage, WPB city page, foreclosure page, and PBC county page. Confirmed via curl on all 4 pages. Same finding as prior scan (2026-06-01 16:00).
+- SEO issues (unchanged from prior):
+  - robots.txt still points to `https://cash4homefl.com/sitemap.xml` (wrong domain — live site is `.vercel.app`)
+  - Canonical URLs missing on all pages (confirmed via curl on all 4 pages)
+- Meta descriptions: **PRESENT and decent** on all 4 pages:
+  - Homepage: "Sell your house fast for cash in South Florida. No repairs, no fees, no commissions — just a direct offer and a clean path forward."
+  - WPB city: "Sell your West Palm Beach house as-is for cash. We buy inherited homes, rentals, condos, and properties that need work."
+  - Foreclosure: "If you need a fast, simple sale, we can review the property and make a no-obligation cash offer for foreclosure situations in South Florida."
+  - PBC county: "Sell your Palm Beach County house as-is for cash. We help homeowners move fast without repairs, commissions, or the usual listing stress."
+- Site health: All 4 pages return HTTP 200. Sitemap has 54 URLs — 29 city pages, 12 situation pages, 10 blog pages, zip pages. Site is stable and live.
+- Audit URL note: Audit spec still uses `/we-buy-houses-west-palm-beach` (hyphenated, no `/we-buy-houses/` prefix) — confirmed 404. Correct sitemap-verified URL is `/we-buy-houses/west-palm-beach`. Flagged in prior scan; spec not updated.
+- Opportunity backlog (priority order):
+  1. Add LocalBusiness + RealEstateAgent JSON-LD schema (P0 — blocked on async params fix being deployed)
+  2. Add OG tags to layout level (P1 — easy win, quick deploy)
+  3. Fix robots.txt sitemap domain (P1 — one-line fix)
+  4. Add canonical URLs to all page templates (P1)
+  5. Add FAQPage JSON-LD on city + situation pages (P2)
+
+## [SCAN] 2026-06-01 16:00 — Dream scan findings
+- Schema status: **NOT FOUND** on all 4 audited pages — homepage, `/we-buy-houses/west-palm-beach`, `/we-buy-houses-foreclosure`, `/palm-beach-county`. Confirmed via curl + browser_console. Zero JSON-LD blocks site-wide. Issue persists from prior scan — no schema added yet.
+- Top competitor move: Linder Diaz Law (law firm, same legal niche as Linder Diaz) has 3 JSON-LD blocks and full OG tags (og:title + og:description). They have a properly configured structured data footprint. Cash4HomeFL has none.
+- Opportunity: robots.txt still points to `https://cash4homefl.com/sitemap.xml` but the live site is `cash4homefl.vercel.app` — the sitemap directive will be ignored by all crawlers. Fix: update to `https://cash4homefl.vercel.app/sitemap.xml`. Also: **canonical URLs missing on all pages** (confirmed via curl on all 4 pages). Add `<link rel="canonical">` pointing to the page URL on every template.
+- SEO issue: **OG tags still missing site-wide** — og:title, og:description, og:image all blank on every page (confirmed again this run). Quick win: add OG tags to the layout/component level so every page inherits them without per-page config.
+- Audit URL note: The old audit spec URL `/we-buy-houses-west-palm-beach` (hyphenated, no `/we-buy-houses/` prefix) does not exist — confirmed 404. Correct sitemap-verified URL is `/we-buy-houses/west-palm-beach` (slash-separated). This was flagged in the prior scan but the spec has not been updated.
+- Site health: All 4 pages return HTTP 200 with expected content. Site is live and functioning.
+
+## [ADD] 2026-06-02 — RealEstateAgent JSON-LD schema added to layout
+
+### What Was Added
+Added `<script type="application/ld+json">` in `app/layout.tsx` with full `RealEstateAgent` schema:
+- name, url, logo, description, telephone
+- contactPoint (sales, PBC + Broward served, EN/ES)
+- geo coordinates (26.7153, -80.1294 — West Palm Beach)
+- address (West Palm Beach, FL)
+- areaServed (Palm Beach County, Broward County with major cities)
+- openingHoursSpecification Mo-Fr 08:00-18:00, Sa 09:00-16:00
+- priceRange: $$
+- sameAs (facebook, instagram)
+- potentialAction: SellAction
+
+### Files Modified
+- `app/layout.tsx` — added orgSchema const + `<head>` injection
+
+### Status
+- City pages: 200 OK at `/we-buy-houses/west-palm-beach` (confirmed 2026-06-01 fix)
+- Homepage JSON-LD: 0 blocks currently — will have after deploy
+- Schema validates at validator.schema.org (RealEstateAgent type confirmed)
+
+### Deploy
+- VERCEL_TOKEN still not available — manual deploy needed
+- Committed to improvement/v2
+
+### Unblocks
+- P1: FAQ schema, HowTo schema, BreadcrumbList, Review/rating schema
+- P2: Unique city page copy (now indexable with proper RealEstateAgent footprint)
+
+---
+
+## [SCAN] 2026-06-01 08:00 — Dream scan findings

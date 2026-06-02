@@ -89,29 +89,20 @@ Notes: CONFIRMED RESOLVED 2026-06-01.
 
 ## [P0] Add JSON-LD Organization schema to site layout
 Owner: alex
-Status: todo
+Status: done
 BlockedBy: []
-Notes: Add <script type="application/ld+json"> in layout.tsx with:
-       - name: Cash4HomeFL
-       - url: https://cash4homefl.vercel.app
-       - logo: https://cash4homefl.vercel.app/favicon.ico
-       - contactPoint: {telephone: "+15612209399", contactType: "sales"}
-       - address: {addressLocality: "West Palm Beach", addressRegion: "FL"}
-       - areaServed: ["Palm Beach County", "Broward County"]
-       - sameAs: [Google Business Profile URL]
-       - potentialAction: Schema.org/SellAction (sell your house for cash)
-       Type: RealEstateAgent or HomeAndConstructionBusiness
-       Validate with: https://validator.schema.org/
+Notes: COMPLETED 2026-06-02. Added RealEstateAgent JSON-LD with name, url, logo, description,
+       telephone, contactPoint, address (West Palm Beach FL), areaServed (PBC + Broward),
+       priceRange $$, sameAs, potentialAction (SellAction), and geo coordinates (26.7153, -80.1294).
+       Schema validates at https://validator.schema.org/ — deploy to verify client-side rendering.
 
 ## [P0] Add LocalBusiness/RealEstateAgent JSON-LD with geo coordinates
 Owner: alex
-Status: todo
-BlockedBy: ["Add JSON-LD Organization schema to site layout"]
-Notes: Extend Organization schema with:
-       - geo: {latitude: 26.7153, longitude: -80.1294, addressCountry: "US"}
-       - openingHours: "Mo-Fr 08:00-18:00, Sa 09:00-16:00"
-       - priceRange: "$$" (indicates mid-level cash buying)
-       Validate: https://validator.schema.org/
+Status: done
+BlockedBy: []
+Notes: COMPLETED 2026-06-02. Geo coordinates added to same RealEstateAgent schema:
+       geo: { "@type": "GeoCoordinates", latitude: 26.7153, longitude: -80.1294, addressCountry: "US" }
+       Also added full openingHoursSpecification Mo-Fr 08:00-18:00, Sa 09:00-16:00.
 
 ## [P1] Audit meta tags and Open Graph on all page types
 Owner: alex
