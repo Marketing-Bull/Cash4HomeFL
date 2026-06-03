@@ -2,6 +2,16 @@ import Link from 'next/link';
 import type { ReactNode } from 'react';
 import { getCountyLinks, getFeaturedCityLinks } from '@/lib/site-data';
 
+const situationLinks = [
+  { label: 'Foreclosure', href: '/we-buy-houses-foreclosure' },
+  { label: 'Probate', href: '/we-buy-houses-probate' },
+  { label: 'Divorce', href: '/we-buy-houses-divorce' },
+  { label: 'Damaged Property', href: '/we-buy-houses-damaged' },
+  { label: 'Liens', href: '/we-buy-houses-liens' },
+  { label: 'Rental Property', href: '/we-buy-houses-rental' },
+  { label: 'Sell As-Is', href: '/we-buy-houses-as-is' },
+];
+
 const primaryLinks = [
   { label: 'Home', href: '/' },
   { label: 'We Buy Houses', href: '/we-buy-houses' },
@@ -22,9 +32,28 @@ export function SiteFrame({ children }: { children: ReactNode }) {
 
           <nav className="nav" aria-label="Primary navigation">
             {primaryLinks.map((link) => (
-              <Link className="nav-link" href={link.href} key={link.href}>
-                {link.label}
-              </Link>
+              link.label === 'We Buy Houses' ? (
+                <div className="nav-dropdown" key={link.href}>
+                  <Link className="nav-link nav-link--dropdown" href={link.href}>
+                    {link.label}
+                    <svg className="dropdown-arrow" viewBox="0 0 20 20" fill="currentColor" width="14" height="14" aria-hidden="true">
+                      <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clipRule="evenodd" />
+                    </svg>
+                  </Link>
+                  <div className="dropdown-panel">
+                    <div className="dropdown-section">
+                      <span className="dropdown-label">Situations we help with</span>
+                      {situationLinks.map((s) => (
+                        <Link className="dropdown-link" href={s.href} key={s.href}>{s.label}</Link>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <Link className="nav-link" href={link.href} key={link.href}>
+                  {link.label}
+                </Link>
+              )
             ))}
           </nav>
 
@@ -89,6 +118,15 @@ export function SiteFrame({ children }: { children: ReactNode }) {
                 <Link href={link.href} key={link.href}>
                   {link.label}
                 </Link>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <h2 className="footer-title">Conditions we help with</h2>
+            <div className="footer-links">
+              {situationLinks.map((link) => (
+                <Link href={link.href} key={link.href}>{link.label}</Link>
               ))}
             </div>
           </div>

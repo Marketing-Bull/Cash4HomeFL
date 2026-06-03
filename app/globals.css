@@ -1104,3 +1104,71 @@ a {
     width: 100%;
   }
 }
+
+/* Nav dropdown */
+.nav-dropdown {
+  position: relative;
+}
+
+.nav-link--dropdown {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  cursor: pointer;
+}
+
+.dropdown-arrow {
+  transition: transform 0.2s;
+}
+
+.nav-dropdown:hover .dropdown-arrow {
+  transform: rotate(180deg);
+}
+
+.dropdown-panel {
+  display: none;
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1rem;
+  min-width: 220px;
+  z-index: 50;
+}
+
+.nav-dropdown:hover .dropdown-panel {
+  display: block;
+}
+
+.dropdown-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.dropdown-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  padding: 0 0.5rem 0.25rem;
+}
+
+.dropdown-link {
+  text-decoration: none;
+  color: var(--text);
+  font-size: 0.9rem;
+  padding: 0.4rem 0.5rem;
+  border-radius: 8px;
+  transition: background 0.15s;
+}
+
+.dropdown-link:hover {
+  background: var(--surface-alt);
+  color: var(--accent);
+}
