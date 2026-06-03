@@ -1,7 +1,57 @@
 import Link from 'next/link';
 import type { ReactNode } from 'react';
 import type { PageTemplateProps } from '@/lib/page-types';
+import type { FaqItem, StepItem } from '@/lib/page-types';
 import { LeadForm } from '@/components/LeadForm';
+
+// FAQPage JSON-LD — injected when faq array is present
+function FaqSchema({ faqs }: { faqs: FaqItem[] }) {
+  if (!faqs?.length) return null;
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{
+        __html: JSON.stringify({
+          '@context': 'https://schema.org',
+          '@type': 'FAQPage',
+          mainEntity: faqs.map((faq) => ({
+            '@type': 'Question',
+            name: faq.question,
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: faq.answer,
+            },
+          })),
+        }),
+      }}
+    />
+  );
+}
+
+// HowTo JSON-LD — injected when steps array is present
+function HowToSchema({ steps }: { steps: StepItem[] }) {
+  if (!steps?.length) return null;
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{
+        __html: JSON.stringify({
+          '@context': 'https://schema.org',
+          '@type': 'HowTo',
+          name: 'How to sell your house for cash in South Florida',
+          description:
+            'A step-by-step guide to selling your home as-is for cash with no repairs, no fees, and no commissions.',
+          step: steps.map((s, i) => ({
+            '@type': 'HowToStep',
+            position: i + 1,
+            name: s.title,
+            text: s.description,
+          })),
+        }),
+      }}
+    />
+  );
+}
 
 function Section({
   eyebrow,
@@ -43,6 +93,8 @@ export function PageTemplate({
 }: PageTemplateProps) {
   return (
     <main className="page-shell">
+      <FaqSchema faqs={faq ?? []} />
+      <HowToSchema steps={steps ?? []} />
       <section className="section section--hero">
         <div className="container hero-grid">
           <div className="hero-copy">
@@ -170,7 +222,7 @@ export function PageTemplate({
             <Link className="button" href={contactHref ?? '/contact'}>
               {ctaLabel ?? 'Get My Cash Offer'}
             </Link>
-            <a className="button button--ghost" href="tel:+15612209399">
+            <a className="button button--ghost" href="tel:+156****9399">
               Call (561) 220-9399
             </a>
           </div>

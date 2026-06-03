@@ -728,3 +728,113 @@ All 4 pages have correct, non-generic meta descriptions:
 - P0: Deploy `improvement/v2` to `main` (manual — no token)
 - P1: Verify RealEstateAgent JSON-LD renders correctly after deploy (use browser_console)
 
+---
+
+## [SCAN] 2026-06-03 12:03 — Dream scan findings
+
+### Schema status: NOT FOUND on any page ❌ (unchanged since morning)
+All 4 audited pages return **zero JSON-LD blocks** via `browser_console`:
+- Homepage: 0 blocks ❌
+- WPB city page: 0 blocks ❌
+- Foreclosure situation page: 0 blocks ❌
+- PBC county page: 0 blocks ❌
+
+**Root cause unchanged**: RealEstateAgent JSON-LD committed to `improvement/v2` (commit `a9780fc`) but `improvement/v2` has NOT been merged to `main`. Still not deployed.
+
+### OG tags: NOT FOUND on any page ❌ (unchanged since morning)
+All 4 audited pages return **zero og:title, og:description, og:image** via direct curl + regex:
+- Homepage: no OG tags ❌
+- WPB: no OG tags ❌
+- Foreclosure: no OG tags ❌
+- PBC: no OG tags ❌
+
+**Root cause unchanged**: OG metadata in `app/layout.tsx` (commit `2b0858d`) is in `improvement/v2` but not in `main`. Not deployed.
+
+### og:image.jpg: STILL MISSING ❌
+- `curl -s -o /dev/null -w "%{http_code}" https://cash4homefl.vercel.app/images/og-image.jpg` → **404**
+- This file was noted in the morning scan as a required pre-deploy fix — still not present in `public/images/`
+
+### Competitor: webuyhouses.com/florida/ still broken
+- Direct curl: **404** — competitor's FL landing page is still non-functional
+- Cash4HomeFL has an opportunity here — national competitor is offline in FL
+
+### Meta titles and descriptions: PASSING ✅ (unchanged)
+All 4 pages continue to have correct, non-generic meta descriptions:
+- Homepage: "Sell your house fast for cash in South Florida..." ✅
+- WPB: "Sell your West Palm Beach house as-is for cash..." ✅
+- Foreclosure: "If you need a fast, simple sale..." ✅
+- PBC: "Sell your Palm Beach County house as-is for cash..." ✅
+
+### Deploy status: STILL BLOCKED ❌
+- `VERCEL_TOKEN` still absent from environment — cannot self-deploy
+- `improvement/v2` is still 8+ commits ahead of `main`
+- **Manual deploy remains the only path to push fixes live**
+
+### Key finding: Site health is stable, deploy gap is the only blocker
+- All 4 pages: 200 OK, fast render, no broken assets or nav links
+- Content and meta descriptions are solid
+- The only issue is that the improvements already exist in code but aren't live
+- Every day without deploy is a day of missed SEO opportunity (no schema, no OG tags, wrong sitemap in robots.txt)
+
+
+## [SCAN] 2026-06-03 08:03 — Dream scan findings
+
+### Schema status: NOT FOUND on all 4 pages ❌ (unchanged — not yet deployed)
+- Homepage: 0 JSON-LD blocks (browser_console confirmed)
+- `/we-buy-houses/west-palm-beach`: 0 JSON-LD blocks
+- `/we-buy-houses-foreclosure`: 0 JSON-LD blocks
+- `/palm-beach-county`: 0 JSON-LD blocks
+
+**Root cause unchanged**: RealEstateAgent JSON-LD committed to `improvement/v2` but branch has NOT been merged to `main`. Manual deploy required.
+
+### OG tags: NOT FOUND on all 4 pages ❌ (unchanged — not yet deployed)
+All 4 pages return zero og:title, og:description, og:image via direct curl + regex:
+- Homepage: no OG tags ❌
+- WPB: no OG tags ❌
+- Foreclosure: no OG tags ❌
+- PBC: no OG tags ❌
+
+**Root cause unchanged**: OG metadata in `app/layout.tsx` is in `improvement/v2` but not in `main`. Not deployed.
+
+### og:image.jpg: STILL MISSING ❌
+- `curl -s -o /dev/null -w "%{http_code}" https://cash4homefl.vercel.app/images/og-image.jpg` → **404**
+- File still not present in `public/images/` — required for social sharing to work correctly
+
+### Meta titles and descriptions: PASSING ✅ (unchanged)
+All 4 pages continue to have correct, non-generic meta descriptions:
+- Homepage: "Sell your house fast for cash in South Florida..." ✅
+- WPB: "Sell your West Palm Beach house as-is for cash..." ✅
+- Foreclosure: "If you need a fast, simple sale..." ✅
+- PBC: "Sell your Palm Beach County house as-is for cash..." ✅
+
+### Competitor: webuyhouses.com/florida/ still broken
+- `webuyhouses.com/florida/` → **404** — national competitor's FL landing page still non-functional
+- Cash4HomeFL opportunity: first-mover on JSON-LD schema in local cash-buyer space for FL
+
+### Site health: STABLE ✅
+- All 4 pages: 200 OK, fast render, no broken assets
+- Internal navigation links all use correct `/we-buy-houses/[city]` slash-separated format
+- No new issues detected
+
+### Deploy status: STILL BLOCKED ❌
+- `VERCEL_TOKEN` still absent from environment — cannot self-deploy
+- `improvement/v2` is still ahead of `main` with RealEstateAgent JSON-LD + OG tags + robots.txt fix
+- **Manual deploy remains the only path to go live**
+
+### Opportunity logged: Add FAQPage JSON-LD to city + situation pages
+- Pages like `/we-buy-houses/west-palm-beach` and `/we-buy-houses-foreclosure` would benefit from FAQPage schema
+- Common seller questions (lines 47-51 on WPB page) provide natural FAQ content to markup
+- Can add without deploy dependency — commit to `improvement/v2` alongside existing commits
+
+---
+
+---
+
+## [SCAN] 2026-06-03 12:03 — Dream scan findings
+- **Schema status**: ZERO JSON-LD on all 4 pages — RealEstateAgent JSON-LD committed to `improvement/v2` (commit `a9780fc`) but NOT yet deployed. Main branch is 7 commits behind. Still a first-mover opportunity in local FL cash-buyer space.
+- **OG tags**: Zero OG tags site-wide (og:title, og:description, og:image all absent on homepage, WPB city page, foreclosure situation, PBC county). Committed in `improvement/v2` (commit `2b0858d`) — not deployed.
+- **Competitor**: `webuyhouses.com/florida/` → **404** — national competitor's FL landing page still non-functional
+- **Site health**: STABLE ✅ — all 4 pages return 200, fast render, no broken assets
+- **SEO issue**: `/we-buy-houses-west-palm-beach` returns 404 — correct URL format is `/we-buy-houses/west-palm-beach` (slash-separated, not hyphen-separated). The sitemap confirms the slash-separated pattern: `https://cash4homefl.vercel.app/we-buy-houses/west-palm-beach`
+- **Deploy status**: STILL BLOCKED ❌ — `VERCEL_TOKEN` absent from environment. `improvement/v2` is 7 commits ahead of `main` (2babe74 vs 923fcf4). Manual deploy required.
+- **Opportunity**: Add FAQPage JSON-LD to city + situation pages — "Common seller questions" sections on WPB page (ref=e47) and foreclosure page (ref=e48) provide natural FAQ content. Can commit alongside existing un-deployed work.
