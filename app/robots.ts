@@ -8,6 +8,6 @@ export default function robots(): MetadataRoute.Robots {
         allow: '/',
       },
     ],
-    sitemap: 'https://cash4homefl.com/sitemap.xml',
+    sitemap: 'https://cash4homefl.vercel.app/sitemap.xml',
   };
 }
