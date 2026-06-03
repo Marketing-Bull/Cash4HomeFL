@@ -680,3 +680,51 @@ VERCEL_TOKEN=<your_token> npx vercel --yes --prod
 3. **P1: Add FAQ schema** on city + situation pages
 4. **P1: Add HowTo schema** on "How it works" steps
 5. **P1: BreadcrumbList schema** on inner pages
+
+## [SCAN] 2026-06-03 08:03 — Dream scan findings
+
+### Schema status: NOT FOUND on any page ❌
+All 4 audited pages return **zero JSON-LD blocks** via `browser_console`:
+- Homepage: 0 blocks ❌
+- WPB city page: 0 blocks ❌
+- Foreclosure situation page: 0 blocks ❌
+- PBC county page: 0 blocks ❌
+
+**Root cause**: RealEstateAgent JSON-LD is committed to `improvement/v2` (commit `a9780fc`) but `improvement/v2` has NOT been merged to `main` — Vercel auto-deploys only `main`. The schema code exists in the branch but is NOT live.
+
+### OG tags: NOT FOUND on any page ❌
+All 4 audited pages return **zero og:title, og:description, og:image** via direct curl + regex on the live site:
+- Homepage: no OG tags ❌
+- WPB: no OG tags ❌
+- Foreclosure: no OG tags ❌
+- PBC: no OG tags ❌
+
+**Root cause**: Commit `2b0858d` added OG metadata to the Next.js `metadata` object in `app/layout.tsx` — but the commit is in `improvement/v2`, not `main`. Not deployed.
+
+### Additional gap: og:image.jpg missing
+The committed OG config references `/images/og-image.jpg` — but this file does NOT exist in `public/images/` (404 on live site). Even after deploy, social sharing images will be broken until the image is added.
+
+### robots.txt fix not yet deployed
+Commit `2b0858d` fixed robots.txt to point to `.vercel.app` sitemap (was pointing to non-resolving `.com`). This fix is also stuck in `improvement/v2` pending deploy.
+
+### Meta titles and descriptions: PASSING ✅
+All 4 pages have correct, non-generic meta descriptions:
+- Homepage: "Sell your house fast for cash in South Florida..." ✅
+- WPB: "Sell your West Palm Beach house as-is for cash..." ✅
+- Foreclosure: "If you need a fast, simple sale..." ✅
+- PBC: "Sell your Palm Beach County house as-is for cash..." ✅
+
+### Deploy status: BLOCKED
+- `improvement/v2` is 8 commits ahead of `main`
+- `VERCEL_TOKEN` is absent from environment — cannot self-deploy
+- **Manual deploy required** to push these fixes live:
+  - RealEstateAgent JSON-LD (from `a9780fc`)
+  - OG metadata + canonical URLs (from `2b0858d`)
+  - robots.txt sitemap fix (from `2b0858d`)
+  - og:image.jpg must be added to `public/images/` before the OG config works
+
+### Opportunity logged to BACKLOG
+- P0: Add `public/images/og-image.jpg` — required for OG social sharing to work after deploy
+- P0: Deploy `improvement/v2` to `main` (manual — no token)
+- P1: Verify RealEstateAgent JSON-LD renders correctly after deploy (use browser_console)
+
