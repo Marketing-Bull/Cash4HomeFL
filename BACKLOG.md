@@ -344,3 +344,29 @@ Notes: Site has hreflang EN/ES in meta already (from previous work),
        <link rel="alternate" hreflang="en" href="https://cash4homefl.vercel.app" />
        <link rel="alternate" hreflang="es" href="https://cash4homefl.vercel.app/es" />
        (Only add es URL if /es page exists)
+## [P0] Deploy improvement/v2 to main — unblocks 3 major fixes
+Owner: alex
+Status: todo
+BlockedBy: [manual deploy]
+Notes: improvement/v2 is 9 commits ahead of main. Vercel auto-deploys main only.
+       Must either: (1) merge improvement/v2 → main + push, or (2) run Vercel CLI directly.
+       Contains: RealEstateAgent JSON-LD, OG metadata, canonical URLs, robots.txt fix.
+       VERCEL_TOKEN is absent — Alex must run the deploy.
+
+## [P0] Add public/images/og-image.jpg — og:image reference 404s
+Owner: alex
+Status: todo
+BlockedBy: []
+Notes: The committed OG metadata in layout.tsx references /images/og-image.jpg.
+       This file does not exist (curl returns 404). Must create or source an image
+       before OG tags will work for social sharing. Recommended: 1200x630px JPEG.
+       Reference: og-image.jpg in /public/images/ must be added after deploy.
+
+## [P1] Verify RealEstateAgent JSON-LD after deploy
+Owner: alex
+Status: todo
+BlockedBy: [P0 deploy]
+Notes: After deploy, run browser_console check on all 4 audit pages:
+       document.querySelectorAll('script[type="application/ld+json"]').length
+       Should return 1 on all pages. Confirm schema validates at
+       https://search.google.com/test/rich-results
