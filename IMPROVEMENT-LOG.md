@@ -624,3 +624,59 @@ All 4 audited pages have good meta descriptions:
 | P1 | Add canonical URLs to all page templates | Not yet committed |
 | P2 | Add FAQPage JSON-LD on city + situation pages | Not yet committed |
 
+
+## [SCAN] 2026-06-03 02:00 — Nightly site improvement run
+
+### Site health: ✅ ALL CITY PAGES OPERATIONAL
+- `/we-buy-houses/west-palm-beach` → **HTTP 200** ✅ via `x-matched-path: /we-buy-houses/west-palm-beach`
+- `/we-buy-houses/boca-raton` → **HTTP 200** ✅
+- All 29 city pages pre-built as static HTML — routing confirmed working at runtime
+- **404 issue is fully resolved** — the P0 fix from June 1 (commit `23e2985`, async params) is deployed and serving correctly
+
+### robots.txt — one-line fix committed
+- **Old**: `sitemap: https://cash4homefl.com/sitemap.xml` → **404** (domain doesn't resolve)
+- **New**: `sitemap: https://cash4homefl.vercel.app/sitemap.xml` → **200** (confirmed)
+- Committed: `2b0858d chore: fix robots.txt sitemap domain and add OG tags to layout metadata`
+
+### Layout metadata — OG tags added
+- Added `metadataBase: https://cash4homefl.vercel.app`
+- Added `openGraph: { type, locale, url, siteName, images[] }` with og-image.jpg
+- Added `twitter: { card: summary_large_image }`
+- Added `alternates: { canonical: https://cash4homefl.vercel.app }`
+- Improved page title template: `"%s | Cash4HomeFL"` (was `"%s | cash4homefl.com"`)
+- Better default title and description
+- Committed to `improvement/v2` — **needs redeploy to go live**
+
+### Deployed site still running old code
+- `improvement/v2` has NOT been merged to `main` — Vercel deploys `main` by default
+- Live site (`cash4homefl.vercel.app`) currently serves:
+  - ✅ City pages: 200 (from `main` branch build, works via static SSG)
+  - ❌ JSON-LD RealEstateAgent schema: **NOT PRESENT** (code in `improvement/v2` but not deployed)
+  - ❌ OG tags: **NOT PRESENT** (code committed but not deployed)
+  - ✅ robots.txt sitemap: **FIXED IN improvement/v2** — will work after next deploy
+- **Deploy required**: merge `improvement/v2 → main` and push, or run `VERCEL_TOKEN=<token> npx vercel --yes --prod`
+
+### Sitemap confirmed healthy
+- 82 URLs total in sitemap
+- All use correct `.vercel.app` domain ✅
+- City pages: `/we-buy-houses/<city>` pattern ✅
+- Situation pages: `/we-buy-houses-<situation>` pattern ✅
+
+### Deploy action for Alex
+```bash
+# Option 1 — merge to main and push (triggers Vercel auto-deploy)
+git checkout main
+git pull origin main
+git merge improvement/v2
+git push origin main
+
+# Option 2 — direct Vercel deploy with token
+VERCEL_TOKEN=<your_token> npx vercel --yes --prod
+```
+
+### Next P0 items (after deploy)
+1. **Add JSON-LD RealEstateAgent** — committed to `improvement/v2`, needs deploy
+2. **Add OG tags** — committed to `improvement/v2`, needs deploy
+3. **P1: Add FAQ schema** on city + situation pages
+4. **P1: Add HowTo schema** on "How it works" steps
+5. **P1: BreadcrumbList schema** on inner pages
