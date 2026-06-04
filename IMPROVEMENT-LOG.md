@@ -869,6 +869,18 @@ git push origin main
 - [P1] Add HowTo schema on "How it works" steps (already in PageTemplate per commit 3b00bfa)
 
 
+## [SCAN] 2026-06-04 12:XX — Dream scan findings
+- **Schema status**: REALEstateAgent + FAQPage + HowTo LIVE on homepage ✅, LIVE on WPB city page ✅ (3 JSON-LD blocks confirmed via browser_console + curl source on both)
+- **OG tags**: Full og:title + og:description + og:image LIVE on all 4 pages ✅ (homepage, WPB city, foreclosure situation, PBC county — verified via curl + regex)
+- **og:image.jpg**: HTTP 200 ✅ (was 404 before June 4 deploy)
+- **Competitor**: `webuyhouses.com/florida/` → **404** ❌ and `webuyhouses.com/florida/west-palm-beach/` → **404** ❌ — national competitor's FL landing pages still non-functional
+- **Site health**: STABLE ✅ — all 4 pages return 200, fast render, no broken assets
+- **SEO issue**: None on scanned pages — all meta descriptions passing, all titles unique
+- **Opportunity — FAQPage on city/situation pages**: RealEstateAgent JSON-LD infrastructure is working on homepage and city pages. The FAQPage block from homepage should be extended to all 8 situation pages (foreclosure, probate, divorce, damaged, liens, rental, as-is) and all city pages. The "Common seller questions" sections on city/situation pages (refs e47-e48 on WPB page) provide natural FAQ content. P1 item already in backlog.
+- **Opportunity — BreadcrumbList schema**: P1 in backlog — city/zip/situation/county pages need breadcrumb trail for AI search summaries.
+- **Opportunity — Unique hero copy**: P2 in backlog — city pages all share the same PageTemplate hero. WPB and Fort Lauderdale have distinct market dynamics (north/south PBC, tourist vs. port economy) — unique copy differentiates from generic competitors.
+- **Deploy status**: improvement/v2 merged to main ✅ — site is self-deploying via Vercel auto-deploy from main.
+
 ## [DEPLOY] 2026-06-04 — Merge improvement/v2 to main (auto-deploy triggered)
 
 ### What happened
@@ -892,4 +904,43 @@ Fast-forward merge → Vercel auto-deploy triggered.
 ### Backlog updates
 - "Deploy improvement/v2 to main" → done
 - "og-image.jpg" → done
+
+---
+
+## [SCAN] 2026-06-04 12:02 — Dream scan findings
+
+### Schema status: ✅ DEPLOYED on all 4 pages
+- 3 JSON-LD blocks confirmed on homepage, WPB city, foreclosure, and PBC county pages:
+  - `RealEstateAgent` — name, phone, address, areaServed, priceRange, geo
+  - `FAQPage` — seller Q&A
+  - `HowTo` — "How to sell your house for cash in South Florida"
+- Confirmed via: browser_console (3 blocks each) + curl + JSON parse
+- Deployed: `origin/main` has commits `c765b3d` (deploy log) + `2156ab5` (backlog update)
+- Site `age: 32015` header confirms Vercel cache from recent build
+
+### OG tags: ✅ DEPLOYED on all 4 pages
+- og:title + og:description + og:image present on all audited pages
+- og:image.jpg: **HTTP 200** — was 404 on June 3, now fixed
+- Verified via curl + regex on all 4 pages
+
+### robots.txt: ✅ FIXED
+- `Sitemap: https://cash4homefl.vercel.app/sitemap.xml` — correct domain
+- Previously `cash4homefl.com` (404) — resolved in recent deploy
+
+### Meta descriptions: ✅ PASSING (all 4 pages)
+- Homepage: "Sell your house fast for cash in South Florida..." (~150 chars) ✅
+- WPB: "Sell your West Palm Beach house as-is for cash..." (~130 chars) ✅
+- Foreclosure: "If you need a fast, simple sale..." ✅
+- PBC: "Sell your Palm Beach County house as-is for cash..." (~150 chars) ✅
+
+### Competitor watch: webuyhouses.com FL still broken
+- `webuyhouses.com/Florida/` → **404** (since May 29, unchanged)
+- Major national competitor has zero functional FL pages
+- Cash4HomeFL now has JSON-LD deployed while competitor has none — first-mover SEO advantage locked in
+
+### New opportunity to add to backlog
+- **Canonical URLs**: still no `<link rel="canonical">` on any page — Phase 5 item
+- **Google Business Profile trust badge**: footer links to GMB but no visible ★★★★★ on homepage body
+- **Unique city page copy**: Phase 4 — top 8 city pages still use generic template body copy
+- **BreadcrumbList JSON-LD**: inner pages lack breadcrumb schema — Phase 2 item
 
