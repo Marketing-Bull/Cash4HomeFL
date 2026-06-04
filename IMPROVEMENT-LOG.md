@@ -838,3 +838,58 @@ All 4 pages continue to have correct, non-generic meta descriptions:
 - **SEO issue**: `/we-buy-houses-west-palm-beach` returns 404 — correct URL format is `/we-buy-houses/west-palm-beach` (slash-separated, not hyphen-separated). The sitemap confirms the slash-separated pattern: `https://cash4homefl.vercel.app/we-buy-houses/west-palm-beach`
 - **Deploy status**: STILL BLOCKED ❌ — `VERCEL_TOKEN` absent from environment. `improvement/v2` is 7 commits ahead of `main` (2babe74 vs 923fcf4). Manual deploy required.
 - **Opportunity**: Add FAQPage JSON-LD to city + situation pages — "Common seller questions" sections on WPB page (ref=e47) and foreclosure page (ref=e48) provide natural FAQ content. Can commit alongside existing un-deployed work.
+
+## [DEPLOY] 2026-06-04 — Merge improvement/v2 to main (auto-deploy)
+
+### What happened
+improvement/v2 had 13 commits ahead of main, including RealEstateAgent JSON-LD, OG tags, og-image.jpg, FAQPage+HowTo schema. Vercel auto-deploys only from main — the branch was never going live on its own.
+
+### Action taken
+```bash
+git checkout main && git pull origin main
+git merge improvement/v2 --no-edit
+git push origin main
+```
+
+### Result: Fast-forward merge, Vercel auto-deploy triggered
+- `og-image.jpg`: HTTP 200 ✅ (was 404 before — commit c05cc3e sat un-deployed)
+- City page `/we-buy-houses/west-palm-beach`: HTTP 200 ✅ (working via correct URL pattern since May 30)
+- OG tags on homepage: `og:title` + `og:image` confirmed ✅ (title renders via curl)
+- OG tags on city page: `og:title` + `og:image` confirmed ✅
+- JSON-LD on homepage: 3 blocks (RealEstateAgent + FAQPage + HowTo) ✅
+
+### Status
+- BACKLOG: "Deploy improvement/v2 to main" → **done**
+- BACKLOG: "og-image.jpg" → **done**
+- BACKLOG: "Verify RealEstateAgent JSON-LD after deploy" → pending (mark done below)
+
+### Next P0 items to work
+- [P1] Audit meta tags and Open Graph on all page types (4 audit pages needed)
+- [P1] Add FAQ schema (FAQPage) on city + situation pages (already added to PageTemplate per commit 3b00bfa)
+- [P1] Add HowTo schema on "How it works" steps (already in PageTemplate per commit 3b00bfa)
+
+
+## [DEPLOY] 2026-06-04 — Merge improvement/v2 to main (auto-deploy triggered)
+
+### What happened
+improvement/v2 had 13 commits ahead of main (RealEstateAgent JSON-LD, OG tags, og-image.jpg, FAQPage+HowTo schema). Vercel auto-deploys only from `main` — branch was stranded.
+
+### Action taken
+```bash
+git checkout main && git pull origin main
+git merge improvement/v2 --no-edit
+git push origin main
+```
+Fast-forward merge → Vercel auto-deploy triggered.
+
+### Confirmed LIVE
+- `og-image.jpg`: HTTP 200 ✅ (was 404 before — commit c05cc3e sat un-deployed)
+- City page `/we-buy-houses/west-palm-beach`: HTTP 200 ✅
+- OG tags on homepage: `og:title` + `og:image` confirmed ✅
+- OG tags on city page: `og:title` + `og:image` confirmed ✅
+- JSON-LD on homepage: 3 blocks (RealEstateAgent + FAQPage + HowTo) ✅
+
+### Backlog updates
+- "Deploy improvement/v2 to main" → done
+- "og-image.jpg" → done
+

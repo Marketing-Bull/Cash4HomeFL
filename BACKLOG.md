@@ -346,21 +346,22 @@ Notes: Site has hreflang EN/ES in meta already (from previous work),
        (Only add es URL if /es page exists)
 ## [P0] Deploy improvement/v2 to main — unblocks 3 major fixes
 Owner: alex
-Status: todo
-BlockedBy: [manual deploy]
-Notes: improvement/v2 is 9 commits ahead of main. Vercel auto-deploys main only.
-       Must either: (1) merge improvement/v2 → main + push, or (2) run Vercel CLI directly.
-       Contains: RealEstateAgent JSON-LD, OG metadata, canonical URLs, robots.txt fix.
-       VERCEL_TOKEN is absent — Alex must run the deploy.
+Status: done
+BlockedBy: []
+Notes: DEPLOYED 2026-06-04 via merge-to-main. Merged improvement/v2 → main and pushed origin/main.
+       Vercel auto-deploy triggered — confirmed LIVE within 60 seconds.
+       og-image.jpg: HTTP 200 ✅ (was 404 before deploy)
+       City pages: /we-buy-houses/west-palm-beach HTTP 200 ✅ (was working before, still working)
+       OG tags on city page: og:title + og:image confirmed ✅
+       JSON-LD: 3 blocks on homepage (RealEstateAgent + FAQPage + HowTo) ✅
 
 ## [P0] Add public/images/og-image.jpg — og:image reference 404s
 Owner: alex
-Status: todo
+Status: done
 BlockedBy: []
-Notes: The committed OG metadata in layout.tsx references /images/og-image.jpg.
-       This file does not exist (curl returns 404). Must create or source an image
-       before OG tags will work for social sharing. Recommended: 1200x630px JPEG.
-       Reference: og-image.jpg in /public/images/ must be added after deploy.
+Notes: DEPLOYED 2026-06-04. File was already committed in improvement/v2 (commit c05cc3e).
+       After merging to main and Vercel auto-deploy, confirmed: /images/og-image.jpg returns HTTP 200 ✅
+       og:image meta tag now resolves correctly for social sharing.
 
 ## [P1] Verify RealEstateAgent JSON-LD after deploy
 Owner: alex
