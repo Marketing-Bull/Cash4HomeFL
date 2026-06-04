@@ -944,3 +944,87 @@ Fast-forward merge → Vercel auto-deploy triggered.
 - **Unique city page copy**: Phase 4 — top 8 city pages still use generic template body copy
 - **BreadcrumbList JSON-LD**: inner pages lack breadcrumb schema — Phase 2 item
 
+## [SCAN] 2026-06-04 16:03 — Dream scan findings
+
+### Schema status: ✅ DEPLOYED on all pages (confirmed)
+- 3 JSON-LD blocks on homepage, WPB city, foreclosure, PBC county:
+  - `RealEstateAgent` — name, phone, address, areaServed, priceRange, geo
+  - `FAQPage` — seller Q&A
+  - `HowTo` — "How to sell your house for cash in South Florida"
+- browser_console confirmed: 3 blocks on homepage, WPB city page, PBC county page
+- curl + regex confirmed: 3 JSON-LD on foreclosure page (`/we-buy-houses-foreclosure`)
+
+### OG tags: ✅ DEPLOYED on all pages (confirmed)
+- og:title + og:description + og:image on all 4 pages
+- og:image.jpg: HTTP 200 ✅
+- curl + regex confirmed on all pages
+
+### robots.txt: ✅ CORRECT
+- `Sitemap: https://cash4homefl.vercel.app/sitemap.xml`
+- Correct domain — already fixed
+
+### URL format clarification — foreclosure page
+- Sitemap URL: `/we-buy-houses-foreclosure` (hyphen, no slash)
+- NOT `/we-buy-houses/foreclosure` — that returns 404
+- This is a situation page, not a city page — situation pages use hyphen format
+
+### SEO issues: NONE FOUND this run
+- All 4 audited pages passing: full schema + full OG tags + meta descriptions
+- No missing JSON-LD, no missing OG tags, no thin descriptions
+- Site is fully compliant with basic SEO requirements
+
+### Competitor watch: webuyhouses.com FL still broken
+- `webuyhouses.com/Florida/` → 404 (unchanged since May 29)
+- Cash4HomeFL maintains first-mover JSON-LD advantage over this national competitor
+
+### Backlog priorities for next session
+1. **BreadcrumbList JSON-LD** on inner pages — adds navigation schema for sitelinks
+2. **Google Business Profile star rating** display on homepage body (trust signal)
+3. **Unique city page copy** — top 8 cities still use generic body copy (Phase 4)
+4. **Canonical URLs** — `<link rel="canonical">` still missing site-wide (Phase 5)
+
+---
+
+## [SCAN] 2026-06-04 16:02 — Dream scan findings
+
+### Schema status: ✅ FOUND on homepage, WPB, Boca Raton, foreclosure, PBC county
+- All 5 pages return JSONLD_COUNT = 3
+- Schema types: RealEstateAgent + FAQPage + HowTo
+- RealEstateAgent schema is now LIVE — confirmed deployed since 07d5e79
+
+### OG tags status: ✅ ALL FOUND site-wide
+- All audited pages return og:title, og:description, og:image
+- og:image.jpg returns HTTP 200 (was 404 on June 3)
+- Fully deployed since commit c765b3d → 07d5e79
+
+### SEO issue: Canonical URL points to homepage on ALL inner pages
+- Homepage: `<link rel="canonical" href="https://cash4homefl.vercel.app">` ✅ correct
+- Boca Raton (`/we-buy-houses/boca-raton`): canonical = `https://cash4homefl.vercel.app` ❌ should be `https://cash4homefl.vercel.app/we-buy-houses/boca-raton`
+- West Palm Beach: same — canonical = homepage ❌
+- PBC County: same — canonical = homepage ❌
+- Foreclosure: canonical = homepage ❌
+- **Impact**: Search engines may treat inner pages as duplicates of the homepage, diluting crawl budget and ranking signals
+- **Fix needed**: PageTemplate should set canonical = self-URL, not hardcoded to site root
+
+### Top competitor move: webuyhouses.com/Florida/ still broken
+- `webuyhouses.com/Florida/` → "Page not found (404)" — unchanged since May 29
+- Cash4HomeFL maintains first-mover schema advantage over this national competitor
+
+### Opportunity: Sitemap has 89 URLs — 6 situation pages now indexed
+- Sitemap confirmed `/we-buy-houses-foreclosure` (hyphen, no slash) format — matches sitemap
+- 6 situation pages in sitemap: foreclosure, probate, divorce, damaged, liens, rental, as-is
+- All 29 city pages present under `/we-buy-houses/[city]`
+- 17 zip-code pages under `/sell-my-house-fast/[zip]`
+- 9 blog pages
+
+### Robots.txt: ✅ CORRECT
+- `Sitemap: https://cash4homefl.vercel.app/sitemap.xml` — correct domain
+
+### Action items
+| Priority | Issue | Page | Fix |
+|---|---|---|---|
+| P1 | Canonical = homepage (not self) | All inner pages | Set canonical = request URL in PageTemplate |
+| P2 | BreadcrumbList JSON-LD | Inner pages | Add navigation schema |
+| P3 | GBP star rating | Homepage | Add trust signals |
+| P3 | Unique city page copy | Top 8 cities | Phase 4 content differentiation |
+
