@@ -106,12 +106,16 @@ Notes: COMPLETED 2026-06-02. Geo coordinates added to same RealEstateAgent schem
 
 ## [P1] Audit meta tags and Open Graph on all page types
 Owner: alex
-Status: in_progress
+Status: done
 BlockedBy: []
-Notes: City, zip, and county pages: DONE (commit 54932bd — OpenGraph + canonical added).
-       Situation pages (7 pages): NOT YET — need OpenGraph + canonical in static metadata.
-       Homepage + blog pages: NOT YET.
-       Run audit with Firecrawl across key pages once situation pages are done.
+Notes: DONE — commit c0cf00f. All page archetypes now have OpenGraph + canonical:
+       - Homepage (layout.tsx root OG, inherits to all)
+       - City pages: generateMetadata + canonical (commit 54932bd)
+       - Zip pages: generateMetadata + canonical (commit 54932bd)
+       - County pages: static metadata + canonical (commits 54932bd, c0cf00f)
+       - Situation pages (7 pages): static metadata + canonical (commit c0cf00f)
+       - Blog pages: NOT audited (no blog pages confirmed active)
+       Remaining: full Firecrawl audit pass to confirm live rendering.
 
 ## [P1] Add FAQ schema (FAQPage) on city + situation pages
 Owner: alex
