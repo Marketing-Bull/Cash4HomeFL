@@ -106,55 +106,37 @@ Notes: COMPLETED 2026-06-02. Geo coordinates added to same RealEstateAgent schem
 
 ## [P1] Audit meta tags and Open Graph on all page types
 Owner: alex
-Status: todo
+Status: in_progress
 BlockedBy: []
-Notes: Check all 6 page archetypes: homepage, city, zip, situation, county, blog
-       Each needs: <title>, <meta name="description">, og:title, og:description,
-       og:image, og:url, og:type, twitter:card
-       Ensure og:image is at least 1200x630px
-       Ensure every page has a unique <title> (not duplicated across pages)
-       Run audit with Firecrawl across key pages
+Notes: City, zip, and county pages: DONE (commit 54932bd — OpenGraph + canonical added).
+       Situation pages (7 pages): NOT YET — need OpenGraph + canonical in static metadata.
+       Homepage + blog pages: NOT YET.
+       Run audit with Firecrawl across key pages once situation pages are done.
 
 ## [P1] Add FAQ schema (FAQPage) on city + situation pages
 Owner: alex
-Status: todo
+Status: done
 BlockedBy: []
-Notes: City pages and situation pages have FAQ sections — these need
-       FAQPage JSON-LD schema with qna: 3-5 Q&A pairs per page
-       Example: { "@type": "FAQPage", "mainEntity": [{ "@type": "Question", 
-       "name": "...", "acceptedAnswer": { "@type": "Answer", "text": "..." }}]}
-       Pages to update:
-       - app/we-buy-houses/[city]/page.tsx (all 14 cities)
-       - app/we-buy-houses-foreclosure/page.tsx
-       - app/we-buy-houses-probate/page.tsx
-       - app/we-buy-houses-divorce/page.tsx
-       - app/we-buy-houses-damaged/page.tsx
-       - app/we-buy-houses-liens/page.tsx
-       - app/we-buy-houses-rental/page.tsx
-       - app/we-buy-houses-as-is/page.tsx
+Notes: DONE — PageTemplate.tsx already emits FAQPage JSON-LD when faq prop is present.
+       All pages using PageTemplate (city, county, zip, situation) inherit FAQPage automatically.
+       No additional schema needed unless new page types are added.
 
 ## [P1] Add HowTo schema on "How it works" steps
 Owner: alex
-Status: todo
+Status: done
 BlockedBy: []
-Notes: The steps section in PageTemplate should emit HowToStep schema.
-       Each step: { "@type": "HowToStep", "name": "...", "text": "..." }
-       If 3 steps: { "@type": "HowTo", "step": [step1, step2, step3] }
-       Add to PageTemplate.tsx as a <script type="application/ld+json">
-       This directly impacts AI search summaries (SGE)
+Notes: DONE — PageTemplate.tsx already emits HowTo JSON-LD when steps prop is present.
+       All pages using PageTemplate inherit HowTo automatically (commit a9780fc, June 2).
 
 ## [P1] Add BreadcrumbList schema on all inner pages
 Owner: alex
-Status: todo
+Status: done
 BlockedBy: []
-Notes: City, zip, situation, county pages need breadcrumb trail.
-       Schema: Home > County > City (or Home > Situation > City)
-       Add to each page's generateMetadata or as JSON-LD in page body
-       Example: { "@type": "BreadcrumbList", "itemListElement": [
-         { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://cash4homefl.vercel.app" },
-         { "@type": "ListItem", "position": 2, "name": "Palm Beach County", "item": "https://cash4homefl.vercel.app/palm-beach-county" },
-         { "@type": "ListItem", "position": 3, "name": "West Palm Beach", "item": "https://cash4homefl.vercel.app/we-buy-houses-west-palm-beach" }
-       ]}
+Notes: DONE — commit 54932bd. PageTemplate receives breadcrumbs prop and emits BreadcrumbList JSON-LD.
+       County pages: Home > County
+       City pages: Home > County > City
+       Zip pages: Home > County > Zip
+       Situation pages: NOT YET — add to buildSituationPageProps if desired.
 
 ## [P1] Add aggregate Review/rating schema
 Owner: alex
