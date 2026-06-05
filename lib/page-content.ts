@@ -255,17 +255,62 @@ export function buildCountyPageProps(countySlug: string): PageTemplateProps | un
   };
 }
 
+// City-specific copy overrides for top cities — unique, non-generic content
+const cityCopyOverrides: Record<string, { lead: string; bullets: string[] }> = {
+  'west-palm-beach': {
+    lead: 'West Palm Beach has one of South Florida\'s most active real estate markets — and one of its most common headaches: the house that\'s been sitting too long, costing too much, or waiting on a sale that never came. Whether it\'s a worn-out rental in Northwood, a family home in Pleasant City caught in an inheritance holdup, or an investor property in Flamingo Park that\'s eaten up carrying costs, the traditional listing route rarely solves the problem. Cash buyers in West Palm Beach cut through the noise and close on a timeline that actually works.',
+    bullets: [
+      'Sell as-is in West Palm Beach — no repairs, no staging, no carrying costs while you wait',
+      'Cash offers for inherited homes in Pleasant City, Roosevelt Estates, and Flamingo Park',
+      'Landlords in WPB can sell rental properties without long tenant vacancy windows',
+      'Direct closing timeline — often 7 to 21 days once you\'ve reviewed the offer',
+      'No listing fees, no buyer financing contingencies, no surprises',
+    ],
+  },
+  'fort-lauderdale': {
+    lead: 'Fort Lauderdale\'s waterfront appeal draws buyers from everywhere — but the local market still has the same old problem: the house that doesn\'t fit the picture-perfect listing. Maybe it\'s a dated condo on the Intracoastal that\'s been sitting for 90 days, or a single-family home in Victoria Park with deferred maintenance the owner can\'t afford to address. The Fort Lauderdale cash market moves when the traditional market stalls. We buy houses as-is, no realtor fees, no repair requirements, no waiting on financed buyers to clear.',
+    bullets: [
+      'Cash offers for Fort Lauderdale homes in Las Olas, Victoria Park, Rio Vista, and Coral Ridge',
+      'Sell your Fort Lauderdale investment property without a long listing runway',
+      'Inherited homes and probate situations in Fort Lauderdale — we work with the estate directly',
+      'Close in days, not months — cash buyers, no financing delays',
+      'No repair requirements — sell your Fort Lauderdale house exactly as it is today',
+    ],
+  },
+  'boca-raton': {
+    lead: 'Boca Raton attracts buyers looking for South Florida at its most refined — but sellers know the other side of that market. When a property doesn\'t fit the profile, it can sit for months. Whether it\'s an oversized lot inherited from a parent in Mizner Park, a condo that\'s outlived its appeal, or a second home that\'s become a liability, the traditional listing process in Boca Raton can stretch 60 to 90 days fast. Cash buyers cut through the HOA rules and seasonality that scare off financed buyers, closing on a timeline that actually works for sellers.',
+    bullets: [
+      'Cash offers for Boca Raton properties in Boca Del Mar, Mizner Park, West Boca, and Royal Palm Yacht',
+      'Sell inherited real estate in Boca Raton without months of traditional listing',
+      'Boca Raton condos and townhomes can sell to cash buyers without the HOA financing障碍',
+      'Downsizers in Boca Raton can close fast without making repairs to a home they\'re leaving',
+      'No listing commissions — what we offer is what you keep',
+    ],
+  },
+  'delray-beach': {
+    lead: 'Delray Beach has always had a reputation for getting attention — the arts scene, the dining on Atlantic Avenue, the quiet neighborhoods a few blocks off the beach. But properties that don\'t fit the lifestyle profile of a typical Delray buyer can linger for months. A home that needs work in Lake Ida, an inherited property that\'s been sitting unused, or a condo that\'s outlived its appeal — these are the situations that drive sellers to the cash market. Delray Beach cash sales close in weeks, not months, and without the listing process.',
+    bullets: [
+      'Sell your Delray Beach home as-is — no repairs needed for properties in Lake Ida, Tropic Isle, or Delray Beach Village',
+      'Inherited homes in Delray Beach: we close without requiring you to fix anything first',
+      'Delray Beach landlords: cash offer on your rental without waiting for a tenant-vacated buyer',
+      'Fast closings in Delray Beach — often under three weeks once you\'ve accepted an offer',
+      'Direct, no-commission sale — what we quote is what lands in your pocket',
+    ],
+  },
+};
+
 export function buildCityPageProps(citySlug: string): PageTemplateProps | undefined {
   const city = getCityBySlug(citySlug);
   if (!city) return undefined;
 
   const nearby = buildNearbyCityLinks(citySlug);
   const areas = city.featured_neighborhoods.length > 0 ? city.featured_neighborhoods : [city.name];
+  const copyOverride = cityCopyOverrides[citySlug];
 
   return {
     eyebrow: city.countyName,
     title: `We Buy Houses in ${city.name}, Florida`,
-    lead: `Sell your ${city.name} house as-is for cash. We buy inherited homes, rentals, condos, and properties that need work.`,
+    lead: copyOverride?.lead ?? `Sell your ${city.name} house as-is for cash. We buy inherited homes, rentals, condos, and properties that need work.`,
     trust: [city.countyName, formatZipList(city.zips), 'No repairs', 'Close on your timeline'],
     stats: [
       { label: 'Primary zip codes', value: formatZipList(city.zips) },
@@ -273,7 +318,7 @@ export function buildCityPageProps(citySlug: string): PageTemplateProps | undefi
       { label: 'Best fit', value: 'As-is sellers, inherited property, distressed rentals, and fast closings' },
     ],
     steps: commonSteps,
-    bullets: buildCoreMoneyBulletList(),
+    bullets: copyOverride?.bullets ?? buildCoreMoneyBulletList(),
     comparison: commonComparison,
     areas: buildAreaPillsFromList(areas, 8),
     nearbyLinks: [
