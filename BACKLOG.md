@@ -154,18 +154,15 @@ Notes: Add AggregateRating to Organization schema or standalone:
 
 ## [P2] Write unique hero + body copy for top 8 city pages
 Owner: alex
-Status: todo
+Status: in_progress
 BlockedBy: ["Fix 404 on dynamic city pages"]
-Notes: Priority cities: West Palm Beach, Fort Lauderdale, Boca Raton, 
-       Delray Beach, Boynton Beach, Hollywood, Pompano Beach, Palm Beach Gardens
-       Each page needs:
-       - Unique H1 (not "We Buy Houses in [City]")
-       - Unique lead paragraph (2-3 sentences specific to the city)
-       - Market angle from site-data.json (use it)
-       - Featured neighborhoods woven into copy
-       DO NOT use generic placeholder copy — this is what Google AI 
-       will summarize and what differentiates from competitors
-       Minimum: 300 unique words per city page
+Notes: Top 4 DONE — commit ace30c0. Unique copy live for:
+       - West Palm Beach (Northwood, Pleasant City, Flamingo Park references)
+       - Fort Lauderdale (Las Olas, Victoria Park, Rio Vista, Coral Ridge)
+       - Boca Raton (Boca Del Mar, Mizner Park, West Boca, Royal Palm Yacht)
+       - Delray Beach (Lake Ida, Tropic Isle, Delray Beach Village)
+       Remaining: Boynton Beach, Hollywood, Palm Beach Gardens, Jupiter, Pompano Beach
+       Each needs 300+ unique words with city-specific neighborhoods and market angle.
 
 ## [P2] Write unique copy for all 7 situation pages
 Owner: alex
