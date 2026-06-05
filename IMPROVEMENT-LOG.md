@@ -1184,3 +1184,76 @@ Patched via Next.js `alternates.canonical` in commit `eadc3db`, pushed to `main`
 | P3 | 404 at `/we-buy-houses-damaged-house` | Stale external link | Add 301 redirect -damaged-house → -damaged |
 | P3 | Hero images per city | 25 city pages | IMAGE-STRATEGY.md prompts |
 | P3 | GA4 + Search Console | Site-wide | — |
+
+## [SCAN] 2026-06-05 21:00 — Dream scan findings
+
+### ✅ All 4 audited pages re-verified — still LIVE with full schema + OG
+- Homepage: 3 JSON-LD blocks, OG ✅
+- WPB city: 4 blocks (+ BreadcrumbList), OG ✅
+- Foreclosure: 3 blocks, OG ✅
+- PBC county: 4 blocks (+ BreadcrumbList), OG ✅
+
+### ✅ eadc3db (16:00 batch) confirmed LIVE
+- `/faq`, `/reviews`, `/privacy`, `/terms` now have self-URL canonicals
+- All 4 pages showing `CANON: https://cash4homefl.vercel.app/<page>` ✅
+- Vercel age 12287s (~3.4h) confirms 16:00 deploy took effect
+
+### 🚨 Found new gap: 9 blog posts had wrong canonicals
+- Full sitemap audit (82 URLs) revealed that the dynamic `/blog/[slug]` route
+  was falling back to the layout's homepage canonical — same root cause the
+  16:00 + 20:00 batches tried to fix, but missed this dynamic route.
+- Affected URLs (9 posts):
+  - /blog/selling-house-as-is-florida
+  - /blog/cash-buyer-vs-realtor-florida
+  - /blog/inherited-house-sale-process
+  - /blog/foreclosure-timeline-florida
+  - /blog/how-fair-cash-offers-are-calculated
+  - /blog/sell-house-with-tenants-florida
+  - /blog/sell-condo-fast-south-florida
+  - /blog/sell-house-after-divorce-florida
+  - /blog/is-we-buy-houses-legit
+- Pre-fix canonical count: 72/82 ❌
+- Post-fix canonical count (after deploy): 82/82 expected ✅
+
+### 🛠️ FIX APPLIED: self-URL canonical on 9 blog posts (commit 4a85262)
+- Patched `app/blog/[slug]/page.tsx` `generateMetadata()` to return
+  `alternates.canonical: 'https://cash4homefl.vercel.app/blog/${slug}'`
+- Build succeeded
+- Pushed to `main` — Vercel auto-deploy in progress
+
+### 🛠️ FIX APPLIED: 301 redirect for damaged-house 404 (commit 4a85262)
+- P3 from 20:00 scan — `/we-buy-houses-damaged-house` (with `-house` suffix)
+  was 404 from a stale external link
+- Added `next.config.mjs` redirects() rule:
+  `/we-buy-houses-damaged-house` → `/we-buy-houses-damaged` (permanent)
+- Cheap fix, no new content, no UX change for real users
+
+### Competitor watch
+- `webuyhouses.com/Florida/` → 404 (unchanged)
+- `opendoor.com/west-palm-beach-fl` → 404 (unchanged)
+- `offerpad.com/florida` → 404 (unchanged)
+- `homevest.com/florida` → 301 → HOAs blog (NOT a competitor — irrelevant)
+- `floridacashhomebuyers.com` → 200 (active)
+- `floridahomebuyers.com` → 200 (active)
+- No new competitor moves
+
+### New opportunity: blog content as internal-link equity
+- 9 blog posts are now canonical-fixed; next step: cross-link them to
+  the city pages (e.g., "Selling a House As-Is in Florida" → /we-buy-houses/west-palm-beach)
+- Adds topical relevance for long-tail queries and helps crawlers find
+  the city pages
+- P3 — could be a 30-min follow-up; flag for next scan
+
+### Action items
+| Priority | Issue | Page(s) | Status |
+|---|---|---|---|
+| **P1** | Self-URL canonical | 9 /blog/[slug] pages | ✅ Fixed in 4a85262, awaiting Vercel deploy |
+| P1 | Self-URL canonical | /faq, /reviews, /privacy, /terms | ✅ Live in eadc3db |
+| P1 | Self-URL canonical | /about, /contact, /blog, /we-buy-houses, /sell-my-house-fast | ✅ Live in 6648c3c |
+| P2 | Review/AggregateRating JSON-LD | /reviews | Add Review or AggregateRating schema |
+| P2 | Unique copy for 7 situation pages | -probate, -divorce, -damaged, -liens, -rental, -as-is | Phase 4 (4 cities done) |
+| P2 | Unique copy for top 10 zip pages | /sell-my-house-fast/[zip] | Phase 4 |
+| P3 | 404 at `/we-buy-houses-damaged-house` | Stale external link | ✅ 301 redirect added in 4a85262 |
+| P3 | Cross-link blog posts → city pages | 9 posts → 25 city pages | Internal-link equity push |
+| P3 | Hero images per city | 25 city pages | IMAGE-STRATEGY.md prompts |
+| P3 | GA4 + Search Console | Site-wide | — |
