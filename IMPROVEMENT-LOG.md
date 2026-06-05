@@ -1070,3 +1070,48 @@ Last scan (June 4 16:02) flagged this. City pages + foreclosure/probate/divorce 
 | P3 | Hero images per city | 25 city pages | IMAGE-STRATEGY.md prompts |
 | P3 | Real testimonials | Reviews page, homepage | — |
 | P3 | GA4 + Search Console | Site-wide | — |
+
+
+---
+
+## [SCAN] 2026-06-05 12:03 — Dream scan findings
+
+### ✅ Schema status: LIVE on all 4 audited pages
+- Homepage: 3 JSON-LD blocks (RealEstateAgent + FAQPage + HowTo)
+- WPB city: 4 blocks (+ BreadcrumbList)
+- Foreclosure: 3 blocks
+- PBC county: 4 blocks (+ BreadcrumbList)
+- og:image.jpg → HTTP 200 ✅
+- Robots.txt → sitemap on correct domain ✅
+
+### 🛠️ FIX APPLIED: Self-URL canonical on 5 pages (P1 from prior 2 scans)
+Pages previously falling back to layout's `canonical: 'https://cash4homefl.vercel.app'` (homepage) — flagged in 2026-06-04 16:02 and 2026-06-05 12:00 dream scans as duplicate-content risk. Patched via Next.js `alternates.canonical`:
+- `/about` → `https://cash4homefl.vercel.app/about` ✅
+- `/contact` → `https://cash4homefl.vercel.app/contact` ✅
+- `/blog` → `https://cash4homefl.vercel.app/blog` ✅
+- `/we-buy-houses` → `https://cash4homefl.vercel.app/we-buy-houses` ✅
+- `/sell-my-house-fast` → `https://cash4homefl.vercel.app/sell-my-house-fast` ✅
+- Build succeeded, committed `6648c3c`, pushed to main → Vercel auto-deploy in progress
+
+### ⚠️ 404 still live: `/we-buy-houses-damaged-house` (with `-house` suffix)
+- Curl returns 404 — directory is `we-buy-houses-damaged` (no `-house` suffix)
+- Sitemap confirms: `https://cash4homefl.vercel.app/we-buy-houses-damaged`
+- Likely a stale external link somewhere (not in the 4 audited pages nor in SiteFrame's situation links). Not in BACKLOG.md — added as P3.
+
+### Competitor watch (June 5 PM)
+- `webuyhouses.com/Florida/` → 404 (unchanged since May 29) — Cash4HomeFL maintains state-level coverage advantage
+- `opendoor.com/west-palm-beach-fl` → 404 (Opendoor doesn't serve WPB)
+- `offerpad.com/florida` → 404 (Offerpad left FL in 2023)
+- `homevest.com/florida` → 301 (redirect) — needs follow-up to confirm destination
+- **No major new competitor moves detected** in this window
+
+### Action items
+| Priority | Issue | Page(s) | Status |
+|---|---|---|---|
+| **P1** | Self-URL canonical | /about, /contact, /blog, /we-buy-houses, /sell-my-house-fast | ✅ Fixed in 6648c3c, awaiting Vercel deploy |
+| P3 | 404 at `/we-buy-houses-damaged-house` | Stale external link | Find + fix; or add redirect from -damaged-house → -damaged |
+| P2 | Unique copy for 7 situation pages | -probate, -divorce, -damaged, -liens, -rental, -as-is | Phase 4 (4 cities done) |
+| P2 | Unique copy for top 10 zip pages | /sell-my-house-fast/[zip] | Phase 4 |
+| P3 | Hero images per city | 25 city pages | IMAGE-STRATEGY.md prompts |
+| P3 | Real testimonials | Reviews page, homepage | — |
+| P3 | GA4 + Search Console | Site-wide | — |
