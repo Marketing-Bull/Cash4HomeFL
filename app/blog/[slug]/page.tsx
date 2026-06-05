@@ -17,6 +17,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return {
     title: post.title,
     description: post.description,
+    alternates: {
+      canonical: `https://cash4homefl.vercel.app/blog/${slug}`,
+    },
   };
 }
 
