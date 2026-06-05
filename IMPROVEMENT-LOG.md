@@ -1115,3 +1115,72 @@ Pages previously falling back to layout's `canonical: 'https://cash4homefl.verce
 | P3 | Hero images per city | 25 city pages | IMAGE-STRATEGY.md prompts |
 | P3 | Real testimonials | Reviews page, homepage | — |
 | P3 | GA4 + Search Console | Site-wide | — |
+
+
+## [SCAN] 2026-06-05 20:00 — Dream scan findings
+
+### ✅ Schema status: LIVE on all 4 audited pages
+- Homepage: 3 JSON-LD blocks (RealEstateAgent + FAQPage + HowTo)
+- WPB city: 4 blocks (+ BreadcrumbList)
+- Foreclosure: 3 blocks
+- PBC county: 4 blocks (+ BreadcrumbList)
+- All blocks validated via curl + regex + JSON parse
+
+### ✅ OG tags: LIVE on all 4 audited pages
+- og:title + og:description + og:image on all 4 pages
+- og-image.jpg: HTTP 200 ✅
+- curl + regex confirmed
+
+### ✅ robots.txt: CORRECT
+- `Sitemap: https://cash4homefl.vercel.app/sitemap.xml` — correct domain
+
+### ✅ Re-verified 5 prior canonical fixes from 16:00 commit (6648c3c) — all LIVE
+- `/about` → `https://cash4homefl.vercel.app/about` ✅
+- `/contact` → `https://cash4homefl.vercel.app/contact` ✅
+- `/blog` → `https://cash4homefl.vercel.app/blog` ✅
+- `/we-buy-houses` → `https://cash4homefl.vercel.app/we-buy-houses` ✅
+- `/sell-my-house-fast` → `https://cash4homefl.vercel.app/sell-my-house-fast` ✅
+- Vercel cache `age: 12367` (3.4h) confirms the 16:00 deploy took effect
+
+### 🛠️ FIX APPLIED: Self-URL canonical on 4 more pages (P1 from 16:00 commit incomplete)
+Previous 16:00 commit fixed 5 pages, but a full sitemap audit found 4 more falling back to layout's `canonical: 'https://cash4homefl.vercel.app'` (homepage):
+- `/faq` → was `https://cash4homefl.vercel.app` ❌
+- `/reviews` → was `https://cash4homefl.vercel.app` ❌
+- `/privacy` → was `https://cash4homefl.vercel.app` ❌
+- `/terms` → was `https://cash4homefl.vercel.app` ❌
+
+Patched via Next.js `alternates.canonical` in commit `eadc3db`, pushed to `main`. After this deploys, every page in the sitemap will have a self-URL canonical — duplicate-content risk closed site-wide.
+
+### ⚠️ Persistent 404: `/we-buy-houses-damaged-house` (with `-house` suffix)
+- Still 404 — route is `/we-buy-houses-damaged` (no `-house` suffix)
+- No canonical, no fix yet
+- Sitemap doesn't include the `-house` variant
+- P3 from prior scan — likely a stale external link. Cheap fix: add 301 redirect in `next.config.mjs`.
+
+### Competitor watch
+- `webuyhouses.com/Florida/` → 404 (unchanged since May 29)
+- `opendoor.com/west-palm-beach-fl` → 404
+- `offerpad.com/florida` → 403 (Cloudflare)
+- `homevest.com/florida` → 301 (need follow-up on destination)
+- `floridacashhomebuyers.com` → 200 ✅ (active competitor)
+- `floridahomebuyers.com` → 200 ✅ (active competitor)
+- `theclosinggroup.com/areas/florida` → 200 ✅
+- No new significant competitor moves in this window
+
+### Opportunity: Review Trust Signals on /reviews page
+- `/reviews` only has 1 JSON-LD block (RealEstateAgent) — no Review/AggregateRating schema
+- A `Review` or `AggregateRating` JSON-LD block on this page would directly support E-E-A-T and rich snippets
+- Adds visible value to existing page, no new content needed
+- P2 — could be rolled into next canonical-deploy batch
+
+### Action items
+| Priority | Issue | Page(s) | Status |
+|---|---|---|---|
+| **P1** | Self-URL canonical | /faq, /reviews, /privacy, /terms | ✅ Fixed in eadc3db, awaiting Vercel deploy |
+| P1 | Self-URL canonical | /about, /contact, /blog, /we-buy-houses, /sell-my-house-fast | ✅ Live in 6648c3c |
+| P2 | Review/AggregateRating JSON-LD | /reviews | Add Review or AggregateRating schema |
+| P2 | Unique copy for 7 situation pages | -probate, -divorce, -damaged, -liens, -rental, -as-is | Phase 4 (4 cities done) |
+| P2 | Unique copy for top 10 zip pages | /sell-my-house-fast/[zip] | Phase 4 |
+| P3 | 404 at `/we-buy-houses-damaged-house` | Stale external link | Add 301 redirect -damaged-house → -damaged |
+| P3 | Hero images per city | 25 city pages | IMAGE-STRATEGY.md prompts |
+| P3 | GA4 + Search Console | Site-wide | — |
