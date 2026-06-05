@@ -5,6 +5,9 @@ import { buildContactPageProps } from '@/lib/page-content';
 export const metadata: Metadata = {
   title: 'Contact | cash4homefl.com',
   description: 'Send your property details and request a cash offer.',
+  alternates: {
+    canonical: 'https://cash4homefl.vercel.app/contact',
+  },
 };
 
 export default function ContactPage({

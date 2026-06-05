@@ -7,6 +7,9 @@ const page = buildBlogIndexProps();
 export const metadata: Metadata = {
   title: page.title,
   description: page.lead,
+  alternates: {
+    canonical: 'https://cash4homefl.vercel.app/blog',
+  },
 };
 
 export default function BlogIndexPage() {
