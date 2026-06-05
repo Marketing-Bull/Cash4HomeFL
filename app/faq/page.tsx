@@ -7,6 +7,9 @@ const page = buildFaqPageProps();
 export const metadata: Metadata = {
   title: page.title,
   description: page.lead,
+  alternates: {
+    canonical: 'https://cash4homefl.vercel.app/faq',
+  },
 };
 
 export default function FaqPage() {

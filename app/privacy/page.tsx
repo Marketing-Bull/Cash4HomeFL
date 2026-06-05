@@ -7,6 +7,9 @@ const page = buildPrivacyArticle();
 export const metadata: Metadata = {
   title: page.title,
   description: page.description,
+  alternates: {
+    canonical: 'https://cash4homefl.vercel.app/privacy',
+  },
 };
 
 export default function PrivacyPage() {
