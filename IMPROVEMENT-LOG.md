@@ -1028,3 +1028,45 @@ Fast-forward merge → Vercel auto-deploy triggered.
 | P3 | GBP star rating | Homepage | Add trust signals |
 | P3 | Unique city page copy | Top 8 cities | Phase 4 content differentiation |
 
+
+---
+
+## [SCAN] 2026-06-05 12:00 — Dream scan findings
+
+### ✅ Major win: RealEstateAgent + BreadcrumbList + FAQPage + HowTo schema all LIVE
+- All 5 audited pages have 3-4 JSON-LD blocks (homepage: 3, inner pages: 4)
+- RealEstateAgent, FAQPage, HowTo, BreadcrumbList all deployed site-wide
+
+### ✅ OG tags fully deployed
+- og:title, og:description, og:image on all 5 pages
+- og-image.jpg → HTTP 200 ✅ (was 404 on June 3)
+
+### ⚠️ SEO issue (P1): Canonical URLs STILL broken on 6+ pages site-wide
+Last scan (June 4 16:02) flagged this. City pages + foreclosure/probate/divorce situation pages now have correct self-URL canonical, BUT these pages still incorrectly canonicalize to the homepage:
+- `/we-buy-houses-damaged-house` → `https://cash4homefl.vercel.app` ❌
+- `/sell-my-house-fast` → `https://cash4homefl.vercel.app` ❌
+- `/we-buy-houses` (index) → `https://cash4homefl.vercel.app` ❌
+- `/about` → `https://cash4homefl.vercel.app` ❌
+- `/contact` → `https://cash4homefl.vercel.app` ❌
+- `/blog` → `https://cash4homefl.vercel.app` ❌
+- **Verified working** (self-URL canonical): `/we-buy-houses/west-palm-beach`, `/boca-raton`, `/fort-lauderdale`, `/we-buy-houses-foreclosure`, `-probate`, `-divorce`, `/palm-beach-county`
+- **Root cause**: PageTemplate/layout requires an explicit `canonical` prop — pages that don't pass it fall back to site root. The BACKLOG item `[P2] Add canonical tags to all pages` is still `Status: todo` and is now more accurately P1 because 6 pages are suffering duplicate-content risk.
+- **Fix**: Add a default in the layout that resolves to the current pathname, OR audit every page.tsx to pass the canonical prop.
+
+### ✅ Robots.txt: CORRECT
+- `Sitemap: https://cash4homefl.vercel.app/sitemap.xml` — correct domain
+
+### Top competitor move: webuyhouses.com/Florida/ still 404 (unchanged)
+- Offerpad, Opendoor both 404 on direct FL URLs (these competitors use city-by-city funnels, not state-level landing pages)
+- Cash4HomeFL maintains schema/canonical/og-image advantage in S. Florida we-buy-houses vertical
+
+### Action items
+| Priority | Issue | Pages affected | Fix |
+|---|---|---|---|
+| **P1** | Canonical = homepage on 6+ pages | /we-buy-houses-damaged-house, /sell-my-house-fast, /we-buy-houses, /about, /contact, /blog | Default canonical to current pathname in layout.tsx OR pass prop to every page |
+| P1 | Review/rating schema (AggregateRating) | Homepage | Already in BACKLOG |
+| P2 | Unique copy for 7 situation pages | -probate, -divorce, -damaged, -liens, -rental, -as-is | Phase 4 content (4 cities done WPB/FL/Boca/Delray) |
+| P2 | Unique copy for top 10 zip pages | /sell-my-house-fast/[zip] | Phase 4 |
+| P3 | Hero images per city | 25 city pages | IMAGE-STRATEGY.md prompts |
+| P3 | Real testimonials | Reviews page, homepage | — |
+| P3 | GA4 + Search Console | Site-wide | — |
