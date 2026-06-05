@@ -1,8 +1,30 @@
 import Link from 'next/link';
 import type { ReactNode } from 'react';
 import type { PageTemplateProps } from '@/lib/page-types';
-import type { FaqItem, StepItem } from '@/lib/page-types';
+import type { FaqItem, StepItem, LinkItem } from '@/lib/page-types';
 import { LeadForm } from '@/components/LeadForm';
+
+// BreadcrumbList JSON-LD — injected when breadcrumbs array is present
+function BreadcrumbSchema({ items }: { items: LinkItem[] }) {
+  if (!items?.length) return null;
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{
+        __html: JSON.stringify({
+          '@context': 'https://schema.org',
+          '@type': 'BreadcrumbList',
+          itemListElement: items.map((item, i) => ({
+            '@type': 'ListItem',
+            position: i + 1,
+            name: item.label,
+            item: `https://cash4homefl.vercel.app${item.href}`,
+          })),
+        }),
+      }}
+    />
+  );
+}
 
 // FAQPage JSON-LD — injected when faq array is present
 function FaqSchema({ faqs }: { faqs: FaqItem[] }) {
@@ -90,9 +112,11 @@ export function PageTemplate({
   finalCtaLead,
   contactHref,
   formDefaults,
+  breadcrumbs,
 }: PageTemplateProps) {
   return (
     <main className="page-shell">
+      <BreadcrumbSchema items={breadcrumbs ?? []} />
       <FaqSchema faqs={faq ?? []} />
       <HowToSchema steps={steps ?? []} />
       <section className="section section--hero">

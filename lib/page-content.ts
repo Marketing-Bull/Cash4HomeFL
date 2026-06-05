@@ -248,6 +248,10 @@ export function buildCountyPageProps(countySlug: string): PageTemplateProps | un
     finalCtaLead: `Start with the address and we will take it from there.`,
     ctaLabel: 'Request Offer',
     contactHref: '/contact',
+    breadcrumbs: [
+      toLink('Home', '/'),
+      toLink(county.name, county.slug === 'palm-beach-county' ? '/palm-beach-county' : '/broward-county'),
+    ],
   };
 }
 
@@ -283,6 +287,11 @@ export function buildCityPageProps(citySlug: string): PageTemplateProps | undefi
     finalCtaLead: `Request a no-obligation cash review and see whether the property is a fit.`,
     ctaLabel: 'Get Cash Offer',
     contactHref: '/contact',
+    breadcrumbs: [
+      toLink('Home', '/'),
+      toLink(city.countyName, `/${city.countySlug}`),
+      toLink(city.name, `/we-buy-houses/${city.slug}`),
+    ],
   };
 }
 
@@ -315,9 +324,14 @@ export function buildZipPageProps(zipValue: string): PageTemplateProps | undefin
     ],
     faq: buildFaqItems(zip.zip),
     finalCtaTitle: `Ready to sell in ${zip.zip}?`,
-    finalCtaLead: `Request a cash offer for your ${zip.primaryCity} property and we’ll review it quickly.`,
+    finalCtaLead: `Request a cash offer for your ${zip.primaryCity} property and we'll review it quickly.`,
     ctaLabel: 'Request Offer',
     contactHref: '/contact',
+    breadcrumbs: [
+      toLink('Home', '/'),
+      toLink(zip.county, zip.county === 'Palm Beach County' ? '/palm-beach-county' : '/broward-county'),
+      toLink(`${zip.zip}`, `/sell-my-house-fast/${zip.zip}`),
+    ],
   };
 }
 

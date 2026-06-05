@@ -38,13 +38,13 @@ const orgSchema = {
   "@context": "https://schema.org",
   "@type": "RealEstateAgent",
   "name": "Cash4HomeFL",
-  "url": "https://cash4homefl.com",
-  "logo": "https://cash4homefl.com/favicon.ico",
+  "url": "https://cash4homefl.vercel.app",
+  "logo": "https://cash4homefl.vercel.app/favicon.ico",
   "description": "Cash home buyers for Palm Beach County and Broward County, Florida. We buy houses as-is — no repairs, no fees, no commissions.",
-  "telephone": "+15612209399",
+  "telephone": "+156****9399",
   "contactPoint": {
     "@type": "ContactPoint",
-    "telephone": "+15612209399",
+    "telephone": "+156****9399",
     "contactType": "sales",
     "areaServed": ["Palm Beach County", "Broward County"],
     "availableLanguage": ["English", "Spanish"],
@@ -100,7 +100,7 @@ const orgSchema = {
     },
   ],
   "priceRange": "$$",
-  "image": "https://cash4homefl.com/favicon.ico",
+  "image": "https://cash4homefl.vercel.app/favicon.ico",
   "sameAs": [
     "https://www.facebook.com/cash4homefl",
     "https://www.instagram.com/cash4homefl",
@@ -109,7 +109,7 @@ const orgSchema = {
     "@type": "SellAction",
     "target": {
       "@type": "EntryPoint",
-      "urlTemplate": "https://cash4homefl.com/contact",
+      "urlTemplate": "https://cash4homefl.vercel.app/contact",
     },
     "object": {
       "@type": "Offer",

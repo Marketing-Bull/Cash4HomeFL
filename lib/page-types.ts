@@ -56,6 +56,7 @@ export type PageTemplateProps = {
   finalCtaLead?: string;
   contactHref?: string;
   formDefaults?: FormDefaults;
+  breadcrumbs?: LinkItem[];
 };
 
 export type ArticleTemplateProps = {
