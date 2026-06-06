@@ -1321,3 +1321,10 @@ Patched via Next.js `alternates.canonical` in commit `eadc3db`, pushed to `main`
 | P3 | Hero images per city | 25 city pages | IMAGE-STRATEGY.md prompts |
 | P3 | GA4 + Search Console | Site-wide | — |
 
+
+## [SCAN] 2026-06-06 12:02 — Dream scan findings (noon run)
+- Schema status: ✅ RealEstateAgent + FAQPage + HowTo + BreadcrumbList on all 82 URLs (unchanged from 08:05)
+- Top competitor move: none new (webuyhouses.com/Florida 404, opendoor.com 404, floridacashhomebuyers.com 200 — no new tactics observed)
+- Opportunity: [P1 favicon fixed and live] — `public/favicon.ico` and `public/icon.png` are now 200 OK (verified at age: 0 after Vercel auto-deploy of commit ff2e7af). This closes the only P1 still open from the 08:05 scan.
+- SEO issue: [P1 BACKLOG drift fixed] — "P2 Add canonical tags to all pages" moved from `Status: todo` to `Status: done` with a notes block citing the 3 commits (6648c3c, eadc3db, 4a85262) that closed it. Site-wide audit confirms 82/82 canonicals present; the only byte-mismatch on the homepage is a normalized trailing-slash form (Google treats them as equivalent).
+- New audit result: 82/82 URLs pass HTTP 200 + canonical + JSON-LD + OG tags via `scripts/sitemap-audit.py`. No ❌ rows. Exit code 0.
