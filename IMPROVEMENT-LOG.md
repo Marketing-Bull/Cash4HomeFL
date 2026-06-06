@@ -1328,3 +1328,57 @@ Patched via Next.js `alternates.canonical` in commit `eadc3db`, pushed to `main`
 - Opportunity: [P1 favicon fixed and live] — `public/favicon.ico` and `public/icon.png` are now 200 OK (verified at age: 0 after Vercel auto-deploy of commit ff2e7af). This closes the only P1 still open from the 08:05 scan.
 - SEO issue: [P1 BACKLOG drift fixed] — "P2 Add canonical tags to all pages" moved from `Status: todo` to `Status: done` with a notes block citing the 3 commits (6648c3c, eadc3db, 4a85262) that closed it. Site-wide audit confirms 82/82 canonicals present; the only byte-mismatch on the homepage is a normalized trailing-slash form (Google treats them as equivalent).
 - New audit result: 82/82 URLs pass HTTP 200 + canonical + JSON-LD + OG tags via `scripts/sitemap-audit.py`. No ❌ rows. Exit code 0.
+
+## [SCAN] 2026-06-06 16:04 — Dream scan findings (afternoon run)
+
+### Full sitemap audit (82/82 URLs) — all P1s remain closed
+- 82/82 URLs return HTTP 200, canonical ✅, JSON-LD ✅, OG tags ✅
+- `scripts/sitemap-audit.py` exit code 0 (no ❌ rows)
+- All fixes from 12:02 run still live: favicon.ico 200, icon.png 200, BACKLOG canonical P2 marked done
+
+### 🆕 Found a stale audit URL in the cron instructions
+- The cron playbook lists `https://cash4homefl.vercel.app/we-buy-houses-west-palm-beach` as an audit page — that URL is **404** (hyphenated, no `/we-buy-houses/` prefix)
+- The actual canonical WPB city URL is `https://cash4homefl.vercel.app/we-buy-houses/west-palm-beach` (slash-separated)
+- The slash URL returns 200 with a proper city-specific title: "We Buy Houses in West Palm Beach, Florida | Cash4HomeFL", unique OG title, and the correct canonical
+- The hyphenated URL probably "appeared" to work in earlier runs because Vercel was serving a different 200 from a redirect rule or wildcard — but on this run it 404s cleanly
+- This is the same URL-pattern pitfall documented in the skill ("Site architecture differences get masked in audit lists" / sitemap.ts generates `/we-buy-houses/[city]` not the hyphenated form)
+- **Action:** update the cron playbook to use the slash-form WPB URL. Future runs should rely on the sitemap-driven `scripts/sitemap-audit.py` (which already covers this correctly) rather than the 4 hardcoded URLs.
+- **Why it matters:** the hyphenated URL appearing in logs as "200" was masking a 4-page audit blind spot — sitemap-driven audit is the only reliable way to verify all 82 URLs.
+
+### 4 audit pages re-verified at the **correct** URLs
+- `/` → title "Cash Home Buyers in Palm Beach County & Broward", H1 matches, 3 JSON-LD blocks
+- `/we-buy-houses/west-palm-beach` → "We Buy Houses in West Palm Beach, Florida", unique city title + OG
+- `/we-buy-houses-foreclosure` → "Sell Your House for Cash When Facing Foreclosure", pain-point meta
+- `/palm-beach-county` → "We Buy Houses in Palm Beach County", 4 JSON-LD blocks
+- All have unique titles, unique meta descriptions, full OG tags (og:title, og:description, og:image), and self-URL canonicals
+
+### Competitor watch (no new moves)
+- `webuyhouses.com/Florida/` → 404 (unchanged)
+- `opendoor.com/west-palm-beach-fl` → 404 (unchanged)
+- `offerpad.com/florida` → 403 (unchanged)
+- `homevest.com/florida` → 200 (unchanged)
+- `floridacashhomebuyers.com` → 200 (no schema, no OG tags — still missing the basics)
+- `floridahomebuyers.com` → 200 (3 JSON-LD blocks, basic OG — moderate implementation)
+- No new tactics observed in this window
+
+### Action items
+| Priority | Issue | Page(s) | Status |
+|---|---|---|---|
+| **P1** | Stale audit URL in cron playbook | `/we-buy-houses-west-palm-beach` (404) | 🆕 Update to `/we-buy-houses/west-palm-beach`. Sitemap-driven audit is the canonical source. |
+| P2 | Cross-link 9 blog posts → city pages | 9 posts → 25 city pages | Internal-link equity push |
+| P2 | Review/AggregateRating JSON-LD | /reviews | Add Review or AggregateRating schema |
+| P2 | Unique copy for 7 situation pages | -probate, -divorce, -damaged, -liens, -rental, -as-is | Phase 4 (4 cities done) |
+| P2 | Unique copy for top 10 zip pages | /sell-my-house-fast/[zip] | Phase 4 |
+| P3 | Hero images per city | 25 city pages | IMAGE-STRATEGY.md prompts |
+| P3 | GA4 + Search Console | Site-wide | — |
+
+### Cron playbook correction (code-level — to be patched next run)
+The current dream-scan prompt lists:
+```
+- https://cash4homefl.vercel.app/we-buy-houses-west-palm-beach
+```
+This URL is **404** on the live site. Replace with the slash form:
+```
+- https://cash4homefl.vercel.app/we-buy-houses/west-palm-beach
+```
+This is a documentation/prompt fix, not a code fix — the sitemap audit already covers it correctly. Flag for the next session that edits the cron prompt.
