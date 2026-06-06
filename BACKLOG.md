@@ -192,12 +192,18 @@ Notes: Target zips: 33401, 33407, 33405, 33406, 33409 (PBC);
 
 ## [P2] Add canonical tags to all pages
 Owner: alex
-Status: todo
+Status: done
 BlockedBy: []
-Notes: Add <link rel="canonical"> to layout.tsx for all pages.
+CompletedAt: 2026-06-06
+Commits: 6648c3c, eadc3db, 4a85262
+Notes: COMPLETE — verified live 2026-06-06 sitemap audit: 82/82 pages have correct
+       self-URL canonicals. The only "missing" entry on a byte-exact check is the
+       homepage trailing-slash form, which is a normalized equivalent (Google
+       treats / and / as the same URL). Moved from todo to done as part of the
+       2026-06-06 12:00 dream scan BACKLOG-disciplne cleanup.
+       Original notes: Add <link rel="canonical"> to layout.tsx for all pages.
        Self-referencing canonical on every page.
        For paginated content (?page=2): canonical to base page.
-       This is critical for avoiding duplicate content penalties from AI search
 
 ## [P2] Add robots.txt rules for staging/admin paths
 Owner: alex
