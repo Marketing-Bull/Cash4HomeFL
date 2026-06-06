@@ -1257,3 +1257,67 @@ Patched via Next.js `alternates.canonical` in commit `eadc3db`, pushed to `main`
 | P3 | Cross-link blog posts → city pages | 9 posts → 25 city pages | Internal-link equity push |
 | P3 | Hero images per city | 25 city pages | IMAGE-STRATEGY.md prompts |
 | P3 | GA4 + Search Console | Site-wide | — |
+
+## [SCAN] 2026-06-06 08:05 — Dream scan findings
+
+### Full sitemap audit (82/82 URLs) — all P1 fixes from 21:00 batch confirmed LIVE
+- 82/82 URLs return HTTP 200 ✅
+- **Canonical: 81/82 ✅, 1/82 false positive** (homepage uses `https://cash4homefl.vercel.app` without trailing slash; sitemap uses `https://cash4homefl.vercel.app/`. Google treats them as equivalent — no action needed)
+- **JSON-LD: 82/82 ✅** — schema detected on every page
+  - 1 JSON-LD block: 13 pages (legal + blog + reviews)
+  - 3 blocks (FAQPage + RealEstateAgent + HowTo): 7 situation pages
+  - 4 blocks (FAQPage + BreadcrumbList + RealEstateAgent + HowTo): 62 city/zip pages
+- **OG tags: 82/82 ✅** — full og:title, og:description, og:image on every page
+- Blog post cache age 214s (~3.5 min) confirms the 4a85262 canonical fix is freshly deployed
+
+### 4 audit pages verified — H1, title, meta description all clean
+- `/` → title "Cash Home Buyers in Palm Beach County & Broward", H1 matches, 200-char meta
+- `/we-buy-houses/west-palm-beach` → title + H1 "We Buy Houses in West Palm Beach, Florida", strong local meta
+- `/we-buy-houses-foreclosure` → H1 "Sell Your House for Cash When Facing Foreclosure", pain-point meta
+- `/palm-beach-county` → H1 "We Buy Houses in Palm Beach County", meta clean
+
+### Competitor watch
+- `webuyhouses.com/Florida/` → 404 (unchanged)
+- `opendoor.com/west-palm-beach-fl` → 404 (unchanged)
+- `offerpad.com/florida` → 404 (unchanged)
+- `homevest.com/florida` → 301 (unchanged)
+- `floridacashhomebuyers.com` → 200 ✅ (active, no new tactics observed)
+- `floridahomebuyers.com` → 200 ✅ (active, no new tactics observed)
+- `theclosinggroup.com/areas/florida` → 200 ✅
+- No new competitor moves in this window
+
+### 🆕 New finding: `/favicon.ico` returns 404 site-wide
+- No `favicon.ico` exists in `public/` (only `public/images/*` and `public/images/og-image.jpg`)
+- Every browser default-fetches `/favicon.ico` on every page load — silent 404 in browser DevTools and in Google Search Console "Coverage > Excluded > Not found (404)"
+- The `RealEstateAgent` JSON-LD `logo` field also points to `/favicon.ico` — so the schema-level brand image is broken too
+- This is a cheap, high-leverage fix: drop a 32x32 favicon (use a simple "C4H" or "C" mark on the brand navy) at `public/favicon.ico` and `public/icon.png` (Next.js auto-detects the latter)
+- P1 — flag for the nightly cron
+
+### New opportunity: cross-link 9 blog posts to city pages (P2 from 21:00)
+- The 9 blog posts are now canonical-fixed (4a85262); next step is internal linking
+- For example: `/blog/foreclosure-timeline-florida` should link to `/we-buy-houses-foreclosure` and `/we-buy-houses/west-palm-beach` in body copy
+- Adds topical relevance + helps crawlers find conversion pages
+- Already flagged in BACKLOG.md P3 — could move to nightly cron queue
+
+### New finding: BACKLOG.md has tracking drift
+- **P2 "Add canonical tags to all pages"** is marked `Status: todo` but 81/82 pages already have correct self-URL canonicals (the last page is a false-positive trailing-slash form). This P2 was completed across 3 commits (6648c3c, eadc3db, 4a85262) but the BACKLOG.md line was never updated.
+- This makes the BACKLOG look out of date — should be marked `done` with notes pointing to those commits
+- Housekeeping — flag for nightly cron to update
+
+### Action items
+| Priority | Issue | Page(s) | Status |
+|---|---|---|---|
+| **P1** | Self-URL canonical | 9 /blog/[slug] pages | ✅ Live in 4a85262 (cache age 214s) |
+| **P1** | Self-URL canonical | /faq, /reviews, /privacy, /terms | ✅ Live in eadc3db |
+| **P1** | Self-URL canonical | /about, /contact, /blog, /we-buy-houses, /sell-my-house-fast | ✅ Live in 6648c3c |
+| **P1** | Missing favicon.ico | Site-wide | 🆕 Add `public/favicon.ico` + `public/icon.png` (or `app/icon.tsx`) |
+| P1 | BACKLOG.md drift | "P2 Add canonical tags to all pages" | 🆕 Mark `done` with notes pointing to 6648c3c/eadc3db/4a85262 |
+| P2 | Review/AggregateRating JSON-LD | /reviews | Add Review or AggregateRating schema |
+| P2 | Unique copy for 7 situation pages | -probate, -divorce, -damaged, -liens, -rental, -as-is | Phase 4 (4 cities done) |
+| P2 | Unique copy for 4 more city pages | boynton-beach, hollywood, palm-beach-gardens, jupiter, pompano-beach | 4/8 done |
+| P2 | Unique copy for top 10 zip pages | /sell-my-house-fast/[zip] | Phase 4 |
+| P2 | Cross-link 9 blog posts → city pages | 9 posts → 25 city pages | Internal-link equity push |
+| P3 | 404 at `/we-buy-houses-damaged-house` | Stale external link | ✅ 301 redirect live in 4a85262 |
+| P3 | Hero images per city | 25 city pages | IMAGE-STRATEGY.md prompts |
+| P3 | GA4 + Search Console | Site-wide | — |
+
