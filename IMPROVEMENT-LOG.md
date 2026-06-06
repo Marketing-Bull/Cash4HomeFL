@@ -1382,3 +1382,75 @@ This URL is **404** on the live site. Replace with the slash form:
 - https://cash4homefl.vercel.app/we-buy-houses/west-palm-beach
 ```
 This is a documentation/prompt fix, not a code fix — the sitemap audit already covers it correctly. Flag for the next session that edits the cron prompt.
+
+## [SCAN] 2026-06-06 20:05 — Dream scan findings (evening run)
+
+### Full sitemap audit (82/82 URLs) — state unchanged from 16:04
+- 82/82 URLs return HTTP 200
+- 82/82 have meta description
+- 82/82 have canonical (self-URL match; homepage is normalized trailing-slash equivalent — `/` URL vs `/` canonical is Google-equivalent, expected false positive on byte-exact)
+- 82/82 have all OG tags (og:title + og:description + og:image)
+- 82/82 have ≥1 JSON-LD block
+- **Audit script fix applied:** Previous 16:04 scan's "22 bad canonicals" was a normalization bug in my comparison logic. The real number of canonical mismatches is 1 (homepage trailing-slash). The 16:04 log entry was not corrected but this run's tally is now correct.
+- No ❌ rows. No regressions since 16:04.
+
+### Site assets
+- `/favicon.ico` → 200 ✅
+- `/icon.png` → 200 ✅
+- `/images/og-image.jpg` → 200 ✅
+- `robots.txt` → clean: `User-Agent: * / Allow: / / Sitemap: https://cash4homefl.vercel.app/sitemap.xml`
+- Stale audit URL `/we-buy-houses-west-palm-beach` → still 404 (the prompt-fix mentioned in 16:04 has not been applied; flagged again)
+
+### Competitor watch — SCHEMA DEPTH
+| Competitor | Status | JSON-LD count | Notable |
+|---|---|---|---|
+| webuyhouses.com/Florida/ | 404 | — | unchanged |
+| opendoor.com/west-palm-beach-fl | 404 | — | unchanged |
+| offerpad.com/florida | 404 | — | unchanged |
+| **cashhomebuyers.io/florida/** | 200 | **7** | 🆕 Strongest implementation: Organization + WebSite + LocalBusiness + VideoObject + FAQPage + BreadcrumbList + **Product** |
+| floridacashhomebuyers.com | 200 | 3 | 🆕 Adds WebSite + Organization + **LocalBusiness with areaServed** since 16:04 scan (which reported "no schema") |
+| floridahomebuyers.com | 200 | 3 | WebSite + Organization + LocalBusiness; missing og:image |
+| homevest.com/florida | 200 | 0 | Content farm pivot (HOA law blog) — not a buyer competitor, URL just routes wrong |
+| sellmyhousefast.com/florida | 404 | — | unchanged |
+| simplebuysellhousesfast.com | timeout | — | unchanged |
+
+### Competitive gap analysis
+**Where we lead:** Cash4HomeFL has RealEstateAgent + FAQPage + HowTo + BreadcrumbList (4 schema types, present on all 82 URLs). Stronger than floridacashhomebuyers.com (3) and floridahomebuyers.com (3).
+
+**Where cashhomebuyers.io beats us:**
+- **Product schema** (cash offer as a "product" with offers/priceSpecification — not present on our pages)
+- **VideoObject schema** (they have video content; we don't)
+- **AggregateRating/Review schema** — not in our schema; we have neither real reviews nor a placeholder. **HOLD** — BACKLOG P1 [Add aggregate Review/rating schema] is correctly `Status: todo` and explicitly says "DO NOT fabricate — if no real reviews exist yet, omit." No change recommended; this is gated on real testimonials.
+
+**Where floridacashhomebuyers.com matches us now:**
+- They added `areaServed` inside LocalBusiness schema (defining service area as Florida). Our RealEstateAgent schema has `areaServed` too — match. Not a gap.
+- They have a WebSite schema; we don't. Minor — WebSite schema unlocks sitelinks search box in Google. **Possible low-effort add to homepage.**
+
+### Backlog state audit (drift check)
+- 11 items `Status: todo`, 1 `Status: in_progress`
+- No drift detected — all completed items have `Status: done` and a `CompletedAt` + `Commits` block
+- [P1] Add aggregate Review/rating schema (Status: todo) — correctly held pending real reviews
+- [P2] Write unique copy for top 10 zip pages (Status: todo) — 33401/33407/33405/33301/33020 all have unique titles but **near-identical template descriptions** (e.g., "Need to sell in 33401? We make fair cash offers..." vs "Need to sell in 33407? We make fair cash offers..."). This is the gap the P2 item targets; not a new finding.
+- [P2] Write unique copy for all 7 situation pages (Status: todo) — confirmed still pending
+- [P4] hreflang EN/ES — `/es` is 404, homepage has zero hreflang tags. **Current state (no /es, no hreflang) is correct per the BACKLOG item's own guidance**: "verify: does /es page exist? If not, remove hreflang until Spanish content is actually published." No action needed.
+
+### Search trend signals (limited — direct SERP checks blocked)
+- Google direct + Bing direct + DuckDuckGo all blocked by bot protection from this environment (per skill notes, `delegate_task + web` returns 401). No fresh SERP ranking data this run.
+- No surprises in competitors' meta copy this window. The two schema additions (cashhomebuyers.io Product + floridacashhomebuyers.com LocalBusiness) are the only competitor moves since 16:04.
+
+### Action items — net new since 16:04
+| Priority | Issue | Notes |
+|---|---|---|
+| **P2** | Add WebSite schema to homepage | Unlocks sitelinks search box; cashhomebuyers.io + floridacashhomebuyers.com both have it. Low effort, ~5 lines of JSON-LD in `app/page.tsx`. |
+| **P2** | Add Product/Offer schema on key CTAs | Mirrors cashhomebuyers.io. Less critical — they have actual product/pricing pages, we have a lead-form flow. Skip unless we add a transparent pricing page. |
+| **P2** | Confirm `/we-buy-houses-west-palm-beach` → `/we-buy-houses/west-palm-beach` redirect | Still 404 on the hyphenated form. Add a Next.js rewrite or `next.config.mjs` redirect. Not strictly needed for SEO (Google doesn't index nonexistent URLs) but cleans up external links that may use the old pattern. |
+| P2 (existing) | Write unique hero+body copy for next 5 city pages | Boynton, Hollywood, Palm Beach Gardens, Jupiter, Pompano (in progress) |
+| P2 (existing) | Write unique copy for 7 situation pages | Pending |
+| P2 (existing) | Write unique copy for 10 zip pages | Confirmed gap: 5/5 sampled zips have near-identical template descriptions |
+| P1 (held) | AggregateRating schema | Gated on real reviews — do not fabricate |
+
+### Cron prompt correction (still unfixed)
+The cron dream-scan prompt in this conversation lists `https://cash4homefl.vercel.app/we-buy-houses-west-palm-beach` as an audit page. That URL is **404** on the live site; the correct URL is `https://cash4homefl.vercel.app/we-buy-houses/west-palm-beach`. Flagged in the 16:04 scan; **not auto-fixable from a cron run** (the prompt is the system message). The sitemap-driven audit covers all 82 URLs correctly regardless.
+
+### Logged
+- This scan did not modify any code (no regressions to fix). No commit made.
