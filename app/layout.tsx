@@ -118,6 +118,32 @@ const orgSchema = {
   },
 };
 
+// WebSite JSON-LD — unlocks Google sitelinks search box
+// Mirrors competitor implementation (cashhomebuyers.io, floridacashhomebuyers.com)
+const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Cash4HomeFL",
+  "url": "https://cash4homefl.vercel.app",
+  "description": "Cash home buyers for Palm Beach County and Broward County, Florida. We buy houses as-is — no repairs, no fees, no commissions.",
+  "publisher": {
+    "@type": "RealEstateAgent",
+    "name": "Cash4HomeFL",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://cash4homefl.vercel.app/favicon.ico",
+    },
+  },
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": {
+      "@type": "EntryPoint",
+      "urlTemplate": "https://cash4homefl.vercel.app/sell-my-house-fast/{zip}",
+    },
+    "query-input": "required name=zip",
+  },
+};
+
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
@@ -125,6 +151,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
         />
       </head>
       <body>
