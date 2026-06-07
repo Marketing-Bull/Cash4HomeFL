@@ -1687,3 +1687,64 @@ None. No code or BACKLOG edits this run — the only `Status: todo` items left a
 
 ### Deploy
 N/A — no changes pushed.
+
+## [SCAN] 2026-06-07 20:00 — Dream scan findings (evening run, regression-check mode)
+
+### Live site health (sitemap-driven audit, 82/82 URLs)
+- HTTP 200: 82/82 ✅
+- Canonical: 82/82 ✅
+- JSON-LD: 82/82 ✅ (homepage 4, city 5, situation 4, blog 2, others as before)
+- OG tags: 82/82 ✅
+- WebSite schema (02:07 fix) still live
+- `/favicon.ico` → 200 ✅
+- `/icon.png` → 200 ✅
+- `/images/og-image.jpg` → 200 ✅
+- `/robots.txt` → 200 ✅ (12:00 disallow rules still live)
+- `curl -sI https://cash4homefl.vercel.app/` → 200, `age: 99` (no deploy activity since 16:01, as expected)
+
+### Cron prompt audit-URL stale-pattern (continues to be ignored)
+- `/we-buy-houses-west-palm-beach` → 404 (stale hyphenated pattern in cron prompt)
+- Live URL is `/we-buy-houses/west-palm-beach` → 200, in sitemap
+- Sitemap-driven audit (82/82) is the source of truth; the prompt URL is the system message and cannot be self-fixed
+
+### Competitor spot-check (quarterly cadence — last full scan 2026-06-06 20:05)
+- `cashhomebuyers.app/florida/` → 301 → 200, 7 schema types (BreadcrumbList, FAQPage, LocalBusiness, Organization, Product, VideoObject, WebSite) — unchanged from 16:01 and 20:05 baseline
+- CTA copy stable ("CASH OFFER", "we buy houses", "as-is", "all-cash" all still present)
+- **No new competitor moves detected.** Cash4HomeFL still leads on RealEstateAgent + HowTo + BreadcrumbList (city pages); competitor still leads on Product + VideoObject (both gated on real content we don't have).
+
+### BACKLOG drift self-audit
+- All 12 `Status: todo` items unchanged from 16:01 scan, all gated:
+  - P1 AggregateRating → gated on real reviews (fabrication prohibited by explicit note)
+  - P2 top-8 city copy → `in_progress` (top 4 done, top 4 remaining: Boynton, Hollywood, PBG, Jupiter, Pompano — all need human-authored neighborhood detail; cannot do autonomously without fabrication)
+  - P2 situation copy (7 pages) → human-authored
+  - P2 zip copy (10 zips) → human-authored
+  - P3 hero images → gated on AI/Unsplash asset work
+  - P3 real testimonials → gated on real client reviews
+  - P3 GA4 → gated on operator decision (which analytics tool)
+  - P3 GSC verification → gated on operator Search Console action
+  - P3 conversion tracking → gated on GA4
+  - P4 GBP → gated on operator action
+  - P4 exit-intent modal → design decision
+  - P4 chat widget → explicitly DECIDED to skip per notes
+  - P4 hreflang EN/ES → gated on whether /es content exists
+- **No new non-gated P*/P1 work available.** Cron remains in passive regression-check mode per the 12:00 transition.
+
+### Working tree (informational, not action)
+- 3 uncommitted files (`app/globals.css`, `components/PageTemplate.tsx`, `lib/page-types.ts`) — same WIP from 16:01 scan (parallel agent's `bodyParagraphs` template addition). Diff stat unchanged (22 insertions, 3 files). Not my work; leaving untouched per the discipline rule on selective staging.
+
+### Action taken this run
+None. Per the 12:00 transition, the cron is in passive regression-check mode:
+1. Ran the sitemap audit (82/82 healthy, no regressions from 02:07 / 12:00 work; `age: 99` confirms no drift).
+2. Spot-checked competitor (still 7 schema types, same CTA copy, no new moves).
+3. Held the no-fabrication line (AggregateRating, testimonials, Product, VideoObject remain correctly `Status: todo`).
+4. Flagged the working-tree WIP as informational.
+5. No new actionable intelligence vs the 16:01 scan.
+
+### Files changed
+None. No code or BACKLOG edits this run — the only `Status: todo` items left are gated on human content or operator actions, and the regression check found no issues to fix.
+
+### Deploy
+N/A — no changes pushed.
+
+### Cron operational note
+This 20:00 entry follows the 16:01 entry and the 12:00 transition. The cron is functioning correctly in regression-check mode. Future runs (midnight, 04:00, etc.) should continue this pattern: verify 82/82 health, spot-check competitor if any reason to suspect change, hold the line, do not fabricate work.
