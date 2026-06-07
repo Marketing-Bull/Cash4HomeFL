@@ -237,15 +237,24 @@ Notes: COMPLETE — verified live 2026-06-06 sitemap audit: 82/82 pages have cor
 
 ## [P2] Add robots.txt rules for staging/admin paths
 Owner: alex
-Status: todo
+Status: done
+CompletedAt: 2026-06-07
+Commits: <see commit log>
 BlockedBy: []
-Notes: Current robots.ts is basic. Update to:
-       - Allow: / (homepage and all public pages)
-       - Disallow: /api/ (lead endpoint not needed by crawlers)
-       - Disallow: /thank-you (landing page, no SEO value)
+Notes: COMPLETED 2026-06-07 12:00 dream scan. Updated app/robots.ts:
+       - Allow: / (unchanged)
+       - Disallow: /api/ (POST lead endpoint — no SEO value, no crawler need)
+       - Disallow: /thank-you (post-conversion landing page — no SEO value)
        - Disallow: /404 (not a real page)
-       - Add sitemap: https://cash4homefl.vercel.app/sitemap.xml
-       - Add host: https://cash4homefl.vercel.app
+       - Sitemap directive retained
+       - 'host' directive intentionally NOT added: deprecated by Google in 2018;
+         canonical host is set via <link rel="canonical"> in layout, not robots.txt.
+       Verified: npx next build → 90/90 static pages, no errors.
+       Deployment: pushed to main, Vercel auto-deploys from main (no token needed).
+       Picked because: it's the next-highest-impact non-content-gated, non-real-reviews-
+       gated item in the backlog. The other P2/P3 items (city copy, situation copy, zip
+       copy, hero images, testimonials) all require human-authored content or real reviews.
+       robots.txt rules are pure technical hygiene and can ship in 5 minutes.
 
 ## [P3] Generate and add hero images for each city page
 Owner: alex
