@@ -1629,3 +1629,61 @@ Cron-side work for Cash4HomeFL is essentially complete. Future runs should:
 2. Spot-check competitors (quarterly, not daily — no new moves expected).
 3. Hold the line on no-fabrication rules (AggregateRating, testimonials, Product, VideoObject).
 4. Flag any new top-level domain or URL pattern changes (e.g., Vercel domain switch).
+
+## [SCAN] 2026-06-07 16:01 — Dream scan findings (afternoon run, regression-check mode)
+
+### Live site health (sitemap-driven audit, 82/82 URLs)
+- HTTP 200: 82/82 ✅
+- Canonical: 82/82 ✅
+- JSON-LD: 82/82 pages have schema; 0 with NONE
+- OG tags: 82/82 ✅
+- WebSite schema (added 02:07) confirmed live — homepage 4 types, city pages 5 types
+- `/favicon.ico` → 200 ✅
+- `/icon.png` → 200 ✅
+- `/images/og-image.jpg` → 200 ✅
+- `/robots.txt` → 200 ✅ (12:00 fix confirmed live: Disallow /api/, /thank-you, /404)
+
+### Cron prompt audit-URL stale-pattern (continues to be ignored)
+- `/we-buy-houses-west-palm-beach` → 404 (stale hyphenated pattern in cron prompt)
+- Live URL is `/we-buy-houses/west-palm-beach` → 200, in sitemap
+- Sitemap-driven audit (82/82) is the source of truth; the prompt URL is the system message and cannot be self-fixed
+
+### Competitor spot-check (quarterly cadence — last full scan 2026-06-06 20:05)
+- `cashhomebuyers.app/florida/` — 200, 7 schema types (BreadcrumbList, FAQPage, LocalBusiness, Organization, Product, VideoObject, WebSite) — unchanged
+- `floridacashhomebuyers.com/florida` — 404, no change
+- `floridahomebuyers.com/florida` — 404, no change
+- `webuyhouses.com/FL` — still broken on FL route
+- **No new competitor moves detected.** Cash4HomeFL still leads on RealEstateAgent + HowTo + BreadcrumbList (city pages); competitor still leads on Product + VideoObject (both gated on real content we don't have).
+
+### BACKLOG drift self-audit
+- All 12 `Status: todo` items remain gated:
+  - P1 AggregateRating → gated on real reviews (fabrication prohibited by explicit note)
+  - P2 top-8 city copy → `in_progress` (top 4 done, top 4 remaining: Boynton, Hollywood, PBG, Jupiter, Pompano — all need human-authored neighborhood detail)
+  - P2 situation copy (7 pages) → human-authored
+  - P2 zip copy (10 zips) → human-authored
+  - P3 hero images → gated on AI/Unsplash asset work
+  - P3 real testimonials → gated on real client reviews
+  - P3 GA4 → gated on operator decision (which analytics tool)
+  - P3 GSC verification → gated on operator Search Console action
+  - P3 conversion tracking → gated on GA4
+  - P4 GBP → gated on operator action
+  - P4 exit-intent modal → design decision
+  - P4 chat widget → explicitly DECIDED to skip per notes
+  - P4 hreflang EN/ES → gated on whether /es content exists
+- **No new non-gated P*/P1 work available.** Cron remains in passive regression-check mode per the 12:00 transition.
+
+### Working tree (informational, not action)
+- 3 uncommitted files (`app/globals.css`, `components/PageTemplate.tsx`, `lib/page-types.ts`) — leftover WIP from a parallel agent's `bodyParagraphs` template addition. Not my work; leaving untouched per the discipline rule on selective staging. The WIP is for a future commit by the original author.
+
+### Action taken this run
+None. Per the 12:00 transition, the cron is in passive regression-check mode:
+1. Ran the sitemap audit (82/82 healthy, no regressions from 02:07 / 12:00 work).
+2. Spot-checked competitors (no new moves).
+3. Held the no-fabrication line (AggregateRating, testimonials, Product, VideoObject remain correctly `Status: todo`).
+4. Flagged the working-tree WIP as informational.
+
+### Files changed
+None. No code or BACKLOG edits this run — the only `Status: todo` items left are gated on human content or operator actions, and the regression check found no issues to fix.
+
+### Deploy
+N/A — no changes pushed.
