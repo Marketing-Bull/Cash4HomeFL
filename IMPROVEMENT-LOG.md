@@ -1546,3 +1546,86 @@ curl -s https://cash4homefl.vercel.app/we-buy-houses/west-palm-beach | python3 p
 - Pushed to `main` (Vercel auto-deploys from main)
 - `age: 0` confirmed on live homepage
 - No manual `vercel` CLI deploy needed (token not required for main-push workflow)
+
+## [SCAN] 2026-06-07 12:00 — Dream scan findings (noon run)
+
+### Cron prompt audit-URL stale-pattern (confirmed recurring)
+- The cron prompt's hard-coded audit URL `/we-buy-houses-west-palm-beach` returns **404** (stale URL pattern; hyphenated, no `/we-buy-houses` prefix).
+- The correct live URL is `/we-buy-houses/west-palm-beach` (slash-separated) — returns 200, confirmed in sitemap audit. Same stale-pattern issue first documented in the 2026-06-06 16:04 scan. The skill explicitly encodes this in the "Site architecture differences get masked in audit lists" pitfall.
+- Cron prompt URL pattern is the system message and cannot be self-fixed; flagged for operator, will continue to ignore the prompt URL and use the sitemap-driven loop.
+
+### Live site health (sitemap-driven audit, 82/82 URLs)
+- HTTP 200: 82/82 ✅
+- Canonical: 82/82 ✅
+- JSON-LD: 82/82 pages have schema; **0 pages with NONE**
+- OG tags: full 82/82 ✅
+- WebSite schema (added 2026-06-07 02:07) confirmed live across all page types
+- `/favicon.ico` → 200 ✅ (fix from 2026-06-06 12:02 still healthy)
+- `/icon.png` → 200 ✅
+- `/images/og-image.jpg` → 200 ✅
+
+### Competitor schema spot-check (3 main rivals + webuyhouses.com/FL)
+| Competitor | JSON-LD count | Types | vs Cash4HomeFL (homepage 4 types) |
+|---|---|---|---|
+| cashhomebuyers.io | 8 | FAQPage, Organization, Product, SiteNavigationElement, VideoObject, WebSite | They still lead on Product + VideoObject; we lead on RealEstateAgent + HowTo |
+| floridacashhomebuyers.com | 3 | Organization, WebSite | MATCH (we have more on every page) |
+| floridahomebuyers.com | 3 | LocalBusiness, Organization, WebSite | MATCH |
+| webuyhouses.com/FL | — | 404 (route still broken) | We lead decisively on a non-functional competitor |
+
+No new competitor moves detected since 2026-06-06 20:05 scan.
+
+### BACKLOG drift self-audit
+- All `Status: done` items verified live on production sitemap.
+- 12 `Status: todo` items remain; 5 are content-gated (city copy, situation copy, zip copy, hero images, testimonials — need human-authored content or real reviews) and 5 are tracking/marketing infra (GA4, GSC verification, GBP listing, exit-intent modal, chat widget — also human-only).
+- **2 are not gated**: P1 AggregateRating (still gated on real reviews per BACKLOG notes — not fabricating) and **P2 robots.txt rules**.
+
+### Action taken this run
+Picked the next-highest-impact non-gated work: **[P2] Add robots.txt rules for staging/admin paths**.
+
+The current `app/robots.ts` only had `Allow: /` and a sitemap directive. Crawlers were free to waste budget on `/api/lead` (POST endpoint, no SEO value) and `/thank-you` (post-conversion landing page). Added explicit disallow rules for both, plus `/404`.
+
+**Skipped the 'host' directive** that the original BACKLOG item called for: deprecated by Google in 2018. Canonical host is set via `<link rel="canonical">` in the layout, not robots.txt. The current sitemap audit confirms 82/82 pages have correct self-URL canonicals, so host canonicalization is already correct.
+
+**Changes (`app/robots.ts`):**
+```typescript
+rules: [
+  {
+    userAgent: '*',
+    allow: '/',
+    disallow: [
+      '/api/',         // POST endpoint for lead capture — no SEO value, no crawler need
+      '/thank-you',    // post-conversion landing page — no SEO value
+      '/404',          // not a real page; prevents accidental indexing of error responses
+    ],
+  },
+],
+sitemap: 'https://cash4homefl.vercel.app/sitemap.xml',
+```
+
+### Verification
+- **Build:** `npx next build` → 90/90 static pages, no errors.
+- **Live:** `curl -s https://cash4homefl.vercel.app/robots.txt` returns the updated rules.
+- **Deploy:** Vercel served with `age: 0` and `x-vercel-cache: HIT` — auto-deploy from main confirmed.
+- **Regression check:** 82/82 URLs still return 200, all canonicals/JSON-LD/OG tags intact.
+
+### Files changed
+- `app/robots.ts` — added disallow rules
+- `BACKLOG.md` — moved P2 robots.txt from `Status: todo` to `done` in the same commit per discipline rule
+
+### Commits
+- `9cf0fa5` — fix: add robots.txt disallow rules for /api/, /thank-you, /404 (close P2) [contains both code + BACKLOG update per discipline rule]
+
+### Deploy
+- Pushed to `main` (Vercel auto-deploys from main)
+- `age: 0` confirmed on live robots.txt
+- No manual `vercel` CLI deploy needed
+
+### Outstanding non-gated P* work
+After this run, the only P*/P1 items remaining in the backlog that are not content-gated, not human-only, and not real-reviews-gated are:
+- (none — all remaining items are blocked on human-authored content, real reviews, or real product/video content)
+
+Cron-side work for Cash4HomeFL is essentially complete. Future runs should:
+1. Run the sitemap audit to detect regressions on the 90 static pages.
+2. Spot-check competitors (quarterly, not daily — no new moves expected).
+3. Hold the line on no-fabrication rules (AggregateRating, testimonials, Product, VideoObject).
+4. Flag any new top-level domain or URL pattern changes (e.g., Vercel domain switch).
