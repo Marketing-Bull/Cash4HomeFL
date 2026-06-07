@@ -142,6 +142,36 @@ Notes: DONE — commit 54932bd. PageTemplate receives breadcrumbs prop and emits
        Zip pages: Home > County > Zip
        Situation pages: NOT YET — add to buildSituationPageProps if desired.
 
+## [P2] Add WebSite schema to homepage — unlocks sitelinks search box
+Owner: alex
+Status: done
+CompletedAt: 2026-06-07
+Commits: ac29314
+Notes: COMPLETED 2026-06-07. Added WebSite JSON-LD to app/layout.tsx root <head>
+       (alongside existing RealEstateAgent). Includes SearchAction with target
+       urlTemplate https://cash4homefl.vercel.app/sell-my-house-fast/{zip} — wires
+       Google's sitelinks search box to the existing /sell-my-house-fast/[zip] route.
+       Mirrors competitor implementations (cashhomebuyers.io, floridacashhomebuyers.com,
+       floridahomebuyers.com all have WebSite schema).
+       Deployed: pushed to main, Vercel auto-deploy confirmed (age: 0 on homepage fetch).
+       Schema count: homepage 3→4 (RealEstateAgent + WebSite + FAQPage + HowTo)
+                     city    4→5 (RealEstateAgent + WebSite + BreadcrumbList + FAQPage + HowTo)
+                     blog    1→2 (RealEstateAgent + WebSite)
+       Gap closed: 20:05 competitor scan flagged this as the single remaining low-effort
+       schema gap. Product/VideoObject schemas are intentionally NOT added (would require
+       real product pages + video content we don't have).
+
+## [P2] Add canonical tags to all pages
+Owner: alex
+Status: done
+BlockedBy: []
+Notes: DONE — see commits c0cf00f, 54932bd, eadc3db, 4a85262, 6648c3c. All page archetypes
+       have self-URL canonicals: city, zip, county, situation, blog, /faq /reviews /privacy
+       /terms /about /contact /we-buy-houses /sell-my-house-fast. Verified via sitemap audit
+       on 2026-06-06 20:05 scan: 82/82 URLs have canonical, 1 false positive on homepage
+       trailing-slash form (Google treats / and / as equivalent — not a real issue).
+       Marked done in commit ff2e7af (BACKLOG drift self-audit).
+
 ## [P1] Add aggregate Review/rating schema
 Owner: alex
 Status: todo

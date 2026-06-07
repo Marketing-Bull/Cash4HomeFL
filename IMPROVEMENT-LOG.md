@@ -1454,3 +1454,95 @@ The cron dream-scan prompt in this conversation lists `https://cash4homefl.verce
 
 ### Logged
 - This scan did not modify any code (no regressions to fix). No commit made.
+
+
+---
+
+## [FIX] 2026-06-07 02:07 — Add WebSite JSON-LD schema (closes competitor gap from 20:05 scan)
+
+### Cron prompt reality check
+The nightly cron prompt instructed: "P0 — Fix 404 on dynamic city pages. Audit: `curl -sI https://cash4homefl.vercel.app/we-buy-houses-west-palm-beach`"
+
+That P0 has been DONE since 2026-06-01 (BACKLOG line 75-88). The audit URL in the prompt is itself the **stale URL pattern** that triggered the original 404 — the correct URL is `/we-buy-houses/west-palm-beach` (slash, prefix) which has returned HTTP 200 throughout. The prompt's audit URL is documented as 404 in both the 16:04 and 20:05 scans as a known stale-prompt issue. The sitemap-driven audit (82/82 URLs, all 200) is the canonical verification.
+
+There are **zero `Status: todo` P0 items remaining** in the BACKLOG. All 3 P0 items are done.
+
+### Picked: P2 WebSite schema gap (from 20:05 competitor scan)
+The 20:05 dream scan flagged a single remaining low-effort schema gap:
+- cashhomebuyers.io, floridacashhomebuyers.com, floridahomebuyers.com all have WebSite schema → unlocks Google sitelinks search box
+- Cash4HomeFL did not have it
+- Fix is ~30 lines of JSON-LD in `app/layout.tsx`, mirrors competitor pattern
+
+### Implementation
+Added to `app/layout.tsx` (root layout — same place as existing RealEstateAgent):
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Cash4HomeFL",
+  "url": "https://cash4homefl.vercel.app",
+  "description": "Cash home buyers for Palm Beach County and Broward County...",
+  "publisher": {
+    "@type": "RealEstateAgent",
+    "name": "Cash4HomeFL",
+    "logo": { "@type": "ImageObject", "url": ".../favicon.ico" }
+  },
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": {
+      "@type": "EntryPoint",
+      "urlTemplate": "https://cash4homefl.vercel.app/sell-my-house-fast/{zip}"
+    },
+    "query-input": "required name=zip"
+  }
+}
+```
+
+The `SearchAction` target is `/sell-my-house-fast/{zip}` — wires the search box to the existing dynamic zip route, leveraging site infrastructure that already works.
+
+### Verification
+**Build:** `npx next build` — 90/90 static pages generated, no errors.
+
+**Pre-deploy schema count (from local build HTML):**
+- Homepage: 3 → 4 (added WebSite)
+- City pages: 4 → 5 (added WebSite)
+- Blog posts: 1 → 2 (added WebSite)
+- Static pages: 1 → 2 (added WebSite)
+
+**Post-deploy (live verification):**
+```
+curl -s https://cash4homefl.vercel.app/ | python3 parse JSON-LD
+→ 4 blocks: RealEstateAgent, WebSite, FAQPage, HowTo ✅
+
+curl -s https://cash4homefl.vercel.app/we-buy-houses/west-palm-beach | python3 parse JSON-LD
+→ 5 blocks: RealEstateAgent, WebSite, BreadcrumbList, FAQPage, HowTo ✅
+```
+
+**Live HTTP status check:**
+- Homepage: HTTP 200, `age: 0` (Vercel auto-deploy confirmed)
+- City page: HTTP 200
+
+**Sitemap regression check:** 82/82 URLs still return 200. No regressions.
+
+### Competitor gap status (post-fix)
+| Competitor | Schema types | Cash4HomeFL |
+|---|---|---|
+| cashhomebuyers.io | 7 (Org, WebSite, LocalBiz, Video, FAQ, Breadcrumb, Product) | We lead on FAQ/Breadcrumb; they lead on Video/Product |
+| floridacashhomebuyers.com | 3 (WebSite, Org, LocalBiz) | MATCH (we have 4 on homepage, 5 on city) |
+| floridahomebuyers.com | 3 (WebSite, Org, LocalBiz) | MATCH |
+| webuyhouses.com | 0 (no schema) | We lead decisively |
+
+**Holds:** AggregateRating/Review schema still correctly `Status: todo` (gated on real reviews — not fabricating).
+**Holds:** Product/VideoObject schema still correctly NOT added (would require real product pages + video content we don't have).
+
+### Files changed
+- `app/layout.tsx` — added `websiteSchema` const + `<script type="application/ld+json">` block in root `<head>`
+- `BACKLOG.md` — added new `[P2] Add WebSite schema to homepage` item, marked `Status: done`
+
+### Commits
+- `ac29314` — feat: add WebSite JSON-LD schema (unlocks sitelinks search box) [contains both code + BACKLOG update per discipline rule]
+
+### Deploy
+- Pushed to `main` (Vercel auto-deploys from main)
+- `age: 0` confirmed on live homepage
+- No manual `vercel` CLI deploy needed (token not required for main-push workflow)
