@@ -1949,3 +1949,46 @@ N/A — no code changes pushed. `age: 14380s` and `x-vercel-cache: HIT/PRERENDER
 ### Cron operational note
 - The cron prompt's P0 has been done for 9 consecutive runs and the audit URL is the wrong pattern. Operator action recommended: rewrite the cron prompt to (a) remove the stale "Fix 404" P0 and the stale hyphenated audit URL, (b) reference the BACKLOG.md next-item flow (e.g. "read BACKLOG.md, work the first non-gated `Status: todo` P*/P1 item"), and (c) tell the cron to remain in regression-check mode when all items are gated.
 - Until the prompt is updated, the cron will continue to log "stale prompt" findings and ship no work. This is the correct behavior per the skill's no-fabrication rule.
+
+## [SCAN] 2026-06-08 20:00 — Dream scan — passive regression-check, no new work
+
+### Live site health
+- 4 spot-check URLs (cron prompt audit set): `/`, `/we-buy-houses/west-palm-beach`, `/we-buy-houses-foreclosure`, `/palm-beach-county` → all 200 ✅
+- Stale audit URL `/we-buy-houses-west-palm-beach` → 404 (correct, never existed — cron prompt issue, not site regression)
+- 6 sitemap edge URLs (first 3 + last 3) → all 200 ✅
+  - First 3: `/`, `/we-buy-houses`, `/sell-my-house-fast`
+  - Last 3: `/blog/sell-condo-fast-south-florida`, `/blog/sell-house-after-divorce-florida`, `/blog/is-we-buy-houses-legit`
+- `age: 1` + `x-vercel-cache: HIT` → fresh edge cache on homepage, no deploy drift since 16:01 UTC commit (5f4d96f, 22:0X scan log)
+- JSON-LD: 4 blocks, 4 top-level @types on homepage (RealEstateAgent, WebSite, FAQPage, HowTo) — all 06-07 fixes still live
+- OG tags: all 3 present (title, description, image → `/images/og-image.jpg`) — 06-04 P1 OG work still live
+- robots.txt: disallow rules + correct sitemap domain — 06-07 12:00 work still live
+- Assets: `/favicon.ico` ✅, `/icon.png` ✅, `/images/og-image.jpg` ✅
+
+### Competitor spot-check
+- Not re-scanned this run (quarterly cadence — last full scan 2026-06-06 20:05; nothing has changed structurally since)
+- `cashhomebuyers.app/florida/` (7 schema types) — still the depth benchmark
+- `webuyhouses.com/florida/west-palm-beach/` — still 404 (no new FL local SEO competitor activity)
+
+### BACKLOG state
+- 13 items `Status: todo` — all gated (same set as 17:24 and 22:0X scans; no movement since 12:00 transition):
+  - P1 AggregateRating → real reviews (fabrication prohibited)
+  - P2 situation copy (7 pages) → human-authored
+  - P2 zip copy (10 zips) → human-authored
+  - P3 hero images / testimonials / GA4 / GSC / conversion tracking → operator + real assets
+  - P4 GBP / exit-intent / chat (DECIDED skip) / hreflang → operator decisions
+
+### Working tree
+- 3 uncommitted files (`app/globals.css`, `components/PageTemplate.tsx`, `lib/page-types.ts`) — same WIP from prior scans (parallel agent's `bodyParagraphs` template addition). Not my work; leaving untouched per the discipline rule on selective staging.
+
+### Action taken
+None. Cron remains in passive regression-check mode. No regressions detected, no new gated work unblocked.
+
+### Files changed
+This entry to IMPROVEMENT-LOG.md only.
+
+### Deploy
+N/A — no code changes pushed. `age: 1` / `x-vercel-cache: HIT` confirms no drift since 16:01 UTC commit.
+
+### Cron operational note
+- The cron prompt's P0 has been done for 9+ consecutive runs and the audit URL is the wrong pattern. Operator action recommended: rewrite the cron prompt to (a) remove the stale "Fix 404" P0 and the stale hyphenated audit URL, (b) reference the BACKLOG.md next-item flow (e.g. "read BACKLOG.md, work the first non-gated `Status: todo` P*/P1 item"), and (c) tell the cron to remain in regression-check mode when all items are gated.
+- Until the prompt is updated, the cron will continue to log "stale prompt" findings and ship no work. This is the correct behavior per the skill's no-fabrication rule.
