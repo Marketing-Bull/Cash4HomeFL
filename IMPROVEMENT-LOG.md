@@ -1992,3 +1992,45 @@ N/A — no code changes pushed. `age: 1` / `x-vercel-cache: HIT` confirms no dri
 ### Cron operational note
 - The cron prompt's P0 has been done for 9+ consecutive runs and the audit URL is the wrong pattern. Operator action recommended: rewrite the cron prompt to (a) remove the stale "Fix 404" P0 and the stale hyphenated audit URL, (b) reference the BACKLOG.md next-item flow (e.g. "read BACKLOG.md, work the first non-gated `Status: todo` P*/P1 item"), and (c) tell the cron to remain in regression-check mode when all items are gated.
 - Until the prompt is updated, the cron will continue to log "stale prompt" findings and ship no work. This is the correct behavior per the skill's no-fabrication rule.
+
+## 2026-06-09 02:02 UTC — dream scan — passive regression-check, no new work
+
+### Cron prompt status
+- P0 "Fix 404 on dynamic city pages" is still `Status: done` (since 2026-06-01, commit 23e2985)
+- The audit URL in the prompt (`/we-buy-houses-west-palm-beach`, hyphen, no prefix) is the wrong pattern — that route has never existed
+- Correct pattern `/we-buy-houses/west-palm-beach` continues to return HTTP 200
+- This is the documented stale-prompt pattern (see 2026-06-06 16:04 + 2026-06-08 02:02 entries)
+
+### Live site health (sampled 20/20)
+- 5 city pages (west-palm-beach, boca-raton, fort-lauderdale, jupiter, hollywood) — all 200
+- Index, static pages, blog index, county pages, robots.txt, sitemap.xml, favicon.ico — all 200
+- No 200→404 regressions detected since 2026-06-08 22:0X scan
+
+### Schema / asset / tag status (no change since 06-08 20:00)
+- JSON-LD: 5 types (Organization, WebSite, RealEstateAgent, FAQPage, HowTo + BreadcrumbList on inner pages) — unchanged
+- OG tags: og:title + og:description + og:image present on all audited pages — unchanged
+- Canonical: 82/82 sitemap URLs validated — unchanged
+- Assets: `/favicon.ico` ✅, `/icon.png` ✅, `/images/og-image.jpg` ✅
+
+### BACKLOG state
+- 13 items `Status: todo` — all gated (content/operator/third-party), no new code work available
+- P1 AggregateRating still gated on real reviews (fabrication prohibited)
+
+### Working tree
+- 3 uncommitted WIP files (`app/globals.css`, `components/PageTemplate.tsx`, `lib/page-types.ts`) — same parallel-agent `bodyParagraphs` WIP, not my work. Leaving untouched per selective-staging discipline rule.
+
+### Action taken
+None. Cron remains in passive regression-check mode. No regressions detected, no new gated work unblocked.
+
+### Files changed
+This entry to IMPROVEMENT-LOG.md only.
+
+### Deploy
+N/A — no code changes pushed.
+
+### Cron operational note
+- The cron prompt's stale P0 + stale audit URL have now been stale for 10+ consecutive runs.
+- Operator rewrite template (already provided in 2026-06-08 02:02 entry, repeating for visibility):
+  1. Remove the stale "Fix 404" P0 and the stale hyphenated audit URL
+  2. Reference the BACKLOG.md next-item flow: "read BACKLOG.md, work the first non-gated `Status: todo` P*/P1 item"
+  3. Explicitly tell the cron to remain in regression-check mode when all items are gated
