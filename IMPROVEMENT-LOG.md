@@ -2034,3 +2034,42 @@ N/A — no code changes pushed.
   1. Remove the stale "Fix 404" P0 and the stale hyphenated audit URL
   2. Reference the BACKLOG.md next-item flow: "read BACKLOG.md, work the first non-gated `Status: todo` P*/P1 item"
   3. Explicitly tell the cron to remain in regression-check mode when all items are gated
+
+## 2026-06-09 08:02 UTC — dream scan — passive regression-check, no new work
+
+### Cron prompt status
+- P0 "Fix 404 on dynamic city pages" is still `Status: done` (since 2026-06-01, commit 23e2985)
+- The audit URL `/we-buy-houses-foreclosure` (no slash prefix) IS the correct pattern and returns 200 — operator's prompt is fine. The original sin was the hyphenated `/we-buy-houses-west-palm-beach` (no prefix) which 404s; that URL was the wrong pattern documented in 2026-06-08 02:02 entry.
+- Confirmed at 2026-06-09 08:02 UTC: `/we-buy-houses-foreclosure` → 200, full markdown served.
+
+### Live site health (sampled 20/20 random from 82-URL sitemap)
+- 20/20 → 200 OK
+- Mix covered: city pages (`/we-buy-houses/<city>`), situation pages (`/we-buy-houses-<topic>`), zip pages (`/sell-my-house-fast/<zip>`), blog posts, static pages (about, reviews)
+- No 200→404 regressions detected
+
+### Schema / asset / tag status (sampled homepage)
+- JSON-LD: 18 distinct `@type`s on homepage (RealEstateAgent, ContactPoint, GeoCoordinates, PostalAddress, Place, City×10, OpeningHoursSpecification×2, SellAction, EntryPoint×2, Offer, WebSite, ImageObject, SearchAction, FAQPage, Question×8, Answer×8, HowTo, HowToStep×3) — unchanged from 2026-06-07 baseline
+- OG tags: og:title + og:description + og:image + og:url all present on homepage
+- Canonical: present and matches sitemap URL
+- Assets: `/favicon.ico` ✅, `/icon.png` ✅, `/images/og-image.jpg` ✅
+
+### BACKLOG state
+- 13 items `Status: todo` — all gated (content/operator/third-party), no new code work available
+- P1 AggregateRating still gated on real reviews (fabrication prohibited)
+- No new gating conditions changed since 2026-06-09 02:02 scan
+
+### Working tree
+- 3 uncommitted WIP files (`app/globals.css`, `components/PageTemplate.tsx`, `lib/page-types.ts`) — same parallel-agent `bodyParagraphs` WIP, not my work. Leaving untouched per selective-staging discipline rule.
+
+### Action taken
+None. Cron remains in passive regression-check mode. No regressions detected, no new gated work unblocked.
+
+### Files changed
+This entry to IMPROVEMENT-LOG.md only.
+
+### Deploy
+N/A — no code changes pushed.
+
+### Cron operational note
+- This is the 11th consecutive passive regression-check scan. The cron prompt's stale P0 and stale audit URL have been documented and an operator rewrite template has been provided twice (2026-06-08 02:02 and 2026-06-09 02:02). When the operator updates the prompt to the BACKLOG-driven flow, the cron will resume shipping real work.
+- Until then: cron continues to log "no new work" findings. This is the correct behavior per the skill's no-fabrication rule.
