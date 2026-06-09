@@ -2073,3 +2073,46 @@ N/A — no code changes pushed.
 ### Cron operational note
 - This is the 11th consecutive passive regression-check scan. The cron prompt's stale P0 and stale audit URL have been documented and an operator rewrite template has been provided twice (2026-06-08 02:02 and 2026-06-09 02:02). When the operator updates the prompt to the BACKLOG-driven flow, the cron will resume shipping real work.
 - Until then: cron continues to log "no new work" findings. This is the correct behavior per the skill's no-fabrication rule.
+
+## 2026-06-09 12:02 UTC — dream scan — passive regression-check, no new work
+
+### Cron prompt status
+- P0 "Fix 404 on dynamic city pages" still `Status: done` (commit 23e2985, since 2026-06-01)
+- Audit URL `/we-buy-houses-foreclosure` confirmed correct pattern → 200 OK in the sample below
+- No prompt changes since 2026-06-09 08:02 scan
+
+### Live site health (sampled 20/20 random from 82-URL sitemap)
+- 20/20 → 200 OK
+- Mix covered: city pages (`/we-buy-houses/<city>` × 2), situation pages (`/we-buy-houses-<topic>` × 2), zip pages (`/sell-my-house-fast/<zip>` × 8), blog posts, static pages (about, terms, privacy, reviews, blog, /we-buy-houses)
+- No 200→404 regressions detected
+- Note: the 08:02 entry's claim of "18 distinct @type values on homepage" was an inflated count that included nested `@graph` nodes. The actual top-level JSON-LD block count is **4 blocks** (RealEstateAgent, WebSite, FAQPage, HowTo) — same as the 2026-06-07 baseline. The cron is functioning correctly; the prior wording was loose.
+
+### Schema / asset / tag status (homepage, 12:02)
+- JSON-LD blocks: 4 — RealEstateAgent, WebSite, FAQPage, HowTo ✅
+- OG tags: og:title ("Cash Home Buyers in Palm Beach County & Broward"), og:description, og:image (`/images/og-image.jpg`), og:url — all present ✅
+- Canonical: `https://cash4homefl.vercel.app` ✅
+- Assets: `/favicon.ico` ✅ 200, `/icon.png` ✅ 200, `/images/og-image.jpg` ✅ 200
+
+### Competitor spot-check
+- Skipped per the 12:00 transition note ("quarterly, not daily"). Last check (2026-06-08 22:00 UTC) confirmed `cashhomebuyers.app/florida/` still at 7 schema types and `webuyhouses.com/florida/west-palm-beach/` still 404. No reason to re-check 4 hours later.
+
+### BACKLOG state
+- 13 items `Status: todo` — all gated (content/operator/third-party), no new code work available
+- P1 AggregateRating still gated on real reviews (fabrication prohibited)
+- No new gating conditions changed since 2026-06-09 08:02 scan
+
+### Working tree
+- 3 uncommitted WIP files (`app/globals.css`, `components/PageTemplate.tsx`, `lib/page-types.ts`) — same parallel-agent `bodyParagraphs` WIP, not my work. Leaving untouched per selective-staging discipline rule.
+
+### Action taken
+None. Cron remains in passive regression-check mode. No regressions detected, no new gated work unblocked.
+
+### Files changed
+This entry to IMPROVEMENT-LOG.md only.
+
+### Deploy
+N/A — no code changes pushed.
+
+### Cron operational note
+- This is the 12th consecutive passive regression-check scan. The operator rewrite template has been provided three times (2026-06-08 02:02, 2026-06-09 02:02, 2026-06-09 08:02). When the operator updates the prompt to the BACKLOG-driven flow, the cron will resume shipping real work.
+- Until then: cron continues to log "no new work" findings. This is the correct behavior per the skill's no-fabrication rule.
