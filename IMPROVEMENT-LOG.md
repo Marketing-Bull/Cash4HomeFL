@@ -2116,3 +2116,45 @@ N/A — no code changes pushed.
 ### Cron operational note
 - This is the 12th consecutive passive regression-check scan. The operator rewrite template has been provided three times (2026-06-08 02:02, 2026-06-09 02:02, 2026-06-09 08:02). When the operator updates the prompt to the BACKLOG-driven flow, the cron will resume shipping real work.
 - Until then: cron continues to log "no new work" findings. This is the correct behavior per the skill's no-fabrication rule.
+
+## 2026-06-09 16:01 UTC — dream scan — passive regression-check, no new work
+
+### Cron prompt status
+- P0 "Fix 404 on dynamic city pages" still `Status: done` (commit 23e2985, since 2026-06-01)
+- Audit URL `/we-buy-houses-foreclosure` confirmed correct pattern → 200 OK in sample below
+- No prompt changes since 2026-06-09 12:02 scan
+
+### Live site health (sampled 20/20 random from 82-URL sitemap)
+- 20/20 → 200 OK
+- Mix covered: city pages (`/we-buy-houses/<city>` × 5), situation pages (`/we-buy-houses-<topic>` × 2), zip pages (`/sell-my-house-fast/<zip>` × 3), blog posts (× 3), county (`/palm-beach-county`), static pages (privacy, terms)
+- No 200→404 regressions detected
+
+### Schema / asset / tag status (homepage, 16:01)
+- JSON-LD blocks: 4 — RealEstateAgent, WebSite, FAQPage, HowTo ✅ (unchanged from 2026-06-07 baseline)
+- OG tags: og:title ("Cash Home Buyers in Palm Beach County & Broward"), og:description, og:image (`/images/og-image.jpg`), og:url — all present ✅
+- Canonical: `https://cash4homefl.vercel.app` ✅
+- Assets: `/favicon.ico` ✅ 200, `/icon.png` ✅ 200, `/images/og-image.jpg` ✅ 200
+
+### Competitor spot-check
+- Skipped per 12:00 transition note (quarterly cadence, last 2026-06-08 22:00 UTC, no reason to re-check 6 hours later).
+
+### BACKLOG state
+- 13 items `Status: todo` — all gated (content/operator/third-party), no new code work available
+- P1 AggregateRating still gated on real reviews (fabrication prohibited)
+- No new gating conditions changed since 2026-06-09 12:02 scan
+
+### Working tree
+- 3 uncommitted WIP files (`app/globals.css`, `components/PageTemplate.tsx`, `lib/page-types.ts`) — same parallel-agent `bodyParagraphs` WIP, not my work. Leaving untouched per selective-staging discipline rule.
+
+### Action taken
+None. Cron remains in passive regression-check mode. No regressions detected, no new gated work unblocked.
+
+### Files changed
+This entry to IMPROVEMENT-LOG.md only.
+
+### Deploy
+N/A — no code changes pushed.
+
+### Cron operational note
+- This is the 13th consecutive passive regression-check scan. The operator rewrite template has been provided four times (2026-06-08 02:02, 2026-06-09 02:02, 2026-06-09 08:02, 2026-06-09 12:02). When the operator updates the prompt to the BACKLOG-driven flow, the cron will resume shipping real work.
+- Until then: cron continues to log "no new work" findings. This is the correct behavior per the skill's no-fabrication rule.
