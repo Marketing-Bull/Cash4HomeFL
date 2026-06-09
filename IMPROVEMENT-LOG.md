@@ -2158,3 +2158,57 @@ N/A — no code changes pushed.
 ### Cron operational note
 - This is the 13th consecutive passive regression-check scan. The operator rewrite template has been provided four times (2026-06-08 02:02, 2026-06-09 02:02, 2026-06-09 08:02, 2026-06-09 12:02). When the operator updates the prompt to the BACKLOG-driven flow, the cron will resume shipping real work.
 - Until then: cron continues to log "no new work" findings. This is the correct behavior per the skill's no-fabrication rule.
+
+## 2026-06-09 20:00 UTC — dream scan — passive regression-check, no new work
+
+### Cron prompt status
+- P0 "Fix 404 on dynamic city pages" still `Status: done` (commit 23e2985, since 2026-06-01)
+- Audit URL `/we-buy-houses-foreclosure` confirmed correct pattern → 200 OK in sample below
+- Stale prompt URL `/we-buy-houses-west-palm-beach` → 404 (confirmed correct: live URL is `/we-buy-houses/west-palm-beach`)
+- No prompt changes since 2026-06-09 16:01 scan
+
+### Live site health (sampled 20/20 random from 82-URL sitemap)
+- 20/20 → 200 OK
+- Mix covered: city pages (`/we-buy-houses/<city>` × 11), situation pages (`/we-buy-houses-<topic>` × 2), zip pages (`/sell-my-house-fast/<zip>` × 5), blog posts, FAQ
+- No 200→404 regressions detected
+
+### Schema / asset / tag status (4 audit pages, 20:00)
+- Homepage: TITLE/OG_T/OG_D/OG_I/OG_U/CANON all present ✅, JSON-LD 4 blocks (RealEstateAgent, WebSite, FAQPage, HowTo) ✅
+- `/we-buy-houses/west-palm-beach` (correct slug): TITLE/OG/canonical ✅, JSON-LD 5 blocks (RealEstateAgent, WebSite, BreadcrumbList, FAQPage, HowTo) ✅
+- `/we-buy-houses-foreclosure`: TITLE/OG/canonical ✅, JSON-LD 4 blocks (RealEstateAgent, WebSite, FAQPage, HowTo) ✅
+- `/palm-beach-county`: TITLE/OG/canonical ✅, JSON-LD 5 blocks (RealEstateAgent, WebSite, BreadcrumbList, FAQPage, HowTo) ✅
+- Assets: `/favicon.ico` ✅ 200 (1150B), `/icon.png` ✅ 200 (104B), `/images/og-image.jpg` ✅ 200 (46059B), `/robots.txt` ✅ 200, `/sitemap.xml` ✅ 200 (82 URLs)
+- `robots.txt` body: `User-Agent: * / Allow: / / Disallow: /api/, /thank-you, /404 / Sitemap: https://cash4homefl.vercel.app/sitemap.xml` (unchanged from 2026-06-07 12:00)
+
+### P4 hreflang item quick verification
+- Backend P4 item says: "Site has hreflang EN/ES in meta already (from previous work), but verify: does /es page exist? If not, remove hreflang until Spanish content is actually published."
+- Verified: `<link rel="alternate" hreflang="..."` regex returns 0 matches on homepage → no stale hreflang being rendered. `/es` and `/es/` both 404.
+- This item is moot — there's nothing to remove. State is already correct. No new work.
+
+### Competitor spot-check (HEAD only, per quarterly cadence)
+- cashhomebuyers.io → 200 ✅ (schema benchmark unchanged)
+- linderdiazlaw.com → 200 ✅ (PI law reference unchanged)
+- floridahomebuyers.com → 200 ✅
+- floridacashhomebuyers.com → 200 ✅
+- No competitor down/regressed; no new site appearing; no reason to escalate cadence.
+
+### BACKLOG state
+- 13 items `Status: todo` + 1 `Status: in_progress` (P2 city copy, top 4 done, waiting on operator for remaining 5 cities)
+- All 13 todo items gated: content (city/situation/zip copy, hero images, testimonials) / operator (GBP, Analytics, Search Console) / real reviews (P1 AggregateRating — fabrication prohibited)
+- No new gating conditions changed since 2026-06-09 16:01 scan
+
+### Working tree
+- 3 uncommitted WIP files (`app/globals.css`, `components/PageTemplate.tsx`, `lib/page-types.ts`) — same parallel-agent `bodyParagraphs` WIP, not my work. Leaving untouched per selective-staging discipline rule.
+
+### Action taken
+None. Cron remains in passive regression-check mode. No regressions detected, no new gated work unblocked.
+
+### Files changed
+This entry to IMPROVEMENT-LOG.md only.
+
+### Deploy
+N/A — no code changes pushed.
+
+### Cron operational note
+- This is the 14th consecutive passive regression-check scan. The operator rewrite template has been provided four times (2026-06-08 02:02, 2026-06-09 02:00/08:00/12:02/16:01). The skill's BACKLOG-driven flow is: `read BACKLOG.md, work the first non-gated Status: todo P*/P1 item`.
+- Until the prompt is updated, cron continues to log "no new work" findings. This is the correct behavior per the skill's no-fabrication rule.
