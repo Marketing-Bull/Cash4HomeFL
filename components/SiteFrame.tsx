@@ -4,10 +4,10 @@ import { getCountyLinks, getFeaturedCityLinks } from '@/lib/site-data';
 
 const situationLinks = [
   { label: 'Foreclosure', href: '/we-buy-houses-foreclosure' },
-  { label: 'Probate', href: '/we-buy-houses-probate' },
+  { label: 'Probate / Inherited', href: '/we-buy-houses-probate' },
   { label: 'Divorce', href: '/we-buy-houses-divorce' },
-  { label: 'Damaged Property', href: '/we-buy-houses-damaged' },
-  { label: 'Liens', href: '/we-buy-houses-liens' },
+  { label: 'Damaged / As-Is', href: '/we-buy-houses-damaged' },
+  { label: 'Liens & Back Taxes', href: '/we-buy-houses-liens' },
   { label: 'Rental Property', href: '/we-buy-houses-rental' },
   { label: 'Sell As-Is', href: '/we-buy-houses-as-is' },
 ];
@@ -140,6 +140,16 @@ export function SiteFrame({ children }: { children: ReactNode }) {
                 </Link>
               ))}
             </div>
+          </div>
+        </div>
+        {/* Footer bottom bar */}
+        <div className="container" style={{ borderTop: '1px solid rgba(255,255,255,0.08)', marginTop: '2.5rem', paddingTop: '1.5rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1rem', flexWrap: 'wrap' }}>
+          <p style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.35)', margin: 0 }}>
+            &copy; {new Date().getFullYear()} Cash4HomeFL. All rights reserved. We are a private cash buyer, not a licensed real estate broker.
+          </p>
+          <div style={{ display: 'flex', gap: '1.25rem' }}>
+            <Link href="/privacy" style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.35)', textDecoration: 'none' }}>Privacy Policy</Link>
+            <Link href="/terms" style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.35)', textDecoration: 'none' }}>Terms</Link>
           </div>
         </div>
       </footer>
