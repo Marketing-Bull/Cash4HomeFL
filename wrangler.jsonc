@@ -1,0 +1,20 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "cash4homefl",
+  "main": ".open-next/worker.js",
+  // Workers Builds runs `npx wrangler deploy` as the deploy command; this
+  // custom build produces .open-next/ so the deploy is self-contained no
+  // matter what the dashboard build command is set to.
+  "build": {
+    "command": "npx opennextjs-cloudflare build"
+  },
+  "compatibility_date": "2026-06-12",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  "observability": {
+    "enabled": true
+  }
+}
