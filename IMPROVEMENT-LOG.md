@@ -2315,3 +2315,11 @@ N/A — no code changes pushed.
 - 16th consecutive scan (15 prior + this one). Pattern stable: site healthy, BACKLOG fully gated, no fabrication
 - The 02:00 hreflang drift-fix is the only "real" work that shipped in this entire 16-scan sequence; everything else has been passive regression-check noise (intentionally)
 - When the operator updates the cron prompt to the BACKLOG-driven flow (`read BACKLOG.md, work the first non-gated Status: todo P*/P1 item`), the cron will pick the first available item automatically. Until then, `[SILENT]` would be the leaner delivery for fully-clean sub-daily scans; emitting log entries continues per existing pattern until operator confirms the switch
+
+## [SCAN] 2026-06-12 16:02 UTC — Dream scan findings
+- Schema status: clean on all archetypes (homepage 4 blocks: RealEstateAgent+WebSite+FAQPage+HowTo; city 5; situation 4; blog 2)
+- Top competitor move: no fresh signal in this window — last competitor scan was 06:06 20:05
+- Opportunity: none new — BACKLOG fully drained of unblocked technical work; remaining P*/P1 items all gated on real reviews, human-authored copy, or operator-only actions (GBP, GA4, GSC)
+- SEO issue: none — 82/82 sitemap URLs return 200, 82/82 canonicals present, og-image.jpg + favicon.ico both 200, robots.txt rules live
+- Mode: passive regression-check (16th consecutive clean run since 06:07 12:00 mode switch)
+- Action taken: no code change; no deploy; no log commit needed beyond this entry
