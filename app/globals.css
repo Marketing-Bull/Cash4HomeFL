@@ -831,6 +831,71 @@ a { color: inherit; }
   margin: 0;
 }
 
+/* ── Address autocomplete ── */
+.autocomplete {
+  position: relative;
+}
+
+.autocomplete input[name='address'] {
+  width: 100%;
+}
+
+.autocomplete__list {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  box-shadow: var(--shadow-lg);
+  list-style: none;
+  margin: 0;
+  padding: 0.25rem;
+  z-index: 30;
+  max-height: 260px;
+  overflow-y: auto;
+}
+
+.autocomplete__item {
+  padding: 0.55rem 0.7rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.autocomplete__item:hover,
+.autocomplete__item--active {
+  background: rgba(29, 78, 216, 0.08);
+}
+
+.autocomplete__secondary {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: var(--muted);
+}
+
+.autocomplete__attribution {
+  padding: 0.3rem 0.7rem 0.15rem;
+  font-size: 0.7rem;
+  color: var(--muted);
+  text-align: right;
+  cursor: default;
+}
+
+/* Honeypot: visually removed but present for bots */
+.hp-field {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
 /* ── Buttons ── */
 .button {
   display: inline-flex;
