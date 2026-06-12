@@ -59,3 +59,10 @@ The Next.js scaffold is now in place under:
 npm install
 npm run dev
 ```
+
+## Environment variables
+
+| Variable | Where | Purpose |
+| --- | --- | --- |
+| `GHL_WEBHOOK_URL` | Server (Vercel project settings / Cloudflare Worker variables) | GoHighLevel inbound-webhook URL. Each lead-form submission is POSTed here as JSON (`full_address`, `address1`, `city`, `state`, `postal_code`, `phone`, `email`, `latitude`, `longitude`, `page_url`, `source`). If unset, submissions still redirect to /thank-you but are **not** captured anywhere — only a server-side warning is logged. |
+| `NEXT_PUBLIC_GOOGLE_MAPS_API_KEY` | Build-time public (set in the host's build env) | Enables Google Places address autocomplete on the lead form. Restrict the key to your domains + Places API (New) in Google Cloud console. If unset, the address field is a plain text input. |
