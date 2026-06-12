@@ -4,3 +4,6 @@ out
 .env*
 .DS_Store
 .vercel
+.open-next
+.wrangler
+cloudflare-env.d.ts
