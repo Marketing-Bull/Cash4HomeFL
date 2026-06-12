@@ -363,9 +363,20 @@ Notes: Free tier limits:
 
 ## [P4] Add hreflang for English/Spanish
 Owner: alex
-Status: todo
+Status: done
+CompletedAt: 2026-06-12
+Commits: chore/backlog-drift-p4-hreflang-2026-06-12
 BlockedBy: []
-Notes: Site has hreflang EN/ES in meta already (from previous work),
+Notes: SELF-RESOLVED — verified 2026-06-12 02:00 UTC dream scan (and originally
+       2026-06-09 20:00 UTC, not previously closed). The item's own precondition
+       ("if /es page doesn't exist, remove hreflang") is moot because:
+       - 0 hreflang tags render on the homepage (regex on /) → nothing to remove
+       - /es and /es/ both return 404 → no Spanish page to point to
+       - State on the live site is already correct (no stale hreflang, no dead URL)
+       Closing as drift-fix in this cron run. Re-open with `Status: todo` only
+       when /es content is actually being authored and hreflang tags need to be
+       added at that time.
+       Original notes: Site has hreflang EN/ES in meta already (from previous work),
        but verify: does /es page exist? If not, remove hreflang until
        Spanish content is actually published.
        Add to layout.tsx:

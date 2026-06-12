@@ -2212,3 +2212,56 @@ N/A — no code changes pushed.
 ### Cron operational note
 - This is the 14th consecutive passive regression-check scan. The operator rewrite template has been provided four times (2026-06-08 02:02, 2026-06-09 02:00/08:00/12:02/16:01). The skill's BACKLOG-driven flow is: `read BACKLOG.md, work the first non-gated Status: todo P*/P1 item`.
 - Until the prompt is updated, cron continues to log "no new work" findings. This is the correct behavior per the skill's no-fabrication rule.
+
+## 2026-06-12 02:00 UTC — dream scan — passive regression-check, BACKLOG drift-fix shipped (P4 hreflang)
+
+### Cron prompt status
+- P0 "Fix 404 on dynamic city pages" still `Status: done` (commit 23e2985, since 2026-06-01)
+- Stale audit URL `/we-buy-houses-west-palm-beach` still in prompt (correct URL is `/we-buy-houses/west-palm-beach`)
+- No prompt changes since 2026-06-09 20:00 scan (3+ days)
+
+### Live site health (sampled 20/82 random from sitemap)
+- 20/20 → 200 OK
+- Mix: city pages (10), zip pages (4), situation pages (1), blog posts (2), static pages (3)
+- No 200→404 regressions detected
+
+### Assets
+- `/favicon.ico` ✅ 200, `/icon.png` ✅ 200, `/images/og-image.jpg` ✅ 200, `/robots.txt` ✅ 200, `/sitemap.xml` ✅ 200 (82 URLs)
+
+### Cron prompt URL check
+- `/we-buy-houses-west-palm-beach` (stale pattern) → 404 (confirmed: correct live URL is `/we-buy-houses/west-palm-beach`)
+- `/we-buy-houses/west-palm-beach` (correct pattern) → 200 ✅
+- `/we-buy-houses-foreclosure` → 200 ✅
+
+### Action taken — BACKLOG drift-fix (P4 hreflang)
+- Verified P4 "Add hreflang for English/Spanish" was self-resolving (originally noted in 2026-06-09 20:00 scan but not closed):
+  - 0 hreflang tags on homepage → nothing to remove
+  - `/es` and `/es/` both 404 → no Spanish page exists
+  - Live site is in the correct state per the item's own precondition
+- Closed the item: `Status: todo` → `Status: done`, added `CompletedAt: 2026-06-12` and resolution note
+- Per the skill's "verify/cleanup items can be self-resolving" rule, this is a legit close — verification was empirical, not assumed
+
+### BACKLOG state after this run
+- 11 `Status: todo` (down from 12 — hreflang closed) + 1 `Status: in_progress` (P2 city copy, top 4 done)
+- All 11 todo items remain gated: content (city/situation/zip copy, hero images, testimonials) / operator (GBP, GA4, Search Console) / real reviews (P1 AggregateRating)
+- No other item qualifies for the same self-resolving close (P4 chat widget is explicitly deferred per its own notes; P4 exit-intent needs copy decision; everything else is operator-gated)
+
+### Working tree
+- 3 uncommitted WIP files (`app/globals.css`, `components/PageTemplate.tsx`, `lib/page-types.ts`) — same parallel-agent `bodyParagraphs` WIP, not my work
+- This commit stages only `BACKLOG.md` per selective-staging discipline rule
+
+### Files changed
+- `BACKLOG.md` — P4 hreflang line: `Status: todo` → `Status: done` with resolution note
+- `IMPROVEMENT-LOG.md` — this entry
+
+### Deploy
+N/A — documentation-only commit (no Next.js code changes). Vercel will rebuild on push and produce an identical site hash.
+
+### Commit
+- Staged: `BACKLOG.md`, `IMPROVEMENT-LOG.md` (selective — not the WIP files)
+- Message: `chore: close P4 hreflang as self-resolved (verified 0 hreflang on homepage, /es 404)`
+
+### Cron operational note
+- This is the 15th consecutive scan (14th passive regression-check + 1 BACKLOG-drift fix). The hreflang close is the only "real" work that shipped — everything else remains gated.
+- The 11 remaining todos are all genuine blocking-on-operand dependencies (content, real reviews, operator-supplied tokens). No fabrication, no fake progress.
+- If the prompt is updated to the BACKLOG-driven flow, the cron will pick the first non-gated todo as its next action item automatically.
