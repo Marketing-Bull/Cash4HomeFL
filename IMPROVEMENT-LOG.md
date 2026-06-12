@@ -2265,3 +2265,53 @@ N/A — documentation-only commit (no Next.js code changes). Vercel will rebuild
 - This is the 15th consecutive scan (14th passive regression-check + 1 BACKLOG-drift fix). The hreflang close is the only "real" work that shipped — everything else remains gated.
 - The 11 remaining todos are all genuine blocking-on-operand dependencies (content, real reviews, operator-supplied tokens). No fabrication, no fake progress.
 - If the prompt is updated to the BACKLOG-driven flow, the cron will pick the first non-gated todo as its next action item automatically.
+
+## 2026-06-12 12:00 UTC — dream scan — passive regression-check, no new work
+
+### Cron prompt status
+- P0 "Fix 404 on dynamic city pages" still `Status: done` (commit 23e2985, since 2026-06-01)
+- Stale audit URL `/we-buy-houses-west-palm-beach` still in prompt (correct URL is `/we-buy-houses/west-palm-beach`)
+- No prompt changes since 2026-06-09 20:00 scan (~3 days)
+
+### Live site health (sampled 20/82 random from sitemap, seed=20260612)
+- 20/20 → 200 OK
+- Mix: city pages (`/we-buy-houses/<city>`), zip pages (`/sell-my-house-fast/<zip>`), situation, blog, FAQ, reviews
+- No 200→404 regressions detected
+- All assets present: `/favicon.ico` (1150B), `/icon.png` (104B), `/images/og-image.jpg` (46059B), `/robots.txt` (128B), `/sitemap.xml` (82 URLs)
+
+### BACKLOG state
+- 11 `Status: todo` (unchanged from 2026-06-12 02:00) + 1 `Status: in_progress` (P2 city copy, top 4/9 done)
+- All 11 todos remain gated on operator/content/real-reviews dependencies; no self-resolving candidates
+- P1 AggregateRating: gated on real reviews (fabrication prohibited by skill)
+- P2 situation/zip copy: gated on human-authored content
+- P3 hero images/testimonials: gated on content/AI generation
+- P3 GA4/GSC/conversion: gated on operator-supplied tokens and decisions
+- P4 GBP: fully operator-only
+- P4 exit-intent: gated on copy/decision
+- P4 chat widget: explicitly deferred per its own notes
+
+### Self-resolving check
+- Walked each todo for the "verify and close" pattern that worked on P4 hreflang
+- P4 chat widget is explicitly deferred (skip)
+- P4 exit-intent: nothing to verify (item is additive work, not cleanup)
+- P1 AggregateRating: not self-resolving (real reviews still required)
+- All other todos are additive work, not verify/cleanup items
+- No additional self-resolving candidates this run
+
+### Working tree
+- 3 uncommitted WIP files (`app/globals.css`, `components/PageTemplate.tsx`, `lib/page-types.ts`) — same parallel-agent `bodyParagraphs` WIP, not my work
+- Leaving untouched per selective-staging discipline rule
+
+### Action taken
+None. Cron remains in passive regression-check mode. No regressions detected, no new gated work unblocked, no self-resolving items to close.
+
+### Files changed
+This entry to IMPROVEMENT-LOG.md only.
+
+### Deploy
+N/A — no code changes pushed.
+
+### Cron operational note
+- 16th consecutive scan (15 prior + this one). Pattern stable: site healthy, BACKLOG fully gated, no fabrication
+- The 02:00 hreflang drift-fix is the only "real" work that shipped in this entire 16-scan sequence; everything else has been passive regression-check noise (intentionally)
+- When the operator updates the cron prompt to the BACKLOG-driven flow (`read BACKLOG.md, work the first non-gated Status: todo P*/P1 item`), the cron will pick the first available item automatically. Until then, `[SILENT]` would be the leaner delivery for fully-clean sub-daily scans; emitting log entries continues per existing pattern until operator confirms the switch
