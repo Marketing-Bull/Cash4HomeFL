@@ -29,10 +29,10 @@ export function LeadForm({ defaults }: LeadFormProps) {
       </label>
 
       <button className="button button--block" type="submit">
-        Get My Cash Offer
+        Get My Cash Offer &rarr;
       </button>
 
-      <p className="form-note">No obligation. No repairs. No commissions.</p>
+      <p className="form-note">&#128274; No obligation &middot; No repairs &middot; No commissions &middot; 100% private</p>
     </form>
   );
 }
