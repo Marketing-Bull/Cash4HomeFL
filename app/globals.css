@@ -824,6 +824,12 @@ a { color: inherit; }
 
 .field input::placeholder { color: #94a3b8; }
 
+.field-error {
+  font-size: 0.8rem;
+  color: #dc2626;
+  margin-top: 0.25rem;
+}
+
 .form-note {
   font-size: 0.8rem;
   color: var(--muted);
@@ -1457,6 +1463,73 @@ a { color: inherit; }
 .advertorial__city-links a { font-size: 0.88rem; color: var(--accent); font-weight: 600; text-decoration: none; }
 .advertorial__city-links a:hover { text-decoration: underline; }
 
+/* ── Mobile Nav ── */
+.mobile-nav-btn {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text);
+  padding: 0.4rem;
+  border-radius: 8px;
+  flex-shrink: 0;
+  margin-left: auto;
+}
+.mobile-nav-btn:hover { background: var(--surface-alt); }
+
+.mobile-nav-drawer {
+  position: fixed;
+  inset: 0;
+  top: 64px; /* below topbar */
+  background: var(--surface);
+  z-index: 100;
+  overflow-y: auto;
+  padding: 1.5rem 1.25rem 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  border-top: 1px solid var(--border);
+}
+
+.mobile-nav-link {
+  display: block;
+  text-decoration: none;
+  color: var(--text);
+  font-size: 1.1rem;
+  font-weight: 600;
+  padding: 0.75rem 0.5rem;
+  border-bottom: 1px solid var(--border);
+  transition: color 0.15s;
+}
+.mobile-nav-link:hover,
+.mobile-nav-link:focus { color: var(--accent); outline: none; }
+
+.mobile-nav-link--sub {
+  font-size: 0.95rem;
+  font-weight: 500;
+  padding-left: 1rem;
+  color: var(--muted);
+  border-bottom-color: transparent;
+}
+.mobile-nav-link--sub:hover,
+.mobile-nav-link--sub:focus { color: var(--accent); }
+
+.mobile-nav-section-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  padding: 1.25rem 0.5rem 0.4rem;
+}
+
+@media (max-width: 768px) {
+  .mobile-nav-btn { display: flex; }
+  .nav { display: none; }
+}
+
 /* ── Nav Dropdown ── */
 .nav-dropdown { position: relative; }
 
@@ -1468,26 +1541,30 @@ a { color: inherit; }
 }
 
 .dropdown-arrow { transition: transform 0.2s; }
-.nav-dropdown:hover .dropdown-arrow { transform: rotate(180deg); }
+.dropdown-arrow--open { transform: rotate(180deg); }
 
+/* Panel rendered by JS — no gap, no CSS show/hide needed */
 .dropdown-panel {
-  display: none;
   position: absolute;
-  top: calc(100% + 0.5rem);
+  top: 100%;
   left: 50%;
   transform: translateX(-50%);
+  padding-top: 0.5rem;
+  min-width: 220px;
+  z-index: 50;
+}
+
+/* Visual card lives inside the section so the transparent padding-top bridges the gap */
+.dropdown-section {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   box-shadow: var(--shadow-lg);
   padding: 1rem;
-  min-width: 220px;
-  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
 }
-
-.nav-dropdown:hover .dropdown-panel { display: block; }
-
-.dropdown-section { display: flex; flex-direction: column; gap: 0.25rem; }
 
 .dropdown-label {
   font-size: 0.75rem;
