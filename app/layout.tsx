@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
 import './globals.css';
 import { SiteFrame } from '@/components/SiteFrame';
+import { Analytics } from '@vercel/analytics/next';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://cash4homefl.vercel.app'),
@@ -159,6 +160,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       </head>
       <body>
         <SiteFrame>{children}</SiteFrame>
+        <Analytics />
       </body>
     </html>
   );
