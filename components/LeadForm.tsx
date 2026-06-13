@@ -1,4 +1,5 @@
 import type { FormDefaults } from '@/lib/page-types';
+import { AddressAutocomplete } from '@/components/AddressAutocomplete';
 
 type LeadFormProps = {
   defaults?: FormDefaults;
@@ -15,7 +16,7 @@ export function LeadForm({ defaults }: LeadFormProps) {
 
       <label className="field">
         <span>Property address</span>
-        <input name="address" defaultValue={defaults?.address ?? ''} placeholder="Street address" required />
+        <AddressAutocomplete defaultValue={defaults?.address} />
       </label>
 
       <label className="field">
@@ -26,6 +27,12 @@ export function LeadForm({ defaults }: LeadFormProps) {
       <label className="field">
         <span>Email</span>
         <input name="email" defaultValue={defaults?.email ?? ''} placeholder="you@email.com" type="email" />
+      </label>
+
+      {/* Honeypot: invisible to humans, bots that fill it are dropped server-side */}
+      <label className="hp-field" aria-hidden="true">
+        <span>Company</span>
+        <input name="company" tabIndex={-1} autoComplete="off" />
       </label>
 
       <button className="button button--block" type="submit">
