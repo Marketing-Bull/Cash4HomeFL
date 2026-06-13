@@ -2,6 +2,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import type { ReactNode } from 'react';
 import { getCountyLinks, getFeaturedCityLinks } from '@/lib/site-data';
+import { NavDropdown } from '@/components/NavDropdown';
+import { MobileNav } from '@/components/MobileNav';
 
 const situationLinks = [
   { label: 'Foreclosure', href: '/we-buy-houses-foreclosure' },
@@ -31,32 +33,22 @@ export function SiteFrame({ children }: { children: ReactNode }) {
             <Image
               src="/images/logo/logo-primary.png"
               alt="Cash4HomeFL"
-              width={180}
-              height={48}
+              width={220}
+              height={60}
               priority
-              style={{ objectFit: 'contain', height: '40px', width: 'auto' }}
+              style={{ objectFit: 'contain', height: '56px', width: 'auto' }}
             />
           </Link>
 
           <nav className="nav" aria-label="Primary navigation">
             {primaryLinks.map((link) => (
               link.label === 'We Buy Houses' ? (
-                <div className="nav-dropdown" key={link.href}>
-                  <Link className="nav-link nav-link--dropdown" href={link.href}>
-                    {link.label}
-                    <svg className="dropdown-arrow" viewBox="0 0 20 20" fill="currentColor" width="14" height="14" aria-hidden="true">
-                      <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clipRule="evenodd" />
-                    </svg>
-                  </Link>
-                  <div className="dropdown-panel">
-                    <div className="dropdown-section">
-                      <span className="dropdown-label">Situations we help with</span>
-                      {situationLinks.map((s) => (
-                        <Link className="dropdown-link" href={s.href} key={s.href}>{s.label}</Link>
-                      ))}
-                    </div>
-                  </div>
-                </div>
+                <NavDropdown
+                  key={link.href}
+                  label={link.label}
+                  href={link.href}
+                  items={situationLinks}
+                />
               ) : (
                 <Link className="nav-link" href={link.href} key={link.href}>
                   {link.label}
@@ -68,6 +60,8 @@ export function SiteFrame({ children }: { children: ReactNode }) {
           <a className="phone-link" href="tel:+15612209399">
             (561) 220-9399
           </a>
+
+          <MobileNav primaryLinks={primaryLinks} situationLinks={situationLinks} />
         </div>
       </header>
 
@@ -80,9 +74,9 @@ export function SiteFrame({ children }: { children: ReactNode }) {
               <Image
                 src="/images/logo/logo-white.png"
                 alt="Cash4HomeFL"
-                width={200}
-                height={54}
-                style={{ objectFit: 'contain', height: '44px', width: 'auto', filter: 'brightness(1)' }}
+                width={220}
+                height={60}
+                style={{ objectFit: 'contain', height: '56px', width: 'auto', filter: 'brightness(1)' }}
               />
             </Link>
             <p className="muted">

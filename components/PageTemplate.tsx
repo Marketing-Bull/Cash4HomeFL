@@ -3,6 +3,7 @@ import Link from 'next/link';
 import type { ReactNode } from 'react';
 import type { PageTemplateProps, FaqItem, StepItem, LinkItem } from '@/lib/page-types';
 import { LeadForm } from '@/components/LeadForm';
+import { ScrollToFormLink } from '@/components/ScrollToFormLink';
 
 /* ── Schema Markup ── */
 function BreadcrumbSchema({ items }: { items: LinkItem[] }) {
@@ -226,7 +227,7 @@ function SocialProofSection() {
               <li>Transparent offer with no hidden deductions at closing</li>
             </ul>
             <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap', marginTop: '0.5rem' }}>
-              <Link className="button" href="/contact">Get My Cash Offer</Link>
+              <ScrollToFormLink className="button">Get My Cash Offer</ScrollToFormLink>
               <a className="button button--ghost" href="tel:+15612209399">(561) 220-9399</a>
             </div>
           </div>
@@ -327,7 +328,7 @@ export function PageTemplate({
               </div>
             ) : null}
           </div>
-          <LeadForm defaults={formDefaults} />
+          <div id="lead-form"><LeadForm defaults={formDefaults} /></div>
         </div>
       </section>
 
@@ -448,9 +449,9 @@ export function PageTemplate({
             <p className="lead lead--compact">{finalCtaLead ?? lead}</p>
           </div>
           <div className="cta-actions">
-            <Link className="button button--lg" href={contactHref ?? '/contact'}>
+            <ScrollToFormLink className="button button--lg">
               {ctaLabel ?? 'Get My Cash Offer'}
-            </Link>
+            </ScrollToFormLink>
             <a className="button button--ghost" href="tel:+15612209399">
               Call (561) 220-9399
             </a>

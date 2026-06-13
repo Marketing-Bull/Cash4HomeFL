@@ -24,22 +24,6 @@ export async function POST(request: Request) {
   const pageUrl = request.headers.get('referer') ?? '';
   const submittedAt = new Date().toISOString();
 
-  const leadData = {
-    source: 'cash4homefl.com lead form',
-    page_url: pageUrl,
-    full_address: address,
-    address1: field('address1') || address,
-    city,
-    state,
-    postal_code: zip,
-    phone,
-    email,
-    latitude: field('lat'),
-    longitude: field('lng'),
-    place_id: field('place_id'),
-    submitted_at: submittedAt,
-  };
-
   // ── Resend email notification ──────────────────────────────────────────────
   const resendKey = process.env.RESEND_API_KEY;
   if (resendKey) {
@@ -67,24 +51,6 @@ export async function POST(request: Request) {
     }
   } else {
     console.warn('RESEND_API_KEY is not set — lead email not sent', { address });
-  }
-
-  // ── GoHighLevel webhook (optional) ────────────────────────────────────────
-  const webhookUrl = process.env.GHL_WEBHOOK_URL;
-  if (webhookUrl) {
-    try {
-      const res = await fetch(webhookUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(leadData),
-        signal: AbortSignal.timeout(8000),
-      });
-      if (!res.ok) {
-        console.error(`GHL webhook responded ${res.status}`, await res.text());
-      }
-    } catch (err) {
-      console.error('GHL webhook delivery failed', err);
-    }
   }
 
   return thankYou();
