@@ -131,6 +131,7 @@ const featuredTestimonials = [
     quote: "They came out, looked at it, and handed me an offer within a week. I didn't have to lift a finger.",
     outcome: 'Closed in 18 days, as-is',
     initials: 'MT',
+    avatar: '/images/testimonials/marcus-t.jpg',
   },
   {
     name: 'Sandra R.',
@@ -139,6 +140,7 @@ const featuredTestimonials = [
     quote: 'Cash4HomeFL looked at the property on a Tuesday and I signed Friday. No repairs, no waiting.',
     outcome: 'Closed in 11 days',
     initials: 'SR',
+    avatar: '/images/testimonials/sandra-r.jpg',
   },
   {
     name: 'Carmen M.',
@@ -147,6 +149,7 @@ const featuredTestimonials = [
     quote: "They worked fast enough that I was able to pay off the mortgage and walk away with cash instead of losing everything.",
     outcome: 'Closed in 26 days, mortgage paid',
     initials: 'CM',
+    avatar: '/images/testimonials/carmen-m.jpg',
   },
 ];
 
@@ -166,7 +169,15 @@ function TestimonialsSection() {
               <p className="testimonial-quote">&#8220;{t.quote}&#8221;</p>
               <span className="testimonial-outcome">✓ {t.outcome}</span>
               <div className="testimonial-author">
-                <div className="testimonial-avatar">{t.initials}</div>
+                <div className="testimonial-avatar" style={{ overflow: 'hidden', padding: 0 }}>
+                  <Image
+                    src={t.avatar}
+                    alt={t.name}
+                    width={48}
+                    height={48}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  />
+                </div>
                 <div>
                   <div className="testimonial-name">{t.name}</div>
                   <div className="testimonial-meta">{t.city} · {t.situation}</div>
@@ -193,7 +204,7 @@ function SocialProofSection() {
         <div className="split-section">
           <div className="split-image">
             <Image
-              src="/images/hero/happy-sellers.jpg"
+              src="/images/hero/happy-sellers-v2.jpg"
               alt="Happy South Florida homeowners after selling their house for cash to Cash4HomeFL"
               width={800}
               height={600}
@@ -252,9 +263,9 @@ function Section({
 
 /* ── Step illustration paths ── */
 const stepIllustrations = [
-  '/images/process/step-submit.png',
-  '/images/process/step-offer.png',
-  '/images/process/step-close.png',
+  '/images/process/step-submit-v2.png',
+  '/images/process/step-offer-v2.png',
+  '/images/process/step-close-v2.png',
 ];
 
 /* ── Main PageTemplate ── */
@@ -285,14 +296,12 @@ export function PageTemplate({
 
       {/* ── Hero with full-bleed background image ── */}
       <section className="section--hero">
-        <div className="hero-bg">
-          <Image
-            src="/images/hero/hero-home.jpg"
-            alt="South Florida home — Cash4HomeFL buys houses as-is in Palm Beach and Broward County"
-            fill
-            priority
-            sizes="100vw"
-            style={{ objectFit: 'cover', objectPosition: 'center 30%' }}
+        <div className="hero-bg" aria-hidden="true">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/images/hero/hero-home-v2.jpg"
+            alt=""
+            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 30%' }}
           />
         </div>
         <div className="container hero-grid">
