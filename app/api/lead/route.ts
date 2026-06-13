@@ -47,7 +47,7 @@ export async function POST(request: Request) {
     const locationLine = [city, state, zip].filter(Boolean).join(', ');
     try {
       await resend.emails.send({
-        from: 'Cash4HomeFL Leads <leads@cash4homefl.com>',
+        from: 'Cash4HomeFL Leads <leads@getmarketingbull.com>',
         to: NOTIFY_TO,
         subject: `New lead: ${address || '(no address)'}`,
         html: `
