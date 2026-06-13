@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import type { ReactNode } from 'react';
 import { getCountyLinks, getFeaturedCityLinks } from '@/lib/site-data';
 
@@ -26,8 +27,15 @@ export function SiteFrame({ children }: { children: ReactNode }) {
     <div className="site-frame">
       <header className="topbar">
         <div className="container topbar__inner">
-          <Link className="brand" href="/">
-            Cash4HomeFL
+          <Link className="brand" href="/" aria-label="Cash4HomeFL — Home">
+            <Image
+              src="/images/logo/logo-primary.png"
+              alt="Cash4HomeFL"
+              width={180}
+              height={48}
+              priority
+              style={{ objectFit: 'contain', height: '40px', width: 'auto' }}
+            />
           </Link>
 
           <nav className="nav" aria-label="Primary navigation">
@@ -68,8 +76,14 @@ export function SiteFrame({ children }: { children: ReactNode }) {
       <footer className="footer">
         <div className="container footer__grid">
           <div>
-            <Link className="brand brand--footer" href="/">
-              Cash4HomeFL
+            <Link className="brand brand--footer" href="/" aria-label="Cash4HomeFL — Home">
+              <Image
+                src="/images/logo/logo-white.png"
+                alt="Cash4HomeFL"
+                width={200}
+                height={54}
+                style={{ objectFit: 'contain', height: '44px', width: 'auto', filter: 'brightness(1)' }}
+              />
             </Link>
             <p className="muted">
               A South Florida cash home buyer focused on Palm Beach County and Broward. We buy houses as-is — no repairs, no commissions, no hassle.
