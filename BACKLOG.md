@@ -182,6 +182,58 @@ Notes: Add AggregateRating to Organization schema or standalone:
        Source of reviews: real client testimonials, Google reviews, BBB
        DO NOT fabricate — if no real reviews exist yet, omit until真实的 reviews exist
 
+## [P1] Implement 80/20 keyword research action plan — homepage + top local pages
+Owner: alex
+Status: todo
+BlockedBy: []
+ResearchDate: 2026-06-12
+Notes: Added from the lean keyword + SimilarWeb research pass. Scope intentionally reduced to
+       the highest-impact work: 5 priority competitor domains, 3 recent SimilarWeb months, and
+       a practical execution checklist instead of broad 60-domain / multi-region analysis.
+
+       Keyword workbook summary:
+       - 115 keywords reviewed; estimated combined monthly volume: 37,090.
+       - Largest themes: cash/we-buy-houses (68 keywords; 24,080 volume), sell fast/as-is
+         (18 keywords; 7,660 volume), foreclosure/mortgage distress (7 keywords; 2,100 volume),
+         probate/inherited (7 keywords; 1,650 volume).
+       - Highest-value geos: Palm Beach (40 keywords; 13,190 volume), Broward (34 keywords;
+         9,030 volume), statewide Florida (21 keywords; 8,560 volume).
+
+       Lean SimilarWeb competitor check, Feb-Apr 2026:
+       - HomeVestors / We Buy Ugly Houses — homevestors.com — 63,123 estimated visits.
+       - WeBuyHouses.com — webuyhouses.com — 32,028 estimated visits.
+       - Florida Cash Home Buyers — floridacashhomebuyers.com — 21,112 estimated visits.
+       - South Florida Cash Home Buyers — southfloridacashhomebuyers.com — 848 estimated visits.
+       - FL House Buyer — flhousebuyer.com — no SimilarWeb visit data found, but still inspect
+         manually because it is a Palm Beach / West Palm Beach local competitor.
+
+       Execution checklist:
+       1. Rewrite homepage hero, subhead, trust bar, CTA, and first 300 words around:
+          "we buy houses for cash Florida", "sell my house fast Palm Beach County",
+          "sell my house fast Broward County", as-is sale, no repairs, no commissions,
+          flexible close, and cash offer.
+       2. Improve /we-buy-houses/west-palm-beach for "we buy houses West Palm Beach",
+          "cash home buyers West Palm Beach", and "sell my house as-is West Palm Beach".
+          Include local proof, neighborhood references, FAQs, process steps, and direct CTA.
+       3. Improve /we-buy-houses/fort-lauderdale for "we buy houses Fort Lauderdale" and
+          "cash for homes Fort Lauderdale". Localize around Broward/Fort Lauderdale seller
+          concerns and add internal links from homepage and county pages.
+       4. Draft or improve foreclosure page for "sell house before foreclosure Florida",
+          "stop foreclosure West Palm Beach", and "foreclosure help Broward County".
+       5. Draft or improve inherited/probate page for "sell inherited house Florida" and
+          probate-house-buyer terms. Address heirs, cleanup, remote sellers, fast close,
+          title/probate caveats, and soft legal disclaimer.
+       6. Manually review the 5 competitors above for H1/title, CTA wording, proof signals,
+          review/testimonial placement, local page structure, FAQs, and internal links.
+
+       Acceptance criteria:
+       - Homepage and the two city pages have updated title/H1/intro copy aligned to the
+         target keyword clusters.
+       - Foreclosure and inherited/probate pages have unique 700-1,000 word drafts or clear
+         implementation-ready copy briefs.
+       - Homepage links to West Palm Beach, Fort Lauderdale, foreclosure, and inherited/probate.
+       - No fabricated reviews, ratings, seller outcomes, or unverifiable trust claims.
+
 ## [P2] Write unique hero + body copy for top 8 city pages
 Owner: alex
 Status: in_progress
