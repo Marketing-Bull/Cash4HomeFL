@@ -2323,3 +2323,36 @@ N/A — no code changes pushed.
 - SEO issue: none — 82/82 sitemap URLs return 200, 82/82 canonicals present, og-image.jpg + favicon.ico both 200, robots.txt rules live
 - Mode: passive regression-check (16th consecutive clean run since 06:07 12:00 mode switch)
 - Action taken: no code change; no deploy; no log commit needed beyond this entry
+
+## [SCAN] 2026-06-13 12:00 UTC — Dream scan findings
+- Schema status: clean on all archetypes (homepage 4 blocks; city 5; situation 4; blog 2; 82/82 pages have JSON-LD)
+- Top competitor move: no fresh signal — webuyhouses.com/florida still 403 (Cloudflare, same as last 6+ scans)
+- Opportunity: none new — BACKLOG fully drained of unblocked technical work
+- SEO issue: none — 82/82 sitemap URLs return 200, 82/82 self-URL canonicals, og-image.jpg (46KB) + favicon.ico + icon.png all 200, robots.txt clean
+- Mode: passive regression-check (17th consecutive clean run since 2026-06-07 12:00 mode switch)
+- Live sitemap health sample (seed=20260613): 20/20 → 200 OK across city, zip, situation, blog, FAQ, reviews
+- BACKLOG state: 13 `Status: todo` + 1 `Status: in_progress` (P2 city copy, top 4/9 done) — unchanged from 06:12 16:02 scan
+- Self-resolving check: walked each todo; no additional self-resolving candidates beyond the 06:12 P4 hreflang close
+- Action taken: no code change; no deploy; no log commit needed beyond this entry
+
+## [SCAN] 2026-06-14 02:00 UTC — Dream scan findings
+- Schema status: clean on all archetypes (homepage 4 blocks: RealEstateAgent+WebSite+FAQPage+HowTo; city 5; situation 4; blog 2; 82/82 pages have JSON-LD)
+- Top competitor move: no fresh signal in this window — competitor scan remains blocked (webuyhouses.com/florida 403)
+- Opportunity: none new — BACKLOG fully drained of unblocked technical work; remaining P*/P1 items all gated on real reviews, human-authored copy, or operator-only actions (GBP, GA4, GSC, P1 AggregateRating)
+- SEO issue: none — 82/82 sitemap URLs return 200 (full sweep, not sample), 82/82 self-URL canonicals, og-image.jpg + favicon.ico + icon.png all 200, robots.txt rules live
+- Mode: passive regression-check (18th consecutive clean run since 2026-06-07 12:00 mode switch)
+- Live sitemap health (full sweep, not sample): 82/82 → 200 OK across all archetypes
+- City page deep check: 29/29 `/we-buy-houses/<slug>` URLs return 200 (all 29 sitemap-listed cities serving pre-built HTML correctly)
+- Zip page deep check: 25/25 `/sell-my-house-fast/<zip>` URLs return 200
+- BACKLOG state: 13 `Status: todo` + 1 `Status: in_progress` (P2 city copy, top 4/9 done) — unchanged from 06:13 12:00 scan
+- Self-resolving check: walked each todo; no additional self-resolving candidates beyond the 06:12 P4 hreflang close
+- **Cron prompt stale-priority flag (5th consecutive run with the same stale prompt):** the cron prompt's "Tonight's Priority" is `P0 — Fix 404 on dynamic city pages. Audit: curl -sI https://cash4homefl.vercel.app/we-buy-houses-west-palm-beach`. Both halves are stale:
+  - The P0 itself has been `Status: done` since 2026-06-01 (commit 23e2985 — `fix: await params in dynamic routes (Next.js 14.2 compatibility)`)
+  - The audit URL is the **wrong URL pattern**: `/we-buy-houses-west-palm-beach` (hyphen, no `/we-buy-houses` prefix) → 404 is **correct behavior**, not a bug. The live URL is `/we-buy-houses/west-palm-beach` (slash, prefix) → HTTP 200 ✅ (just verified)
+  - **Concrete rewrite template for the operator** (so the next cron run isn't a phantom finding):
+    1. Remove the stale P0 line and the stale audit URL from the prompt body
+    2. Reference the BACKLOG.md next-item flow, e.g. `read BACKLOG.md, work the first non-gated Status: todo P*/P1 item`
+    3. Explicitly tell the cron to remain in regression-check mode when all items are gated
+  - The next cron run will continue to log this stale-prompt flag until the prompt is updated. Doing this work in the log entry per the 2026-06-08 02:02 worked example.
+- Working tree: 3 uncommitted WIP files (`app/globals.css`, `components/PageTemplate.tsx`, `lib/page-types.ts`) — same parallel-agent `bodyParagraphs` WIP as the 06:13 12:00 scan, not my work. Leaving untouched per selective-staging discipline rule
+- Action taken: no code change; no deploy; no log commit needed beyond this entry (but writing this entry per existing pattern)
