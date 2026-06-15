@@ -2410,3 +2410,29 @@ N/A — no code changes pushed.
 - Action taken: no code change; no deploy; no log commit needed beyond this entry
 - Files changed: IMPROVEMENT-LOG.md only (this entry)
 - Deploy: N/A — log-only commit, Vercel auto-deploy from main will be a no-op (no app code touched)
+## [SCAN] 2026-06-15 16:05 UTC — Dream scan findings
+- Schema status: clean on all archetypes (homepage 4 JSON-LD blocks: RealEstateAgent+WebSite+FAQPage+HowTo; 82/82 pages have JSON-LD)
+- Live sitemap health (full sweep, not sample): 82/82 → 200 OK across city, zip, situation, blog, FAQ, reviews
+- City page deep check: 29/29 `/we-buy-houses/<slug>` URLs return 200
+- Zip page deep check: 25/25 `/sell-my-house-fast/<zip>` URLs return 200
+- Asset checks: `/favicon.ico`, `/icon.png`, `/images/og-image.jpg`, `/robots.txt`, `/sitemap.xml` all → 200
+- Homepage structural: title `Cash Home Buyers in Palm Beach County &amp; Broward`, canonical `https://cash4homefl.vercel.app`, og:title + og:description + og:image all present, 4 JSON-LD `<script>` blocks
+- Audit page pattern check: `/we-buy-houses-west-palm-beach` (stale prompt URL) → 404 (correct behavior — wrong URL pattern); `/we-buy-houses/west-palm-beach` (correct URL) → 200 ✅
+- Top competitor move: no fresh signal — webuyhouses.com/florida 403, cashhomebuyers.io/florida 403. **Note:** `https://www.sellmyhousefastflorida.com` returned 200 with 3 JSON-LD blocks (RealEstateAgent + 2 others) — first time this source reachable in 7+ scans. Domain is a Squarespace site targeting the broader "FL cash buyers" keyword set with a Miami phone (305-874-0269), not a direct WPB competitor. Logged for awareness; no P*/P1 action triggered.
+- Opportunity: none new — BACKLOG fully drained of unblocked technical work
+- SEO issue: none — site healthy on all structural checks
+- Mode: passive regression-check (21st consecutive clean run since 2026-06-07 12:00 mode switch)
+- BACKLOG state: 13 `Status: todo` + 1 `Status: in_progress` (P2 city copy, top 4/9 done) — unchanged
+- Self-resolving check: walked each todo; only verify/cleanup candidate would be the 2 stale `BlockedBy: "Fix 404 on dynamic city pages"` references on `[P2] Write unique copy for top 8 city pages` (in_progress) and `[P2] Write unique copy for top 10 zip pages` (todo). Both are now-unblocked dependency references — but the underlying copy items are still gated on human-authored text, so unblocking the dependency string doesn't enable new work. Not worth a doc-only commit. Logged here for the next BACKLOG-tidy pass.
+- **Cron prompt stale-priority flag (8th consecutive run with the same stale prompt):** the cron prompt's "Tonight's Priority" is `P0 — Fix 404 on dynamic city pages. Audit: curl -sI https://cash4homefl.vercel.app/we-buy-houses-west-palm-beach`. Both halves are stale:
+  - The P0 itself has been `Status: done` since 2026-06-01 (commit 23e2985 — `fix: await params in dynamic routes (Next.js 14.2 compatibility)`)
+  - The audit URL is the **wrong URL pattern**: `/we-buy-houses-west-palm-beach` (hyphen, no `/we-buy-houses` prefix) → 404 is **correct behavior**, not a bug. The live URL is `/we-buy-houses/west-palm-beach` (slash, prefix) → HTTP 200 ✅ (just re-verified this run)
+  - **Concrete rewrite template for the operator** (so the next cron run isn't a phantom finding), repeated per the 2026-06-14 02:00 worked example:
+    1. Remove the stale P0 line and the stale audit URL from the prompt body
+    2. Reference the BACKLOG.md next-item flow, e.g. `read BACKLOG.md, work the first non-gated Status: todo P*/P1 item`
+    3. Explicitly tell the cron to remain in regression-check mode when all items are gated
+  - The next cron run will continue to log this stale-prompt flag until the prompt is updated
+- Working tree: clean — no uncommitted WIP to selectively stage around
+- Action taken: no code change; no deploy; no log commit needed beyond this entry
+- Files changed: IMPROVEMENT-LOG.md only (this entry)
+- Deploy: N/A — log-only commit, Vercel auto-deploy from main will be a no-op (no app code touched)
