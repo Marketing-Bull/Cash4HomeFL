@@ -2436,3 +2436,19 @@ N/A — no code changes pushed.
 - Action taken: no code change; no deploy; no log commit needed beyond this entry
 - Files changed: IMPROVEMENT-LOG.md only (this entry)
 - Deploy: N/A — log-only commit, Vercel auto-deploy from main will be a no-op (no app code touched)
+
+## [SCAN] 2026-06-16 20:00 UTC — Dream scan findings
+- Schema status: clean — homepage 4 JSON-LD blocks (RealEstateAgent+WebSite+FAQPage+HowTo), full OG tags, canonical correct
+- Live sitemap health (random sample, seed=20260616): 15/15 → 200 OK (city, zip, situation, blog)
+- Audit page checks: `/` 200, `/we-buy-houses/west-palm-beach` 200, `/we-buy-houses-foreclosure` 200, `/palm-beach-county` 200; stale-prompt URL `/we-buy-houses-west-palm-beach` 404 (correct — wrong pattern)
+- Asset checks: `/favicon.ico`, `/icon.png`, `/images/og-image.jpg`, `/robots.txt` all → 200
+- Top competitor move: no fresh signal — webuyhouses.com/florida 403, cashhomebuyers.io 403 (same as prior runs)
+- Opportunity: none new — BACKLOG fully drained of unblocked technical work
+- SEO issue: none — site healthy on all structural checks
+- Mode: passive regression-check (22nd consecutive clean run since 2026-06-07 12:00 mode switch)
+- BACKLOG state: unchanged from 06-15 16:05 scan
+- **Cron prompt stale-priority flag (9th consecutive run):** same as prior runs — see 06-15 16:05 entry for full detail and rewrite template
+- Working tree: clean
+- Action taken: no code change; no deploy; log-only commit
+- Files changed: IMPROVEMENT-LOG.md only
+- Deploy: N/A
