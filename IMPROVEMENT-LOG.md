@@ -2452,3 +2452,16 @@ N/A — no code changes pushed.
 - Action taken: no code change; no deploy; log-only commit
 - Files changed: IMPROVEMENT-LOG.md only
 - Deploy: N/A
+
+## [SCAN] 2026-06-17 (cron delivery switch to [SILENT])
+Per the skill's `Once in passive mode at sub-daily cadence, default to [SILENT]` rule (referenced in 2026-06-12 12:00 entry), this run delivers `[SILENT]` rather than a full log entry. Verification performed (not delivered):
+- 82/82 sitemap URLs → 200 OK (full sweep, not sample)
+- `/favicon.ico`, `/icon.png`, `/images/og-image.jpg`, `/robots.txt`, `/sitemap.xml` all → 200
+- `/we-buy-houses/west-palm-beach` (correct URL) → 200 ✅
+- `/we-buy-houses-west-palm-beach` (stale prompt URL) → 404 (correct — wrong pattern)
+- Homepage: 4 JSON-LD blocks, canonical + OG title/image present
+- BACKLOG state: 12 `Status: todo` + 1 `Status: in_progress`, all gated on operator/content/real-reviews dependencies; no fabrication
+- Self-resolving check: no new candidates
+- Stale-prompt flag: 10th consecutive run (rewrite template documented in 2026-06-15 16:05 entry)
+
+The 23rd consecutive clean run is the noise threshold — the 22 prior entries documented the mode transition. Subsequent healthy sub-daily scans should default to `[SILENT]` per the skill rule. Re-emit a long entry only when: (a) shipping code, (b) real regression detected, (c) new gating condition change, (d) first scan after the operator updates the prompt to the BACKLOG-driven flow.
