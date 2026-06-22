@@ -2465,3 +2465,26 @@ Per the skill's `Once in passive mode at sub-daily cadence, default to [SILENT]`
 - Stale-prompt flag: 10th consecutive run (rewrite template documented in 2026-06-15 16:05 entry)
 
 The 23rd consecutive clean run is the noise threshold — the 22 prior entries documented the mode transition. Subsequent healthy sub-daily scans should default to `[SILENT]` per the skill rule. Re-emit a long entry only when: (a) shipping code, (b) real regression detected, (c) new gating condition change, (d) first scan after the operator updates the prompt to the BACKLOG-driven flow.
+
+## [SCAN] 2026-06-22 08:00 UTC — Dream scan findings (gap-resume, 24th clean run)
+Resuming after 5-day cron gap (last run 2026-06-17 02:00, established [SILENT] default for healthy sub-daily scans). Compact log because the site has been verified clean 23× consecutively and the gap is not a regression signal.
+
+- Schema status: clean — homepage 4 JSON-LD blocks (RealEstateAgent + WebSite + FAQPage + HowTo), city pages 5 types (add BreadcrumbList); full OG title/desc/image; canonical correct on all sampled pages
+- Live sitemap health: 82/82 URLs in sitemap (unchanged); sampled 10 across archetypes → all 200, all canonical/OG/JSON-LD intact
+- Audit page checks (per cron prompt URLs): `/` 200, `/we-buy-houses/west-palm-beach` 200 (correct URL — `/we-buy-houses/[city]` format), `/we-buy-houses-foreclosure` 200, `/palm-beach-county` 200
+- **Stale audit URLs in cron prompt (10th consecutive flag):**
+  - `/we-buy-houses-west-palm-beach` (hyphenated, no `/we-buy-houses` prefix) → 404 — WRONG pattern, live URL is `/we-buy-houses/west-palm-beach`
+  - `/we-buy-houses-inherited-house` → 404 — WRONG pattern, inherited content lives at `/blog/inherited-house-sale-process`
+  - Rewrite template per 06-15 16:05 entry applies unchanged
+- Asset checks: `/favicon.ico` 200, `/images/og-image.jpg` 200, `/robots.txt` 200, `/sitemap.xml` 200
+- Top competitor move: no fresh signal — webuyhouses.com/florida 403, cashhomebuyers.io 403 (same bot-block pattern as prior runs); sellmyhousefastflorida.com reachable (per 06-15 16:05 note) but not actively checked this run
+- Opportunity: none new — BACKLOG fully drained of unblocked technical work; 12 `Status: todo` items all gated on human-authored content / operator-only actions (Alex copy, real testimonials, GA4/GSC/GBP wiring, hero images, live chat)
+- P1 candidate (`Add aggregate Review/rating schema`, BlockedBy: []) not actionable — requires real testimonials (P3 dep) and aggregating 0 reviews would violate Google's self-serving reviews policy
+- SEO issue: none — site healthy on all structural checks; no schema-type drift, no canonical regression, no asset 404s
+- Mode: passive regression-check (24th consecutive clean run since 2026-06-07 12:00 mode switch)
+- BACKLOG state: unchanged from 06-17 scan; all 12 todo items remain gated
+- Self-resolving check: no new verify/cleanup candidates this run (hreflang was the only one and it's already closed)
+- Working tree: clean (verified via `git status`)
+- Action taken: no code change; no deploy; log-only commit
+- Files changed: IMPROVEMENT-LOG.md only
+- Deploy: N/A
