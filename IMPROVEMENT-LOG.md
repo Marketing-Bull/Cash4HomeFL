@@ -2488,3 +2488,34 @@ Resuming after 5-day cron gap (last run 2026-06-17 02:00, established [SILENT] d
 - Action taken: no code change; no deploy; log-only commit
 - Files changed: IMPROVEMENT-LOG.md only
 - Deploy: N/A
+
+## [SCAN] 2026-06-25 04:00 UTC — Dream scan findings (25th consecutive clean)
+Resuming after 3-day cron gap (last scan 2026-06-22 08:00 UTC). Site verified healthy across all standard structural checks. The cron prompt's "Tonight's Priority" P0 is the 11th-consecutive-stale flag — both the P0 (done since 2026-06-01) and the audit URL pattern (wrong — see below) are unchanged from prior runs. Per the 2026-06-17 `[SILENT]`-default rule established for healthy sub-daily scans, this run emits a compact log entry (rather than silent) only because (a) the gap-resume cadence warrants one confirmation entry per the 06-22 pattern, and (b) one new reachability signal on a competitor source is worth a one-line note.
+
+- Schema status: clean — homepage 4 JSON-LD blocks (RealEstateAgent + WebSite + FAQPage + HowTo), full OG title/desc/image, canonical correct
+- Live sitemap health (random sample, seed=20260625): 20/20 → 200 OK across city (8), zip (6), situation (1), blog (1), homepage (1), county (1), and adjacent archetypes — full coverage of the sitemap's 82 URLs proportionally represented
+- City page deep check: 29/29 `/we-buy-houses/<slug>` URLs return 200 (unchanged from 06-22 scan)
+- Zip page deep check: 25/25 `/sell-my-house-fast/<zip>` URLs return 200
+- Asset checks: `/favicon.ico` 200, `/icon.png` 200, `/images/og-image.jpg` 200, `/robots.txt` 200, `/sitemap.xml` 200 — all asset 404s from earlier scans remain fixed
+- Homepage structural: title `Cash Home Buyers in Palm Beach County &amp; Broward`, canonical `https://cash4homefl.vercel.app` (self-referencing), og:title + og:description + og:image all present, 4 JSON-LD `<script>` blocks
+- Audit page checks (per cron prompt URLs): `/` 200, `/we-buy-houses/west-palm-beach` 200, `/we-buy-houses-foreclosure` 200, `/palm-beach-county` 200; stale-prompt URL `/we-buy-houses-west-palm-beach` 404 (correct behavior — wrong URL pattern; hyphen, no `/we-buy-houses` prefix; live URL is slash-prefixed)
+- **Competitor signal (one new note):** `https://www.cashhomebuyers.io/florida` returned 200 (was 403 / bot-blocked in prior scans — first reachable this cycle). Body looks like a real WordPress page (WordPress + Gravity Forms scripts visible in HTML head). Not actionable — the page's "Florida" landing is national-funnel-level, not a direct WPB/PBC competitor, and the cron can't extract meaningful intel without browser-side rendering. Logging for awareness; no P*/P1 action triggered.
+- Other competitors: webuyhouses.com/florida 404 (route dead), sellmyhousefastflorida.com not checked this run (was reachable per 06-15 16:05 note — still in awareness log)
+- Opportunity: none new — BACKLOG fully drained of unblocked technical work; 12 `Status: todo` items remain gated on human-authored content (Alex copy, real testimonials, GBP/GA4/GSC operator wiring, hero images, live chat widget)
+- P1 candidate (`Add aggregate Review/rating schema`, BlockedBy: []) still not actionable — requires real testimonials (P3 dep) and aggregating 0 reviews would violate Google's self-serving reviews policy
+- SEO issue: none — site healthy on all structural checks; no schema-type drift, no canonical regression, no asset 404s
+- Mode: passive regression-check (25th consecutive clean run since 2026-06-07 12:00 mode switch)
+- BACKLOG state: unchanged from 06-22 scan; 12 `Status: todo` + 1 `Status: in_progress` (P2 city copy, top 4/9 done); no drift to close
+- Self-resolving check: walked each todo; no new verify/cleanup candidates (hreflang was the only one and it's already closed)
+- **Cron prompt stale-priority flag (11th consecutive run with the same stale prompt):** the cron prompt's "Tonight's Priority" is `P0 — Fix 404 on dynamic city pages. Audit: curl -sI https://cash4homefl.vercel.app/we-buy-houses-west-palm-beach`. Both halves are stale:
+  - The P0 itself has been `Status: done` since 2026-06-01 (commit 23e2985 — `fix: await params in dynamic routes (Next.js 14.2 compatibility)`)
+  - The audit URL is the **wrong URL pattern**: `/we-buy-houses-west-palm-beach` (hyphen, no `/we-buy-houses` prefix) → 404 is **correct behavior**, not a bug. The live URL is `/we-buy-houses/west-palm-beach` (slash, prefix) → HTTP 200 ✅ (just re-verified this run)
+  - **Concrete rewrite template for the operator** (so the next cron run isn't a phantom finding), repeated per the 2026-06-22 08:00 worked example:
+    1. Remove the stale P0 line and the stale audit URL from the prompt body
+    2. Reference the BACKLOG.md next-item flow, e.g. `read BACKLOG.md, work the first non-gated Status: todo P*/P1 item`
+    3. Explicitly tell the cron to remain in regression-check mode when all items are gated
+  - The next cron run will continue to log this stale-prompt flag until the prompt is updated
+- Working tree: clean — no uncommitted WIP to selectively stage around
+- Action taken: no code change; no deploy; log-only commit
+- Files changed: IMPROVEMENT-LOG.md only (this entry)
+- Deploy: N/A — log-only commit, Vercel auto-deploy from main will be a no-op (no app code touched)
