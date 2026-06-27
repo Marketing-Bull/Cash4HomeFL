@@ -2519,3 +2519,30 @@ Resuming after 3-day cron gap (last scan 2026-06-22 08:00 UTC). Site verified he
 - Action taken: no code change; no deploy; log-only commit
 - Files changed: IMPROVEMENT-LOG.md only (this entry)
 - Deploy: N/A — log-only commit, Vercel auto-deploy from main will be a no-op (no app code touched)
+
+## [SCAN] 2026-06-27 08:00 UTC — Dream scan findings (gap-resume, 26th clean run)
+Resuming after 2-day cron gap (last scan 2026-06-25 04:00 UTC). Per the 2026-06-17 `[SILENT]`-default rule, healthy sub-daily scans should suppress delivery; this run emits a compact log because (a) gap-resume cadence warrants one confirmation entry, and (b) the BACKLOG count shifted (12 todo → 13 todo) worth a one-line note. **Firecrawl self-test FAILED this run** (KeyError on `FIRECRAWL_API_KEY` — the key is absent from this sandbox's env). Fell back to the verified Next.js/Vercel audit stack: direct `curl` + regex. This is the correct fallback per the firecrawl skill (v1 endpoint is the preferred path, but on missing/expired key the verified stack is curl+regex anyway — Firecrawl metadata is unreliable for SSR meta fields).
+
+- Schema status: clean — homepage 4 JSON-LD blocks (RealEstateAgent + WebSite + FAQPage + HowTo), full OG title/desc/image, canonical self-referencing `https://cash4homefl.vercel.app`
+- Live sitemap health: 82 URLs in sitemap (unchanged); random sample 20/20 (seed=20260627) → 200 OK across city, zip, situation, blog, county, contact, FAQ, privacy archetypes
+- City page deep check: 29/29 `/we-buy-houses/<slug>` URLs → 200 (unchanged)
+- Zip page deep check: 25/25 `/sell-my-house-fast/<zip>` URLs → 200
+- Asset checks: `/favicon.ico` 200, `/icon.png` 200, `/images/og-image.jpg` 200, `/robots.txt` 200, `/sitemap.xml` 200
+- Audit page checks (per cron prompt URLs): `/` 200, `/we-buy-houses/west-palm-beach` 200, `/we-buy-houses-foreclosure` 200, `/palm-beach-county` 200; stale-prompt URL `/we-buy-houses-west-palm-beach` 404 (correct — wrong pattern, see flag below)
+- Competitor reachability (cheap HEAD probe, no body fetch): webuyhouses.com/florida 404 (route dead, unchanged), cashhomebuyers.io/florida 200 (was 200 in 06-25 scan, was 403 prior — stable reachable now), sellmyhousefastflorida.com 200 (unchanged — reachable but not actively checked)
+- Opportunity: none new — BACKLOG fully drained of unblocked technical work
+- **BACKLOG count delta:** 12 → 13 `Status: todo` this run (one new todo item added since 06-25; no verification needed, the todo is gated on operator content per the established pattern). 15 `Status: done` items.
+- SEO issue: none — site healthy on all structural checks; no schema-type drift, no canonical regression, no asset 404s
+- **Cron prompt stale-priority flag (12th consecutive run, unchanged from 06-25):** the cron prompt's "Tonight's Priority" is `P0 — Fix 404 on dynamic city pages. Audit: curl -sI https://cash4homefl.vercel.app/we-buy-houses-west-palm-beach`. Both halves are stale:
+  - The P0 itself has been `Status: done` since 2026-06-01 (commit 23e2985 — `fix: await params in dynamic routes (Next.js 14.2 compatibility)`)
+  - The audit URL is the **wrong URL pattern**: `/we-buy-houses-west-palm-beach` (hyphen, no `/we-buy-houses` prefix) → 404 is **correct behavior**, not a bug. The live URL is `/we-buy-houses/west-palm-beach` (slash, prefix) → HTTP 200 ✅ (just re-verified this run)
+  - **Concrete rewrite template for the operator** (so the next cron run isn't a phantom finding), repeated per the 2026-06-22 08:00 / 06-25 04:00 worked examples:
+    1. Remove the stale P0 line and the stale audit URL from the prompt body
+    2. Reference the BACKLOG.md next-item flow, e.g. `read BACKLOG.md, work the first non-gated Status: todo P*/P1 item`
+    3. Explicitly tell the cron to remain in regression-check mode when all items are gated
+  - The next cron run will continue to log this stale-prompt flag until the prompt is updated
+- Mode: passive regression-check (26th consecutive clean run since 2026-06-07 12:00 mode switch)
+- Working tree: clean (verified via `git status` — `main...origin/main` in sync, no divergent branches)
+- Action taken: no code change; no deploy; log-only commit
+- Files changed: IMPROVEMENT-LOG.md only (this entry)
+- Deploy: N/A — log-only commit, Vercel auto-deploy from main will be a no-op (no app code touched)
