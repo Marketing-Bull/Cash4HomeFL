@@ -2546,3 +2546,33 @@ Resuming after 2-day cron gap (last scan 2026-06-25 04:00 UTC). Per the 2026-06-
 - Action taken: no code change; no deploy; log-only commit
 - Files changed: IMPROVEMENT-LOG.md only (this entry)
 - Deploy: N/A — log-only commit, Vercel auto-deploy from main will be a no-op (no app code touched)
+
+## [SCAN] 2026-06-28 08:00 UTC — Dream scan findings (27th consecutive clean)
+Resuming after 1-day cron gap (last scan 2026-06-27 08:00 UTC). Per the 2026-06-17 `[SILENT]`-default rule, healthy sub-daily scans should suppress delivery; this run emits a compact log because (a) gap-resume cadence warrants one confirmation entry per the 06-25/06-27 pattern, and (b) it keeps the running passive-mode counter visible in the log. **Firecrawl self-test still failing in this sandbox** (key absent — same as 06-27). Continued with the verified Next.js/Vercel audit stack: direct `curl` + regex. No app-code change attempted — BACKLOG fully drained of unblocked technical work.
+
+- Schema status: clean — homepage 4 JSON-LD blocks (RealEstateAgent + WebSite + FAQPage + HowTo), full OG title/desc/image, canonical self-referencing `https://cash4homefl.vercel.app`
+- Live sitemap health: 82 URLs in sitemap (unchanged); random sample 20/20 (seed=20260628) → 200 OK across city, zip, situation, blog, county, contact, FAQ, privacy, reviews archetypes (homepage + 5 city + 5 zip + 3 situation + blog + 5 other)
+- City page deep check: 29/29 `/we-buy-houses/<slug>` URLs → 200 (unchanged)
+- Zip page deep check: 25/25 `/sell-my-house-fast/<zip>` URLs → 200
+- Asset checks: `/favicon.ico` 200, `/icon.png` 200, `/images/og-image.jpg` 200, `/robots.txt` 200, `/sitemap.xml` 200 — all asset 404s from earlier scans remain fixed
+- Homepage structural: title `Cash Home Buyers in Palm Beach County &amp; Broward`, canonical `https://cash4homefl.vercel.app` (self-referencing), og:title + og:description + og:image all present, 4 JSON-LD `<script>` blocks (RealEstateAgent + WebSite + FAQPage + HowTo)
+- Audit page checks (per cron prompt URLs): `/` 200, `/we-buy-houses/west-palm-beach` 200, `/we-buy-houses-foreclosure` 200, `/palm-beach-county` 200; stale-prompt URL `/we-buy-houses-west-palm-beach` 404 (correct — wrong pattern, see flag below)
+- Competitor reachability: not re-checked this run (no change expected; 06-25 04:00 noted cashhomebuyers.io/florida stable at 200, sellmyhousefastflorida.com stable at 200, webuyhouses.com/florida stable at 404)
+- Opportunity: none new — BACKLOG fully drained of unblocked technical work; 13 `Status: todo` items remain gated on human-authored content (Alex copy, real testimonials, GBP/GA4/GSC operator wiring, hero images, live chat widget)
+- P1 candidate (`Add aggregate Review/rating schema`, BlockedBy: []) still not actionable — requires real testimonials (P3 dep) and aggregating 0 reviews would violate Google's self-serving reviews policy
+- SEO issue: none — site healthy on all structural checks; no schema-type drift, no canonical regression, no asset 404s
+- Mode: passive regression-check (27th consecutive clean run since 2026-06-07 12:00 mode switch)
+- BACKLOG state: unchanged from 06-27 scan; 13 `Status: todo` + 1 `Status: in_progress` (P2 city copy, top 4/9 done); no drift to close
+- Self-resolving check: walked each todo; no new verify/cleanup candidates (hreflang was the only one and it's already closed per 06-12 02:00 commit e5de48d)
+- **Cron prompt stale-priority flag (13th consecutive run with the same stale prompt):** the cron prompt's "Tonight's Priority" is `P0 — Fix 404 on dynamic city pages. Audit: curl -sI https://cash4homefl.vercel.app/we-buy-houses-west-palm-beach`. Both halves are stale:
+  - The P0 itself has been `Status: done` since 2026-06-01 (commit 23e2985 — `fix: await params in dynamic routes (Next.js 14.2 compatibility)`)
+  - The audit URL is the **wrong URL pattern**: `/we-buy-houses-west-palm-beach` (hyphen, no `/we-buy-houses` prefix) → 404 is **correct behavior**, not a bug. The live URL is `/we-buy-houses/west-palm-beach` (slash, prefix) → HTTP 200 ✅ (just re-verified this run)
+  - **Concrete rewrite template for the operator** (so the next cron run isn't a phantom finding), repeated per the 2026-06-22 08:00 / 06-25 04:00 / 06-27 08:00 worked examples:
+    1. Remove the stale P0 line and the stale audit URL from the prompt body
+    2. Reference the BACKLOG.md next-item flow, e.g. `read BACKLOG.md, work the first non-gated Status: todo P*/P1 item`
+    3. Explicitly tell the cron to remain in regression-check mode when all items are gated
+  - The next cron run will continue to log this stale-prompt flag until the prompt is updated
+- Working tree: clean — no uncommitted WIP to selectively stage around
+- Action taken: no code change; no deploy; log-only commit
+- Files changed: IMPROVEMENT-LOG.md only (this entry)
+- Deploy: N/A — log-only commit, Vercel auto-deploy from main will be a no-op (no app code touched)
