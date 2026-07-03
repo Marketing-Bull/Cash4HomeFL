@@ -2752,3 +2752,36 @@ Sub-daily passive-mode scan (4-hourly cadence slot 08 UTC). **Notable environmen
 - Action taken: no code change; no deploy; log-only commit
 - Files changed: IMPROVEMENT-LOG.md only (this entry)
 - Deploy: N/A — log-only commit, Vercel auto-deploy from main will be a no-op (no app code touched)
+
+## [SCAN] 2026-07-03 08:00 UTC — Dream scan findings (34th consecutive clean)
+Sub-daily passive-mode scan (4-hourly cadence slot 08 UTC; first run after a ~48h gap, 12 missed cadence slots since 2026-07-01 08:00). Per the 2026-06-17 `[SILENT]`-default rule, healthy sub-daily scans should suppress delivery; this run emits a compact log entry because (a) the running passive-mode counter increments visibly (34th), (b) BACKLOG state remained stable at 13 todo / 1 in_progress / 15 done (no new gated items), and (c) the structural sweep below documents the no-regression state for the operator and notes a small competitor-redirect delta first observed this run. **Firecrawl key available** (re-loaded via `/root/.hermes/.env` source, per the 2026-07-01 08:00 fix) — corroboration only; the verified `curl + regex + urllib.request` audit stack remains the trusted path. No app-code change attempted — BACKLOG fully drained of unblocked technical work.
+
+- Schema status: clean — homepage 4 JSON-LD blocks, @type set = {FAQPage, HowTo, RealEstateAgent, WebSite} (unchanged from 2026-07-01 08:00), full OG title/desc/image (og:description 131 chars), canonical self-referencing `https://cash4homefl.vercel.app`
+- Live sitemap health: 82 URLs in sitemap (unchanged from 2026-07-01 08:00); random sample 20/20 (seed=20260703) → 200 OK across city, zip, situation, blog, county, contact, FAQ, privacy, reviews archetypes
+- City page deep check: confirmed `/we-buy-houses/west-palm-beach` 200 (live URL pattern, unchanged)
+- Asset checks: `/favicon.ico` 200, `/icon.png` 200, `/images/og-image.jpg` 200, `/robots.txt` 200, `/sitemap.xml` 200 — all asset 404s from earlier scans remain fixed
+- Homepage structural: title `Cash Home Buyers in Palm Beach County & Broward`, meta desc 130 chars, og:title + og:description (131 chars) + og:image all present, 4 JSON-LD `<script>` blocks (unchanged from 2026-07-01 08:00)
+- Audit page checks (per cron prompt URLs): `/` 200, `/we-buy-houses/west-palm-beach` 200, `/we-buy-houses-foreclosure` 200, `/palm-beach-county` 200; stale-prompt URL `/we-buy-houses-west-palm-beach` 404 (correct — wrong URL pattern, see flag below)
+- Competitor reachability (`-L` follow-redirects, first run to surface a 301 layer on the reachable pair):
+  - webuyhouses.com/florida: 404 final (unchanged — route dead)
+  - cashhomebuyers.io/florida: HEAD probe 301 → final 200 at `https://www.cashhomebuyers.app/florida/` (title `Cash Home Buyers Florida 🏡 | Cash Buyers | Sell House To Florida Cash Buyer` — stable reachable content; the 301 is a new redirect layer, not a data signal)
+  - sellmyhousefastflorida.com/: HEAD probe 301 → final 200 at `https://www.sellmyhousefastflorida.com/` (title `Sell My House Fast Florida & Nationwide USA | We Buy Houses Florida | Sell House Cash FL | Cash for Houses FL | We Buy Houses Near Me` — stable reachable content; the 301 is a new www-canonical redirect layer, not a data signal)
+  - **Delta vs prior runs:** 2026-07-01 08:00 logged both as plain 200; this run shows both behind a 301 → 200. Likely a server-side TLS/host normalization change on the upstream CDN, not a content/route change. Not actionable; document and move on.
+- Opportunity: none new — BACKLOG fully drained of unblocked technical work; 13 `Status: todo` items remain gated on human-authored content (Alex copy, real testimonials, GBP/GA4/GSC operator wiring, hero images, live chat widget)
+- P1 candidate (`Add aggregate Review/rating schema`, BlockedBy: []) still not actionable — requires real testimonials (P3 dep) and aggregating 0 reviews would violate Google's self-serving reviews policy
+- SEO issue: none — site healthy on all structural checks; no schema-type drift, no canonical regression, no asset 404s
+- Mode: passive regression-check (34th consecutive clean run since 2026-06-07 12:00 mode switch)
+- BACKLOG state: 13 `Status: todo` + 1 `Status: in_progress` (P2 city copy, top 4/9 done) + 15 `Status: done`; unchanged from 2026-06-27 / 06-28 ×4 / 06-29 02:00 / 06-30 12:00 / 2026-07-01 08:00 scans
+- Self-resolving check: walked each todo; no new verify/cleanup candidates (hreflang was the only one and it's already closed per 2026-06-12 02:00 commit e5de48d)
+- **Cron prompt stale-priority flag (20th consecutive run with the same stale prompt):** the cron prompt's "Tonight's Priority" is `P0 — Fix 404 on dynamic city pages. Audit: curl -sI https://cash4homefl.vercel.app/we-buy-houses-west-palm-beach`. Both halves are stale:
+  - The P0 itself has been `Status: done` since 2026-06-01 (commit 23e2985 — `fix: await params in dynamic routes (Next.js 14.2 compatibility)`)
+  - The audit URL is the **wrong URL pattern**: `/we-buy-houses-west-palm-beach` (hyphen, no `/we-buy-houses` prefix) → 404 is **correct behavior**, not a bug. The live URL is `/we-buy-houses/west-palm-beach` (slash, prefix) → HTTP 200 ✅ (just re-verified this run)
+  - **Concrete rewrite template for the operator** (so the next cron run isn't a phantom finding), repeated per the 06-22 08:00 / 06-25 04:00 / 06-27 08:00 / 06-28 ×4 / 06-29 02:00 / 06-30 12:00 / 2026-07-01 08:00 worked examples:
+    1. Remove the stale P0 line and the stale audit URL from the prompt body
+    2. Reference the BACKLOG.md next-item flow, e.g. `read BACKLOG.md, work the first non-gated Status: todo P*/P1 item`
+    3. Explicitly tell the cron to remain in regression-check mode when all items are gated
+  - The next cron run will continue to log this stale-prompt flag until the prompt is updated
+- Working tree: clean — `main...origin/main` in sync, no divergent branches, no uncommitted WIP to selectively stage around
+- Action taken: no code change; no deploy; log-only commit
+- Files changed: IMPROVEMENT-LOG.md only (this entry)
+- Deploy: N/A — log-only commit, Vercel auto-deploy from main will be a no-op (no app code touched)
