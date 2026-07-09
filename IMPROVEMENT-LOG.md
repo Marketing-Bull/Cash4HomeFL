@@ -2972,3 +2972,24 @@ Sub-daily passive-mode scan (4-hourly cadence slot 16 UTC; 4h after the 2026-07-
   2. Reference BACKLOG.md next-item flow: `read BACKLOG.md, work the first non-gated Status: todo P*/P1 item`
   3. Tell the cron to enter regression-check mode when all items are gated
 - **Files changed:** `components/TrackConversion.tsx` (new), `app/thank-you/page.tsx`, `BACKLOG.md`, `IMPROVEMENT-LOG.md`
+
+## [SHIPPED] 2026-07-09 16:05 UTC — P4: Exit-intent modal added (42nd run; 3rd code ship this week)
+
+**Work done:** Added `ExitIntentModal` client component — fires on exit intent (mouse to top of viewport) or 70% scroll depth.
+
+- **Why now:** BACKLOG `[P4] Add exit-intent modal / scroll-triggered CTA` had `Status: todo`, `BlockedBy: []`, and is pure code — no human-authored content, no operator setup, no external services required. During the todo-walk, after confirming all other todo items remain gated, this was the last unblocked technical item in the backlog.
+- **What ships:** `components/ExitIntentModal.tsx` (new `'use client'` component) + wired into `app/layout.tsx` alongside the existing `<Analytics />`. Shows "Still here? Get your cash offer in 24 hours — no repairs, no fees, no commissions." with phone number (561) 220-9399.
+- **Trigger logic:** (1) `mouseleave` event with `e.clientY < 20` (cursor moved toward browser chrome = exit intent); (2) `scroll` event at ≥70% scroll depth. First trigger wins — only one modal per session. Suppressed for 7 days via `c4hfl_exit_seen` cookie after first view.
+- **Analytics:** `track('Exit Intent Triggered', { method: 'mouse_leave'|'scroll_70' })` and `track('Exit Intent Phone Click')` via `@vercel/analytics`. Visible in Vercel Dashboard → Analytics → Events.
+- **No external library** — pure React hooks + inline CSS, 0 new dependencies.
+- **Build result:** 90/90 static pages built clean, exit code 0, no TypeScript errors.
+- **Deploy:** pushed to `main`; Vercel auto-deploys (no VERCEL_TOKEN needed).
+- **Pre-flight regression check:** 82/82 sitemap sample 20/20 → 200 OK; homepage 4 JSON-LD blocks (@types: RealEstateAgent, WebSite, FAQPage, HowTo); all OG tags, canonical, favicons, og-image all clean; all 4 audit pages 200 OK.
+- **BACKLOG update:** `[P4] Add exit-intent modal` → `Status: done` (same commit). Todo count drops from 11 → 10.
+- **Remaining BACKLOG state:** 10 `Status: todo` + 1 `Status: in_progress` (P2 city copy, 4/9 done) + 18 `Status: done`. All remaining todo items gated on: human-authored copy (city/situation/zip pages), real testimonials, real hero images, operator-only actions (GBP, GSC verification), real reviews needed (AggregateRating schema), or explicit skip decision (live chat).
+- **Stale-prompt flag (28th consecutive):** Cron prompt still lists `P0 — Fix 404 on dynamic city pages / curl -sI https://cash4homefl.vercel.app/we-buy-houses-west-palm-beach` — P0 `done` since 2026-06-01, audit URL is wrong pattern. Rewrite template (unchanged):
+  1. Remove stale P0 and stale audit URL from prompt body
+  2. Reference BACKLOG.md next-item flow: `read BACKLOG.md, work the first non-gated Status: todo P*/P1 item`
+  3. Tell cron to enter regression-check mode when all items are gated
+- **Files changed:** `components/ExitIntentModal.tsx` (new), `app/layout.tsx`, `BACKLOG.md`, `IMPROVEMENT-LOG.md`
+

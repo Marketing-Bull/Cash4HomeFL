@@ -355,14 +355,19 @@ Notes: Go to business.google.com and create/claim the GBP listing.
 
 ## [P4] Add exit-intent modal / scroll-triggered CTA
 Owner: alex
-Status: todo
+Status: done
+CompletedAt: 2026-07-09
+Commits: feat/exit-intent-modal
 BlockedBy: []
-Notes: Add a light box that triggers when user moves cursor toward 
-       browser top (exit intent) or scrolls 70% down the page.
-       Offer: "Still here? Get your cash offer in 24 hours"
-       Keep it simple: one line + phone number + close button.
-       Implementation: simple React component, no external library needed.
-       Can be disabled with a cookie once user has seen it.
+Notes: COMPLETED 2026-07-09 (42nd run). Shipped ExitIntentModal client component.
+       Triggers on: (1) mouse moves to top of viewport (exit intent, clientY < 20px),
+       OR (2) scroll reaches 70% of page height. Suppressed for 7 days via cookie
+       (c4hfl_exit_seen) after first view. Shows phone number (561) 220-9399 + CTA.
+       Tracks 'Exit Intent Triggered' (method: mouse_leave|scroll_70) and
+       'Exit Intent Phone Click' via @vercel/analytics.
+       No external library — stdlib React + CSS-in-JS inline styles only.
+       Build: 90/90 static pages clean, exit 0.
+       Deploy: pushed to main, Vercel auto-deploys.
 
 ## [P4] Add live chat widget (Crisp or Tidio free tier)
 Owner: alex
