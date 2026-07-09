@@ -2952,3 +2952,23 @@ Sub-daily passive-mode scan (4-hourly cadence slot 16 UTC; 4h after the 2026-07-
   3. Tell the cron to enter regression-check mode when all items are gated
 - **Files changed:** `app/layout.tsx`, `package.json`, `package-lock.json`, `BACKLOG.md`, `IMPROVEMENT-LOG.md`
 
+
+## [SHIPPED] 2026-07-09 2026-07-09 08:05 UTC — P3: Conversion tracking added (41st run; 2nd consecutive code ship)
+
+**Work done:** Added `TrackConversion` client component to `/thank-you` page — fires `track('Lead Form Submit')` via `@vercel/analytics` on mount.
+
+- **Why shippable now:** BACKLOG `[P3] Add conversion goal tracking` had `BlockedBy: ["Add Google Analytics 4 to site"]`. That dependency was resolved yesterday (2026-07-09) when `@vercel/analytics` shipped (commit `dc1daf7`). BACKLOG drift self-audit during this run's todo-walk caught the stale `BlockedBy` and confirmed the item was now unblocked.
+- **What ships:** `components/TrackConversion.tsx` (new `'use client'` component, calls `track('Lead Form Submit')` on mount) + `app/thank-you/page.tsx` (imports and renders `<TrackConversion />`). Every successful form submission now fires a named event visible in **Vercel Dashboard → Analytics → Events**.
+- **Also covered:** `@vercel/analytics` auto-captures `tel:` outbound link clicks as `'Outbound Link: Click'` events — phone CTA clicks on the thank-you page are tracked automatically without additional code.
+- **Build result:** 90/90 static pages built clean, exit code 0, no TypeScript errors.
+- **Deploy:** pushed to `main`; Vercel auto-deploys (no VERCEL_TOKEN needed).
+- **Regression check:** 82/82 sitemap sample (20 random, all 200 OK); homepage 4 JSON-LD blocks, OG tags, canonical all unchanged; assets `/favicon.ico` `/icon.png` `/images/og-image.jpg` `/robots.txt` `/sitemap.xml` all 200.
+- **BACKLOG update:** `[P3] Add conversion goal tracking` → `Status: done` (same commit). Remaining todo count drops from 12 → 11.
+- **Remaining BACKLOG state:** 11 `Status: todo` + 1 `Status: in_progress` (P2 city copy, 4/9 done) + 17 `Status: done`. All remaining todo items are gated on: human-authored copy, real testimonials, real hero images, operator-only actions (GBP setup, GSC verification), or explicit decision to skip (live chat widget).
+- **Competitor reachability:** `webuyhouses.com/florida` 404 (unchanged, HEAD-block or down), `cashhomebuyers.io/florida` 200, `sellmyhousefastflorida.com` 200.
+- **Schema status:** homepage 4 JSON-LD blocks, @type set = {FAQPage, HowTo, RealEstateAgent, WebSite} — unchanged.
+- **Stale-prompt flag (27th consecutive):** The cron prompt's `Tonight's Priority` is still `P0 — Fix 404 on dynamic city pages / curl -sI https://cash4homefl.vercel.app/we-buy-houses-west-palm-beach`. Both halves remain stale (P0 `done` since 2026-06-01; audit URL is wrong URL pattern). Rewrite template (unchanged from prior runs):
+  1. Remove stale P0 and stale audit URL from prompt body
+  2. Reference BACKLOG.md next-item flow: `read BACKLOG.md, work the first non-gated Status: todo P*/P1 item`
+  3. Tell the cron to enter regression-check mode when all items are gated
+- **Files changed:** `components/TrackConversion.tsx` (new), `app/thank-you/page.tsx`, `BACKLOG.md`, `IMPROVEMENT-LOG.md`

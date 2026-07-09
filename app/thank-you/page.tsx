@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
+import { TrackConversion } from '@/components/TrackConversion';
 
 export const metadata: Metadata = {
   title: 'Thank You — We Got Your Request | Cash4HomeFL',
@@ -40,6 +41,7 @@ const reassurances = [
 export default function ThankYouPage() {
   return (
     <main className="page-shell">
+      <TrackConversion />
       {/* ── Warm welcome hero ── */}
       <section
         style={{

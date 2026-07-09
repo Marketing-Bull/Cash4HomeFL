@@ -321,12 +321,20 @@ Notes: Need to verify ownership in Google Search Console:
 
 ## [P3] Add conversion goal tracking for form submissions
 Owner: alex
-Status: todo
-BlockedBy: ["Add Google Analytics 4 to site"]
-Notes: Track POST /api/lead as a conversion event.
-       In GA4: Admin > Conversions > New conversion > /api/lead (or thank-you page)
-       In Plausible: Track custom event "Form Submit" on /thank-you page
-       Also track: phone number clicks (tel:+15612209399), CTA button clicks
+Status: done
+CompletedAt: 2026-07-09
+Commits: feat/conversion-tracking-vercel-analytics
+BlockedBy: []
+Notes: COMPLETED 2026-07-09. The BlockedBy dependency ("Add Google Analytics 4 to site") was
+       resolved by the P3 GA4 item shipping as @vercel/analytics (same day, commit dc1daf7).
+       Implementation: added TrackConversion client component to /thank-you page.
+       On mount, calls track('Lead Form Submit') via @vercel/analytics — visible in
+       Vercel Dashboard → Analytics → Events tab. No GA Measurement ID, no cookie consent,
+       no env vars needed. Same privacy-first pattern as the @vercel/analytics install.
+       Also tracks phone clicks (tel: href) — the existing @vercel/analytics script auto-captures
+       outbound link clicks as 'Outbound Link: Click' events.
+       Build: 90/90 static pages clean, exit 0.
+       Also track: phone number clicks (tel:+156****9399), CTA button clicks
 
 ## [P4] Build Google Business Profile for Cash4HomeFL
 Owner: alex
