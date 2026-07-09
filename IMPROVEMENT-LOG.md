@@ -2934,3 +2934,21 @@ Sub-daily passive-mode scan (4-hourly cadence slot 16 UTC; 4h after the 2026-07-
 - Action taken: no code change; no deploy; log-only commit
 - Files changed: IMPROVEMENT-LOG.md only (this entry)
 - Deploy: N/A — log-only commit, Vercel auto-deploy from main will be a no-op (no app code touched)
+
+## [SHIPPED] 2026-07-09 — P3: Vercel Analytics added (40th run; first code ship since 2026-06-07)
+
+**Work done:** Installed `@vercel/analytics` and wired `<Analytics />` into `app/layout.tsx`.
+
+- **Why now:** BACKLOG P3 "Add Google Analytics 4 to site" had `Status: todo`, no `BlockedBy`, and option 2 (Vercel Analytics) requires zero operator setup — no GA Measurement ID, no cookie consent banner, no env vars. All other todo items are gated on human content, operator-only actions (GBP, GSC, GA4 Measurement ID), or real testimonials.
+- **What ships:** Privacy-first pageview tracking, web vitals, and navigation events — visible in the Vercel dashboard under Analytics > Web Analytics. Tracks page views, referrers, top pages, visitor counts.
+- **Build result:** 90/90 static pages built clean, exit code 0, no TypeScript errors.
+- **Deploy:** pushed to `main`; Vercel auto-deploys (no VERCEL_TOKEN needed).
+- **Regression check:** 82/82 sitemap URLs → 200 OK (full check before work). Schema: homepage 4 JSON-LD blocks, all OG tags present, canonical self-referencing, `/favicon.ico` 200, `/images/og-image.jpg` 200, `/robots.txt` 200.
+- **BACKLOG update:** P3 "Add Google Analytics 4 to site" → `Status: done` (in same commit).
+- **Remaining BACKLOG state:** 12 `Status: todo` + 1 `Status: in_progress` (P2 city copy, 4/9 done) + 16 `Status: done`. All remaining todo items are gated on: human-authored copy (city pages, situation pages, zip pages), real testimonials, real hero images, operator-only wiring (GBP setup, GSC verification, conversion tracking setup), or explicit decision to skip (live chat widget).
+- **Stale-prompt flag (26th consecutive):** The cron prompt's `Tonight's Priority` is still `P0 — Fix 404 on dynamic city pages / curl -sI https://cash4homefl.vercel.app/we-buy-houses-west-palm-beach`. Both halves remain stale (P0 `done` since 2026-06-01; audit URL is wrong URL pattern). Rewrite template (unchanged from prior runs):
+  1. Remove stale P0 and stale audit URL from prompt body
+  2. Reference BACKLOG.md next-item flow: `read BACKLOG.md, work the first non-gated Status: todo P*/P1 item`
+  3. Tell the cron to enter regression-check mode when all items are gated
+- **Files changed:** `app/layout.tsx`, `package.json`, `package-lock.json`, `BACKLOG.md`, `IMPROVEMENT-LOG.md`
+

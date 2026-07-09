@@ -286,13 +286,21 @@ Notes: Need at least 5 real testimonials:
 
 ## [P3] Add Google Analytics 4 to site
 Owner: alex
-Status: todo
+Status: done
+CompletedAt: 2026-07-09
+Commits: feat/vercel-analytics
 BlockedBy: []
-Notes: Add GA4 tracking. Options (in order of preference):
+Notes: COMPLETED 2026-07-09. Installed @vercel/analytics package and added <Analytics />
+       component to app/layout.tsx. Vercel Analytics is option 2 from the original notes:
+       privacy-first, no cookie consent needed, free tier, no GA Measurement ID required.
+       Works automatically on Vercel deployments — tracks page views, web vitals, navigation.
+       Build confirmed: 90/90 static pages, no TypeScript errors.
+       No VERCEL_TOKEN needed — pushed to main, Vercel auto-deploys.
+       Original notes: Add GA4 tracking. Options (in order of preference):
        1. Plausible Analytics (privacy-first, no cookie consent needed, free tier)
           - Script: plausible.io/js
           - Domain: cash4homefl.vercel.app
-       2. Vercel Analytics (built-in, free, privacy-friendly)
+       2. Vercel Analytics (built-in, free, privacy-friendly) ← SHIPPED
           - Run: vercel env add LARAVEL_ANALYTICS_ID (not applicable)
           - Install @vercel/analytics package
        3. Google Analytics 4 (requires cookie consent banner in EU)
