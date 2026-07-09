@@ -2993,3 +2993,56 @@ Sub-daily passive-mode scan (4-hourly cadence slot 16 UTC; 4h after the 2026-07-
   3. Tell cron to enter regression-check mode when all items are gated
 - **Files changed:** `components/ExitIntentModal.tsx` (new), `app/layout.tsx`, `BACKLOG.md`, `IMPROVEMENT-LOG.md`
 
+## [SCAN] 2026-07-09 20:00 UTC — Dream scan findings (43rd run; passive regression-check mode)
+
+**Site health: CLEAN — all systems nominal.**
+
+- **Sitemap sample:** 20/20 random URLs → 200 OK (82 total URLs in sitemap, unchanged)
+- **Audit pages:**
+  - `/` (homepage) → 200 OK ✅
+  - `/we-buy-houses/west-palm-beach` → 200 OK ✅
+  - `/we-buy-houses-foreclosure` → 200 OK ✅
+  - `/palm-beach-county` → 200 OK ✅
+  - Note: cron prompt's `/we-buy-houses-west-palm-beach` → 404 as expected (wrong URL pattern, correct behavior — live URL is `/we-buy-houses/west-palm-beach`)
+- **Assets:** `/favicon.ico` 200, `/images/og-image.jpg` 200, `/robots.txt` 200, `/sitemap.xml` 200 — all clean
+- **Schema status (homepage):** 4 JSON-LD blocks — `{RealEstateAgent, WebSite, FAQPage, HowTo}` (unchanged from 2026-07-09 16:05 exit-intent modal ship)
+- **Schema status (WPB city page):** 5 JSON-LD blocks — `{RealEstateAgent, WebSite, BreadcrumbList, FAQPage, HowTo}` ✅
+- **Schema status (/we-buy-houses-foreclosure):** 4 JSON-LD blocks — `{RealEstateAgent, WebSite, FAQPage, HowTo}` ✅ (note: situation pages don't get BreadcrumbList — this is by design per BACKLOG P1 notes)
+- **OG tags (homepage):** og:title ✅, og:description (131 chars) ✅, og:image (200 OK) ✅, canonical `https://cash4homefl.vercel.app` ✅
+- **Git state:** `main...origin/main` in sync (confirmed via git log — last commit `def6da9` is the exit-intent modal from 16:05 UTC today)
+
+**BACKLOG todo-walk:**
+- 10 `Status: todo` + 1 `Status: in_progress` (P2 city copy, 4/9 done) + 18 `Status: done`
+- All remaining todo items remain gated (unchanged from 42nd run):
+  - P1 `Add aggregate Review/rating schema` — gated on real reviews (Google policy: can't self-serve AggregateRating with 0 real reviews)
+  - P2 `Write unique hero + body copy` (remaining 5 cities) — gated on Alex writing copy
+  - P2 `Write unique copy for all 7 situation pages` — gated on Alex writing copy
+  - P2 `Write unique copy for top 10 zip pages` — gated on Alex writing copy
+  - P3 `Generate and add hero images for each city page` — gated on image generation step (see observation below)
+  - P3 `Add real testimonials with photos` — gated on real client reviews
+  - P3 `Google Search Console verification` — operator-only (GSC dashboard)
+  - P4 `Build Google Business Profile` — operator-only
+  - P4 `Add live chat widget` — explicit skip decision per BACKLOG note
+  - P4 `Add hreflang` — `Status: done` (self-resolved 2026-06-12)
+- No stale `BlockedBy` strings found this run (no same-session ship to cascade)
+- No verify/cleanup items pending (hreflang was the only one; closed 2026-06-12)
+
+**Competitor scan:**
+- `sellmyhousefastflorida.com` — 200 OK, 3 JSON-LD blocks `{WebSite, Organization, LocalBusiness}` — still at 3 types vs Cash4HomeFL's 4 on homepage ✅ (schema lead maintained)
+- `cashhomebuyers.io/florida/palm-beach-county-fl/` — **404 Not Found** — their PBC county page is broken (opportunity: if a competitor's county page is down, their local rankings may slip)
+- `floridacashrealestate.com` — timed out (unreachable this run)
+
+**Observation — city hero images (P3 BACKLOG item, not yet actionable):**
+The `/public/images/cities/` directory exists in the repo but contains only a `.gitkeep` placeholder — zero city-specific images have been generated. All 29 city pages currently render with the same generic hero (`/images/hero/hero-home-v2.jpg`). The `IMAGE-STRATEGY.md` (at `docs/IMAGE-STRATEGY.md`) has per-city prompts and Unsplash fallback URLs ready to go. This is a P3 BACKLOG item gated on running the image generation script or using the documented Unsplash fallbacks — but it does not require human-authored content. If Alex wants a quick visual differentiation win, generating even Unsplash fallback images for the top 4 cities (WPB, Fort Lauderdale, Boca Raton, Delray Beach) would be a low-effort P3 ship. **Not shipping this run** — image generation requires operator direction on which images to use (AI-generated vs. Unsplash fallbacks). Adding to observation log for operator visibility.
+
+**Action taken:** log-only commit — no code change, no deploy.
+
+**Mode:** passive regression-check (43rd consecutive clean run; 3rd same-day run after the 42nd run shipped the exit-intent modal at 16:05 UTC).
+
+**Stale-prompt flag (29th consecutive):** Cron prompt still lists `P0 — Fix 404 on dynamic city pages / curl -sI https://cash4homefl.vercel.app/we-buy-houses-west-palm-beach`. P0 `done` since 2026-06-01; audit URL is wrong URL pattern (→ 404 is correct behavior). Rewrite template (unchanged):
+  1. Remove stale P0 and stale audit URL from prompt body
+  2. Reference BACKLOG.md next-item flow: `read BACKLOG.md, work the first non-gated Status: todo P*/P1 item`
+  3. Tell cron to enter regression-check mode when all items are gated
+
+**Files changed:** `IMPROVEMENT-LOG.md` only (log-only commit)
+
