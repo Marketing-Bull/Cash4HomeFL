@@ -3046,3 +3046,46 @@ The `/public/images/cities/` directory exists in the repo but contains only a `.
 
 **Files changed:** `IMPROVEMENT-LOG.md` only (log-only commit)
 
+
+## [SCAN] 2026-07-13 16:01 UTC — Dream scan findings (44th run; passive regression-check mode)
+
+**Site health: CLEAN — all systems nominal.**
+
+- **Sitemap sample:** 20/20 random URLs → 200 OK (82 total URLs in sitemap, unchanged)
+- **Audit pages:**
+  - `/` (homepage) → 200 OK ✅
+  - `/we-buy-houses/west-palm-beach` → 200 OK ✅
+  - `/we-buy-houses-foreclosure` → 200 OK ✅
+  - `/palm-beach-county` → 200 OK ✅
+  - Note: cron prompt's `/we-buy-houses-west-palm-beach` → 404 as expected (wrong URL pattern, correct behavior — live URL is `/we-buy-houses/west-palm-beach`)
+- **Assets:** `/favicon.ico` 200, `/images/og-image.jpg` 200, `/robots.txt` 200 — all clean
+- **Schema status (homepage):** 4 JSON-LD blocks — `{RealEstateAgent, WebSite, FAQPage, HowTo}` (unchanged)
+- **Schema status (/we-buy-houses/west-palm-beach):** 5 JSON-LD blocks — `{RealEstateAgent, WebSite, BreadcrumbList, FAQPage, HowTo}` ✅
+- **Schema status (/we-buy-houses-foreclosure):** 4 JSON-LD blocks — `{RealEstateAgent, WebSite, FAQPage, HowTo}` ✅ (situation pages omit BreadcrumbList by design)
+- **Schema status (/palm-beach-county):** 5 JSON-LD blocks — `{RealEstateAgent, WebSite, BreadcrumbList, FAQPage, HowTo}` ✅
+- **OG tags (homepage):** og:title ✅, og:description ✅, og:image (200 OK) ✅, canonical `https://cash4homefl.vercel.app` ✅
+- **Meta descriptions:** All 4 audit pages have meta descriptions (WPB city page: 567 chars — full custom copy ✅; foreclosure: 140 chars ✅; PBC county: 137 chars ✅)
+
+**BACKLOG todo-walk:**
+- All 10 `Status: todo` + 1 `Status: in_progress` items remain gated (unchanged from 43rd run)
+- No stale `BlockedBy` strings found (no new ship to cascade)
+- No verify/cleanup items pending
+
+**Competitor scan:**
+- `sellmyhousefastflorida.com` — 200 OK, 3 JSON-LD types `{WebSite, Organization, LocalBusiness}` — Cash4HomeFL leads with 4 types on homepage ✅
+- `cashhomebuyers.io/florida/palm-beach-county-fl/` — **404 Not Found** (2nd consecutive run — PBC county page still broken)
+- `floridacashrealestate.com` — 200 OK (back online; timed out last run), 2 JSON-LD types `{WebSite, Organization}` — Cash4HomeFL leads with 4 types ✅
+
+**Schema competitive position:** Cash4HomeFL homepage (4 types: RealEstateAgent + WebSite + FAQPage + HowTo) leads all tracked competitors. City pages at 5 types (adding BreadcrumbList). No competitor has AggregateRating schema — that gap remains gated on real reviews for everyone.
+
+**Mode:** passive regression-check (no unblocked BACKLOG items — all gated on human content/operator actions).
+
+**Action taken:** log-only commit.
+
+**Stale-prompt flag (30th consecutive):** Cron prompt still lists stale P0 and wrong audit URL (`/we-buy-houses-west-palm-beach` → 404). Rewrite template (unchanged from prior runs):
+  1. Remove stale P0 and stale audit URL from prompt body
+  2. Reference BACKLOG.md next-item flow: `read BACKLOG.md, work the first non-gated Status: todo P*/P1 item`
+  3. Tell cron to enter regression-check mode when all items are gated
+
+**Files changed:** `IMPROVEMENT-LOG.md` only (log-only commit)
+
