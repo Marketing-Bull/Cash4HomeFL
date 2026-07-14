@@ -3089,3 +3089,48 @@ The `/public/images/cities/` directory exists in the repo but contains only a `.
 
 **Files changed:** `IMPROVEMENT-LOG.md` only (log-only commit)
 
+
+## [SCAN] 2026-07-14 — Dream scan findings (45th run; passive regression-check mode)
+
+**Site health: CLEAN — all systems nominal.**
+
+- **Sitemap:** 82 URLs (unchanged); sample 20/20 → 200 OK across city, zip, situation, blog, county, contact, FAQ, privacy, reviews archetypes
+- **Audit pages:**
+  - `/` → 200 OK ✅
+  - `/we-buy-houses/west-palm-beach` → 200 OK ✅
+  - `/we-buy-houses-foreclosure` → 200 OK ✅ (situation page)
+  - `/palm-beach-county` → 200 OK ✅
+  - `/we-buy-houses-west-palm-beach` → 404 (correct — stale URL pattern, expected)
+- **Assets:** `/favicon.ico` 200 ✅, `/images/og-image.jpg` 200 ✅, `/robots.txt` 200 ✅, `/sitemap.xml` 200 ✅
+- **Schema (homepage):** 4 JSON-LD blocks — `{RealEstateAgent, WebSite, FAQPage, HowTo}` (unchanged)
+- **Schema (city page /we-buy-houses/west-palm-beach):** 5 JSON-LD blocks — `{RealEstateAgent, WebSite, BreadcrumbList, FAQPage, HowTo}` ✅
+- **OG tags (homepage):** og:title ✅, og:description ✅, og:image (200 OK) ✅, canonical `https://cash4homefl.vercel.app` ✅
+- **Git state:** `main...origin/main` in sync; last commit `b509b5b` (2026-07-13 44th-run log entry)
+
+**BACKLOG todo-walk:** All 10 `Status: todo` + 1 `Status: in_progress` items remain gated (unchanged from 44th run):
+- P1 `Add aggregate Review/rating schema` — gated on real reviews
+- P2 `Write unique hero + body copy` (5 cities remaining) — gated on Alex copy
+- P2 `Write unique copy for all 7 situation pages` — gated on Alex copy
+- P2 `Write unique copy for top 10 zip pages` — gated on Alex copy
+- P3 `Generate and add hero images for each city page` — gated on operator direction (AI-gen vs Unsplash; `.gitkeep` placeholder only in `/public/images/cities/`)
+- P3 `Add real testimonials with photos` — gated on real client reviews
+- P3 `Google Search Console verification` — operator-only (GSC dashboard)
+- P4 `Build Google Business Profile` — operator-only
+- P4 `Add live chat widget` — explicit skip per BACKLOG note
+No stale `BlockedBy` strings found. No verify/cleanup items pending.
+
+**Competitor scan:**
+- `sellmyhousefastflorida.com` — 200 OK (stable)
+- `cashhomebuyers.io/florida/palm-beach-county-fl/` — **404** (3rd consecutive run — PBC county page still broken)
+- `floridacashrealestate.com` — ERR/timeout (was 200 on 44th run, timed out this run)
+
+**Mode:** passive regression-check (45th consecutive clean run since 2026-06-07 12:00 mode switch).
+**Action taken:** log-only commit — no code change, no deploy.
+
+**Stale-prompt flag (31st consecutive):** Cron prompt still lists `P0 — Fix 404 on dynamic city pages / curl -sI https://cash4homefl.vercel.app/we-buy-houses-west-palm-beach`. P0 `done` since 2026-06-01; audit URL is wrong URL pattern. Rewrite template (unchanged):
+  1. Remove stale P0 and stale audit URL from prompt body
+  2. Reference BACKLOG.md next-item flow: `read BACKLOG.md, work the first non-gated Status: todo P*/P1 item`
+  3. Tell cron to enter regression-check mode when all items are gated
+
+**Files changed:** `IMPROVEMENT-LOG.md` only (log-only commit)
+
