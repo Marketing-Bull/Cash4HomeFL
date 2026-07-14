@@ -3134,3 +3134,52 @@ No stale `BlockedBy` strings found. No verify/cleanup items pending.
 
 **Files changed:** `IMPROVEMENT-LOG.md` only (log-only commit)
 
+
+## [SCAN] 2026-07-14 — Dream scan findings (46th run; passive regression-check mode)
+
+**Site health: CLEAN — all systems nominal.**
+
+- **Sitemap:** 82 URLs (unchanged); sample 20/20 → 200 OK
+- **Audit pages:**
+  - `/` → 200 OK ✅
+  - `/we-buy-houses/west-palm-beach` → 200 OK ✅
+  - `/we-buy-houses-foreclosure` → 200 OK ✅ (situation page)
+  - `/palm-beach-county` → 200 OK ✅
+  - `/we-buy-houses-west-palm-beach` → 404 (correct — stale URL in cron prompt, expected)
+- **Assets:** `/favicon.ico` 200 ✅, `/images/og-image.jpg` 200 ✅, `/robots.txt` 200 ✅, `/sitemap.xml` 200 ✅
+- **Schema (homepage):** 4 JSON-LD blocks — `{RealEstateAgent, WebSite, FAQPage, HowTo}` ✅ (unchanged)
+- **Schema (city page /we-buy-houses/west-palm-beach):** 5 JSON-LD blocks ✅ (unchanged)
+- **Schema (situation /we-buy-houses-foreclosure):** 4 JSON-LD blocks ✅
+- **Schema (/palm-beach-county):** 5 JSON-LD blocks ✅
+- **OG tags (homepage):** og:title ✅, og:description ✅, og:image (200 OK) ✅, canonical ✅
+
+**BACKLOG todo-walk:** All 10 `Status: todo` + 1 `Status: in_progress` items remain gated (unchanged from 45th run). No stale `BlockedBy` strings. No verify/cleanup items pending.
+
+**Competitor scan:**
+- `sellmyhousefastflorida.com` — 200 OK, 3 JSON-LD types `{WebSite, Organization, LocalBusiness}` — Cash4HomeFL leads ✅
+- `cashhomebuyers.io/florida/palm-beach-county-fl/` — **404** (4th consecutive run — PBC county page still broken)
+- `floridacashrealestate.com` — 200 OK, **3 JSON-LD blocks: `{WebSite, Organization, Product+AggregateRating}`** — ⚠️ **NEW COMPETITIVE FINDING**
+
+**⚠️ Competitive alert — `floridacashrealestate.com` now has `AggregateRating` schema live:**
+Previously tracked at 2 JSON-LD types (`WebSite + Organization`). This run detected 3 blocks, with a `Product` type carrying an `AggregateRating` nested type. This means they are now serving structured aggregate review data to Google's crawlers — eligible for star rating rich results in search. Cash4HomeFL's own P1 BACKLOG item `Add aggregate Review/rating schema` is gated on real client reviews, which remains the correct constraint (fabricated ratings would violate Google's policies and risk manual action). However, this is the first competitor in the tracked set to activate rating schema. **Operator action:** if Cash4HomeFL has even a small number of verifiable Google reviews or testimonials from real clients, now is a good time to collect them and enable this schema — the competitive gap will widen the longer it sits unaddressed.
+
+**Schema competitive position:**
+| Site | JSON-LD types | AggregateRating | BreadcrumbList |
+|---|---|---|---|
+| Cash4HomeFL homepage | 4 (RealEstateAgent, WebSite, FAQPage, HowTo) | ❌ (gated) | — |
+| Cash4HomeFL city pages | 5 (+ BreadcrumbList) | ❌ (gated) | ✅ |
+| sellmyhousefastflorida.com | 3 | ❌ | ❌ |
+| floridacashrealestate.com | 3 | ✅ **ACTIVE** | ❌ |
+| cashhomebuyers.io PBC | 404 | — | — |
+
+**Mode:** passive regression-check (no unblocked BACKLOG items — all gated on human content/operator actions).
+
+**Action taken:** log-only commit — new competitive intelligence signal warrants logging (case (e): new operator-actionable observation).
+
+**Stale-prompt flag (32nd consecutive):** Cron prompt still lists `P0 — Fix 404 on dynamic city pages / curl -sI https://cash4homefl.vercel.app/we-buy-houses-west-palm-beach`. P0 `done` since 2026-06-01; audit URL is wrong URL pattern. Rewrite template (unchanged):
+  1. Remove stale P0 and stale audit URL from prompt body
+  2. Reference BACKLOG.md next-item flow: `read BACKLOG.md, work the first non-gated Status: todo P*/P1 item`
+  3. Tell cron to enter regression-check mode when all items are gated
+
+**Files changed:** `IMPROVEMENT-LOG.md` only (log-only commit)
+
