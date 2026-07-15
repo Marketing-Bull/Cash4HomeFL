@@ -61,6 +61,13 @@ export function LeadForm({ defaults }: LeadFormProps) {
     setEmailError(eErr);
     if (pErr || eErr) {
       e.preventDefault();
+      return;
+    }
+    // The form has noValidate (so we can show custom phone/email messages),
+    // which also silently disables the address field's `required` attribute.
+    // Re-run native validation manually so an empty address still blocks submit.
+    if (!e.currentTarget.reportValidity()) {
+      e.preventDefault();
     }
   }
 
