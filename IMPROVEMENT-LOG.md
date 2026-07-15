@@ -3261,3 +3261,89 @@ Previously tracked at 2 JSON-LD types (`WebSite + Organization`). This run detec
 
 **Files changed:** `IMPROVEMENT-LOG.md` only (log-only commit)
 
+
+
+## [SCAN] 2026-07-15 16:02 UTC — Dream scan findings (49th run; passive regression-check mode)
+
+**Site health: CLEAN — all systems nominal.**
+
+- **Sitemap:** 82 URLs (unchanged); sample 20/20 → 200 OK ✅
+- **Audit pages:**
+  - `/` → 200 OK ✅
+  - `/we-buy-houses/west-palm-beach` → 200 OK ✅
+  - `/we-buy-houses-foreclosure` → 200 OK ✅ (situation page)
+  - `/palm-beach-county` → 200 OK ✅
+  - `/we-buy-houses-west-palm-beach` → 404 (expected — stale URL in cron prompt)
+- **Assets:** `/favicon.ico` 200 ✅, `/images/og-image.jpg` 200 ✅, `/robots.txt` 200 ✅, `/sitemap.xml` 200 ✅
+- **Schema (homepage):** 4 JSON-LD blocks — `{RealEstateAgent, WebSite, FAQPage, HowTo}` ✅ (unchanged)
+- **Schema (situation /we-buy-houses-foreclosure):** 4 JSON-LD blocks ✅ (unchanged)
+- **OG tags (homepage):** og:title ✅, og:description ✅, og:image (200 OK) ✅, canonical ✅
+
+**BACKLOG todo-walk:** All `Status: todo` + 1 `Status: in_progress` items remain gated (unchanged). No stale `BlockedBy` strings. No verify/cleanup items pending.
+
+**Competitor scan:**
+- `sellmyhousefastflorida.com` — 200 OK, 3 JSON-LD types `{WebSite, Organization, LocalBusiness}` — Cash4HomeFL leads ✅
+- `cashhomebuyers.io/florida/palm-beach-county-fl/` — **301 → 404** (7th consecutive run — 301 is just HTTP→HTTPS redirect; final destination still 404 at `www.cashhomebuyers.io/florida/palm-beach-county-fl/`; PBC county page confirmed permanently removed)
+- `floridacashrealestate.com` — 200 OK, **3 JSON-LD blocks: `{WebSite, Organization, Product+AggregateRating}`** — AggregateRating `ratingValue=5.0, reviewCount=14` confirmed present (3rd consecutive confirmation)
+
+**`floridacashrealestate.com` AggregateRating details (3rd confirmation):**
+- `@type: Product` carrying `AggregateRating` with `ratingValue: "5.0"`, `reviewCount: "14"`, `bestRating: "5"`, `worstRating: "1"`
+- Using `Product` type to carry a service-business rating is an atypical pattern — typically `LocalBusiness` or `Organization` is used. May or may not trigger Google rich results (Google is inconsistent on `Product` for services).
+- Cash4HomeFL's P1 `Add aggregate Review/rating schema` item remains correctly gated on real client reviews. Recommended implementation when reviews are available: nest `AggregateRating` under the existing `RealEstateAgent` block — cleaner and semantically correct for a service business.
+- **Operator note:** floridacashrealestate.com now has 14 reviews and a 5.0 rating surfaced in schema. If Cash4HomeFL has any verifiable Google or testimonial reviews, activating this schema would close the competitive gap immediately.
+
+**`cashhomebuyers.io` update:** Clarifying previous runs — HTTP 301 is just a www-redirect, not a new signal. Final URL still 404. Treating as permanently removed (7 runs). Cash4HomeFL `/palm-beach-county` (200 OK, 5 JSON-LD blocks) holds clear PBC coverage advantage.
+
+**Mode:** passive regression-check (no unblocked BACKLOG items — all gated on human content/operator actions).
+
+**Action taken:** log-only commit — ongoing AggregateRating competitor tracking + `cashhomebuyers.io` 7-run 404 permanence determination.
+
+**Stale-prompt flag (35th consecutive):** Cron prompt still lists `P0 — Fix 404 on dynamic city pages / curl -sI https://cash4homefl.vercel.app/we-buy-houses-west-palm-beach`. P0 `done` since 2026-06-01; audit URL is wrong URL pattern. Rewrite template (unchanged):
+  1. Remove stale P0 and stale audit URL from prompt body
+  2. Reference BACKLOG.md next-item flow: `read BACKLOG.md, work the first non-gated Status: todo P*/P1 item`
+  3. Tell cron to enter regression-check mode when all items are gated
+
+**Files changed:** `IMPROVEMENT-LOG.md` only (log-only commit)
+
+
+
+## [SCAN] 2026-07-15 16:02 UTC — Dream scan findings (49th run; passive regression-check mode)
+
+**Site health: CLEAN — all systems nominal.**
+
+- **Sitemap:** 82 URLs (unchanged); sample 20/20 → 200 OK ✅
+- **Audit pages:**
+  - `/` → 200 OK ✅
+  - `/we-buy-houses/west-palm-beach` → 200 OK ✅
+  - `/we-buy-houses-foreclosure` → 200 OK ✅ (situation page)
+  - `/palm-beach-county` → 200 OK ✅
+  - `/we-buy-houses-west-palm-beach` → 404 (expected — stale URL in cron prompt)
+- **Assets:** `/favicon.ico` 200 ✅, `/images/og-image.jpg` 200 ✅, `/robots.txt` 200 ✅, `/sitemap.xml` 200 ✅
+- **Schema (homepage):** 4 JSON-LD blocks — {RealEstateAgent, WebSite, FAQPage, HowTo} ✅ (unchanged)
+- **Schema (situation /we-buy-houses-foreclosure):** 4 JSON-LD blocks ✅ (unchanged)
+- **OG tags (homepage):** og:title ✅, og:description ✅, og:image (200 OK) ✅, canonical ✅
+
+**BACKLOG todo-walk:** All Status: todo + 1 Status: in_progress items remain gated (unchanged). No stale BlockedBy strings. No verify/cleanup items pending.
+
+**Competitor scan:**
+- `sellmyhousefastflorida.com` — 200 OK, 3 JSON-LD types {WebSite, Organization, LocalBusiness} — Cash4HomeFL leads ✅
+- `cashhomebuyers.io/florida/palm-beach-county-fl/` — 301 → 404 (7th consecutive run — 301 is HTTP→HTTPS redirect only; final destination still 404 at www.cashhomebuyers.io/florida/palm-beach-county-fl/; PBC county page confirmed permanently removed)
+- `floridacashrealestate.com` — 200 OK, 3 JSON-LD blocks: {WebSite, Organization, Product+AggregateRating} — AggregateRating ratingValue=5.0, reviewCount=14 confirmed present (3rd consecutive confirmation)
+
+**floridacashrealestate.com AggregateRating details (3rd confirmation):**
+- @type: Product carrying AggregateRating with ratingValue: "5.0", reviewCount: "14", bestRating: "5", worstRating: "1"
+- Using Product type for a service-business rating is atypical — LocalBusiness or Organization is the cleaner pattern. May or may not trigger Google rich results.
+- Cash4HomeFL P1 item "Add aggregate Review/rating schema" correctly gated on real client reviews.
+- Recommended implementation: nest AggregateRating under existing RealEstateAgent block (not standalone Product).
+- **Operator note:** floridacashrealestate.com has 14 reviews at 5.0 surfaced in schema. Any verifiable reviews on Cash4HomeFL's side would enable immediate activation of this schema.
+
+**cashhomebuyers.io PBC update:** Clarifying prior runs — the 301 is a plain HTTP→HTTPS redirect, not a new content signal. Final destination still 404. Treating as permanently removed after 7 consecutive runs. Cash4HomeFL /palm-beach-county (200 OK, 5 JSON-LD blocks) holds clear PBC coverage advantage.
+
+**Mode:** passive regression-check (no unblocked BACKLOG items — all gated on human content/operator actions).
+
+**Action taken:** log-only commit — AggregateRating competitor tracking (3rd confirmation, reviewCount detail added) + cashhomebuyers.io 7-run permanence determination.
+
+**Stale-prompt flag (35th consecutive):** Cron prompt still lists P0 "Fix 404 on dynamic city pages" and stale audit URL /we-buy-houses-west-palm-beach. P0 done since 2026-06-01. Rewrite template: (1) remove stale P0 + audit URL, (2) reference BACKLOG.md next-item flow, (3) set regression-check mode when all items gated.
+
+**Files changed:** IMPROVEMENT-LOG.md only (log-only commit)
+
