@@ -184,15 +184,23 @@ Notes: Add AggregateRating to Organization schema or standalone:
 
 ## [P2] Write unique hero + body copy for top 8 city pages
 Owner: alex
-Status: in_progress
-BlockedBy: ["Fix 404 on dynamic city pages"]
-Notes: Top 4 DONE — commit ace30c0. Unique copy live for:
+Status: done
+BlockedBy: []
+Notes: All 9 cities DONE. First 4 from commit ace30c0:
        - West Palm Beach (Northwood, Pleasant City, Flamingo Park references)
        - Fort Lauderdale (Las Olas, Victoria Park, Rio Vista, Coral Ridge)
        - Boca Raton (Boca Del Mar, Mizner Park, West Boca, Royal Palm Yacht)
        - Delray Beach (Lake Ida, Tropic Isle, Delray Beach Village)
-       Remaining: Boynton Beach, Hollywood, Palm Beach Gardens, Jupiter, Pompano Beach
-       Each needs 300+ unique words with city-specific neighborhoods and market angle.
+       Remaining 5 added in this pass (cityCopyOverrides in lib/page-content.ts):
+       - Boynton Beach (Leisureville, Chapel Hill, Palm Shores)
+       - Hollywood (Hollywood Lakes, Emerald Hills, Hollywood Hills)
+       - Palm Beach Gardens (PGA National, Mirasol, BallenIsles)
+       - Jupiter (no verified neighborhood list in data/site-data.json — kept city-wide,
+         did not invent neighborhood names)
+       - Pompano Beach (same — no verified neighborhoods, kept city-wide)
+       All copy pulled real market_angle/zips/featured_neighborhoods from
+       data/site-data.json rather than inventing details. Verified via npm run build
+       (all 9 city pages render unique lead + bullets) and full Playwright suite (24/24 pass).
 
 ## [P2] Write unique copy for all 7 situation pages
 Owner: alex
