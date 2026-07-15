@@ -33,10 +33,21 @@ export function MobileNav({
     return () => document.removeEventListener('keydown', onKey);
   }, [open]);
 
-  // Prevent body scroll while drawer is open.
+  // Prevent body scroll while drawer is open, and close on resize to desktop.
   useEffect(() => {
     document.body.style.overflow = open ? 'hidden' : '';
-    return () => { document.body.style.overflow = ''; };
+
+    function handleResize() {
+      if (window.innerWidth > 768) {
+        close();
+      }
+    }
+
+    window.addEventListener('resize', handleResize);
+    return () => {
+      document.body.style.overflow = '';
+      window.removeEventListener('resize', handleResize);
+    };
   }, [open]);
 
   return (

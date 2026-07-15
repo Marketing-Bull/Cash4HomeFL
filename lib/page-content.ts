@@ -297,6 +297,56 @@ const cityCopyOverrides: Record<string, { lead: string; bullets: string[] }> = {
       'Direct, no-commission sale — what we quote is what lands in your pocket',
     ],
   },
+  'boynton-beach': {
+    lead: 'Boynton Beach has a lot of older housing stock and long-time owners, which means two things show up constantly: move-up sellers who don\'t want to fix a house on their way out, and families handling a downsizing or inherited property that needs more work than they\'re able to take on. In neighborhoods like Leisureville, Chapel Hill, and Palm Shores, that combination of aging homes and motivated sellers is exactly where a traditional listing drags out the longest. A cash sale skips the repair list and the buyer-financing wait entirely.',
+    bullets: [
+      'Cash offers for Boynton Beach homes in Leisureville, Chapel Hill, and Palm Shores — no repairs required',
+      'Downsizing in Boynton Beach? Sell the house as-is and skip the pre-listing fix-up list',
+      'Inherited or rental property in Boynton Beach — we work directly with owners and estates',
+      'Close on your timeline, often within a few weeks of accepting an offer',
+      'No commissions, no financing contingencies, no repeat showings',
+    ],
+  },
+  'hollywood': {
+    lead: 'Hollywood\'s housing stock skews older, and that shows up in the sales that stall — a home in Hollywood Lakes with deferred maintenance, a rental in Hollywood Hills that\'s cost more in repairs than it brings in rent, or a family property in Emerald Hills tied up after a death in the family. The traditional listing process punishes exactly these situations, since financed buyers want move-in-ready homes. A cash sale in Hollywood means the condition of the house stops being the obstacle.',
+    bullets: [
+      'Cash offers for Hollywood homes in Hollywood Lakes, Emerald Hills, and Hollywood Hills — sold as-is',
+      'Distressed or deferred-maintenance properties in Hollywood — no repair requirement to close',
+      'Landlords in Hollywood can sell a tired rental without a vacancy gap or repair bill',
+      'Inherited and estate properties in Hollywood — we coordinate directly with heirs',
+      'No listing commissions — the offer we make is what you keep',
+    ],
+  },
+  'palm-beach-gardens': {
+    lead: 'Palm Beach Gardens is a higher-income market, which cuts both ways for sellers — homes in PGA National, Mirasol, and BallenIsles carry strict HOA requirements and buyer expectations that can slow down a traditional sale, especially for an inherited property or an estate that hasn\'t been updated in years. A cash sale in Palm Beach Gardens sidesteps the HOA approval delays and repair standards that financed buyers and their lenders require, closing on a timeline that works for the seller instead of the market.',
+    bullets: [
+      'Cash offers for Palm Beach Gardens homes in PGA National, Mirasol, and BallenIsles',
+      'Inherited and probate properties in Palm Beach Gardens — sold without HOA-driven repair delays',
+      'Skip HOA approval and lender-required updates that slow down a traditional Palm Beach Gardens sale',
+      'Close in weeks, not months, with no financing contingency to fall through',
+      'No commissions or closing-cost surprises — the offer is the number you receive',
+    ],
+  },
+  'jupiter': {
+    lead: 'Jupiter\'s higher-end market means most listings move on the strength of condition and presentation — which leaves a gap for owners handling an inherited home, a downsizing move, or a property that simply needs more work than they want to put into it before selling. A cash sale in Jupiter closes on the seller\'s timeline instead of waiting for a financed buyer to clear underwriting on a home that isn\'t market-ready.',
+    bullets: [
+      'Cash offers for Jupiter homes and condos — no repairs or staging required',
+      'Inherited property in Jupiter? We work directly with the estate to close quickly',
+      'Downsizing in Jupiter — sell as-is and skip the pre-sale renovation list',
+      'Fast, direct closings with no financing contingency to fall through',
+      'No listing commissions — straightforward, no-obligation cash offers',
+    ],
+  },
+  'pompano-beach': {
+    lead: 'Pompano Beach has an older, investor-heavy housing stock along the coast, which means a lot of the properties that come up for sale need real work before they\'d pass a traditional buyer\'s inspection. For landlords sitting on a tired rental or owners of a coastal property that needs more than a fresh coat of paint, a cash sale in Pompano Beach removes the repair requirement and the financing wait entirely.',
+    bullets: [
+      'Cash offers for Pompano Beach homes and rentals — sold exactly as they are today',
+      'Investor and landlord exits in Pompano Beach — sell without a vacancy gap or repair bill',
+      'Coastal and older-stock properties in Pompano Beach that wouldn\'t qualify for buyer financing',
+      'Close in days or weeks, not months — no financing contingency',
+      'No commissions — the offer we make is what you keep',
+    ],
+  },
 };
 
 export function buildCityPageProps(citySlug: string): PageTemplateProps | undefined {

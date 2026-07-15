@@ -133,6 +133,15 @@ export function AddressAutocomplete({ defaultValue }: { defaultValue?: string })
     }
 
     loadMapsScript(initAutocomplete);
+
+    return () => {
+      if (acRef.current) {
+        const g = (window as any).google;
+        if (g?.maps?.event) {
+          g.maps.event.clearInstanceListeners(acRef.current);
+        }
+      }
+    };
   }, []);
 
   return (
