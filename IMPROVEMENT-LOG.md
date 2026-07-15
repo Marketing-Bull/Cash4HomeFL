@@ -3135,6 +3135,45 @@ No stale `BlockedBy` strings found. No verify/cleanup items pending.
 **Files changed:** `IMPROVEMENT-LOG.md` only (log-only commit)
 
 
+## [SCAN] 2026-07-15 — Dream scan findings (47th run; passive regression-check mode)
+
+**Site health: CLEAN — all systems nominal.**
+
+- **Sitemap:** 82 URLs (unchanged); sample 20/20 → 200 OK
+- **Audit pages:**
+  - `/` → 200 OK ✅
+  - `/we-buy-houses/west-palm-beach` → 200 OK ✅
+  - `/we-buy-houses-foreclosure` → 200 OK ✅ (situation page)
+  - `/palm-beach-county` → 200 OK ✅
+  - `/we-buy-houses-west-palm-beach` → 404 (correct — stale URL in cron prompt, expected)
+- **Assets:** `/favicon.ico` 200 ✅, `/images/og-image.jpg` 200 ✅, `/robots.txt` 200 ✅, `/sitemap.xml` 200 ✅
+- **Schema (homepage):** 4 JSON-LD blocks — `{RealEstateAgent, WebSite, FAQPage, HowTo}` ✅ (unchanged)
+- **OG tags (homepage):** og:title ✅, og:description ✅, og:image (200 OK) ✅, canonical ✅
+
+**BACKLOG todo-walk:** All 10 `Status: todo` + 1 `Status: in_progress` items remain gated (unchanged from 46th run). No stale `BlockedBy` strings. No verify/cleanup items pending.
+
+**Competitor scan:**
+- `sellmyhousefastflorida.com` — 200 OK, 3 JSON-LD types `{WebSite, Organization, LocalBusiness}` — Cash4HomeFL still leads ✅
+- `cashhomebuyers.io/florida/palm-beach-county-fl/` — **404** (5th consecutive run — PBC county page continues broken)
+- `floridacashrealestate.com` — **TIMEOUT** ⚠️
+
+**⚠️ Competitor update — `floridacashrealestate.com` unreachable this run:**
+Run 46 (2026-07-14) flagged this site as a new competitive threat after detecting an `AggregateRating` schema block — marking them as the first tracked competitor to activate structured rating data for Google rich results. This run, the site timed out entirely (URLError). Possible explanations: (1) temporary server outage or flap; (2) Cloudflare/CDN timeout from this environment specifically. Not yet a confirmed site-down — single timeout is inconclusive. **Monitor next 1–2 runs.** If it resolves: the AggregateRating competitive gap is still present. If it stays down: the threat from run 46 may be moot.
+
+**`cashhomebuyers.io` PBC escalation note:** 5th consecutive 404 on `/florida/palm-beach-county-fl/`. This may be a permanent page deletion rather than a transient error — 5 runs (~5 days) is a sustained absence. The competitor weakness in Palm Beach County coverage remains. Cash4HomeFL's `/palm-beach-county` returns 200 OK with full schema.
+
+**Mode:** passive regression-check (no unblocked BACKLOG items — all gated on human content/operator actions).
+
+**Action taken:** log-only commit — competitor state update warrants logging (case (e): new operator-actionable observation; `floridacashrealestate.com` flap directly follows run 46 alert).
+
+**Stale-prompt flag (33rd consecutive):** Cron prompt still lists `P0 — Fix 404 on dynamic city pages / curl -sI https://cash4homefl.vercel.app/we-buy-houses-west-palm-beach`. P0 `done` since 2026-06-01; audit URL is wrong URL pattern. Rewrite template (unchanged):
+  1. Remove stale P0 and stale audit URL from prompt body
+  2. Reference BACKLOG.md next-item flow: `read BACKLOG.md, work the first non-gated Status: todo P*/P1 item`
+  3. Tell cron to enter regression-check mode when all items are gated
+
+**Files changed:** `IMPROVEMENT-LOG.md` only (log-only commit)
+
+
 ## [SCAN] 2026-07-14 — Dream scan findings (46th run; passive regression-check mode)
 
 **Site health: CLEAN — all systems nominal.**
