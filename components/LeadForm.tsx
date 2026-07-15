@@ -36,8 +36,9 @@ export function LeadForm({ defaults }: LeadFormProps) {
   }
 
   function handlePhoneChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const formatted = formatPhone(e.target.value);
-    setPhone(formatted);
+    // Formatting is deferred to blur — reformatting on every keystroke moves
+    // the cursor to the end and breaks editing digits in the middle.
+    setPhone(e.target.value);
     if (phoneError) setPhoneError('');
   }
 
@@ -47,7 +48,9 @@ export function LeadForm({ defaults }: LeadFormProps) {
   }
 
   function handlePhoneBlur() {
-    setPhoneError(validatePhone(phone));
+    const formatted = formatPhone(phone);
+    setPhone(formatted);
+    setPhoneError(validatePhone(formatted));
   }
 
   function handleEmailBlur() {
