@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import { PageTemplate } from '@/components/PageTemplate';
 import { buildCityPageProps } from '@/lib/page-content';
 import { getCityParams } from '@/lib/site-data';
+import { SITE_URL } from '@/lib/site-url';
 
 export function generateStaticParams() {
   return getCityParams();
@@ -21,12 +22,12 @@ export async function generateMetadata({ params }: { params: Promise<{ city: str
     openGraph: {
       title: page.title,
       description: page.lead,
-      url: `https://cash4homefl.vercel.app/we-buy-houses/${city}`,
+      url: `${SITE_URL}/we-buy-houses/${city}`,
       type: 'website',
       images: [{ url: '/images/og-image.jpg', width: 1200, height: 630, alt: page.title }],
     },
     alternates: {
-      canonical: `https://cash4homefl.vercel.app/we-buy-houses/${city}`,
+      canonical: `${SITE_URL}/we-buy-houses/${city}`,
     },
   };
 }

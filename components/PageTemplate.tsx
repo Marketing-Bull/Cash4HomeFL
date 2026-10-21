@@ -4,6 +4,7 @@ import type { ReactNode } from 'react';
 import type { PageTemplateProps, FaqItem, StepItem, LinkItem } from '@/lib/page-types';
 import { LeadForm } from '@/components/LeadForm';
 import { ScrollToFormLink } from '@/components/ScrollToFormLink';
+import { SITE_URL } from '@/lib/site-url';
 
 /* ── Schema Markup ── */
 function BreadcrumbSchema({ items }: { items: LinkItem[] }) {
@@ -19,7 +20,7 @@ function BreadcrumbSchema({ items }: { items: LinkItem[] }) {
             '@type': 'ListItem',
             position: i + 1,
             name: item.label,
-            item: `https://cash4homefl.vercel.app${item.href}`,
+            item: `${SITE_URL}${item.href}`,
           })),
         }),
       }}
