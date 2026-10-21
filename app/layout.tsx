@@ -4,9 +4,10 @@ import './globals.css';
 import { SiteFrame } from '@/components/SiteFrame';
 import { Analytics } from '@vercel/analytics/react';
 import { ExitIntentModal } from '@/components/ExitIntentModal';
+import { SITE_URL } from '@/lib/site-url';
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://cash4homefl.vercel.app'),
+  metadataBase: new URL(SITE_URL),
   title: {
     default: 'Cash4HomeFL — Cash Home Buyers in Palm Beach & Broward',
     template: '%s | Cash4HomeFL',
@@ -15,7 +16,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://cash4homefl.vercel.app',
+    url: SITE_URL,
     siteName: 'Cash4HomeFL',
     images: [
       {
@@ -31,7 +32,7 @@ export const metadata: Metadata = {
     site: '@cash4homefl',
   },
   alternates: {
-    canonical: 'https://cash4homefl.vercel.app',
+    canonical: SITE_URL,
   },
 };
 
@@ -40,8 +41,8 @@ const orgSchema = {
   "@context": "https://schema.org",
   "@type": "RealEstateAgent",
   "name": "Cash4HomeFL",
-  "url": "https://cash4homefl.vercel.app",
-  "logo": "https://cash4homefl.vercel.app/favicon.ico",
+  "url": SITE_URL,
+  "logo": `${SITE_URL}/favicon.ico`,
   "description": "Cash home buyers for Palm Beach County and Broward County, Florida. We buy houses as-is — no repairs, no fees, no commissions.",
   "telephone": "+156****9399",
   "contactPoint": {
@@ -102,7 +103,7 @@ const orgSchema = {
     },
   ],
   "priceRange": "$$",
-  "image": "https://cash4homefl.vercel.app/favicon.ico",
+  "image": `${SITE_URL}/favicon.ico`,
   "sameAs": [
     "https://www.facebook.com/cash4homefl",
     "https://www.instagram.com/cash4homefl",
@@ -111,7 +112,7 @@ const orgSchema = {
     "@type": "SellAction",
     "target": {
       "@type": "EntryPoint",
-      "urlTemplate": "https://cash4homefl.vercel.app/contact",
+      "urlTemplate": `${SITE_URL}/contact`,
     },
     "object": {
       "@type": "Offer",
@@ -126,21 +127,21 @@ const websiteSchema = {
   "@context": "https://schema.org",
   "@type": "WebSite",
   "name": "Cash4HomeFL",
-  "url": "https://cash4homefl.vercel.app",
+  "url": SITE_URL,
   "description": "Cash home buyers for Palm Beach County and Broward County, Florida. We buy houses as-is — no repairs, no fees, no commissions.",
   "publisher": {
     "@type": "RealEstateAgent",
     "name": "Cash4HomeFL",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://cash4homefl.vercel.app/favicon.ico",
+      "url": `${SITE_URL}/favicon.ico`,
     },
   },
   "potentialAction": {
     "@type": "SearchAction",
     "target": {
       "@type": "EntryPoint",
-      "urlTemplate": "https://cash4homefl.vercel.app/sell-my-house-fast/{zip}",
+      "urlTemplate": `${SITE_URL}/sell-my-house-fast/{zip}`,
     },
     "query-input": "required name=zip",
   },

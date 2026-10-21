@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
 import { buildBlogIndexProps } from '@/lib/page-content';
+import { SITE_URL } from '@/lib/site-url';
 
 const page = buildBlogIndexProps();
 
@@ -8,7 +9,7 @@ export const metadata: Metadata = {
   title: page.title,
   description: page.lead,
   alternates: {
-    canonical: 'https://cash4homefl.vercel.app/blog',
+    canonical: `${SITE_URL}/blog`,
   },
 };
 

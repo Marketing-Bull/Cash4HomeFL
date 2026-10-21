@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { ArticleTemplate } from '@/components/ArticleTemplate';
 import { getBlogParams, getBlogPostBySlug } from '@/lib/page-content';
+import { SITE_URL } from '@/lib/site-url';
 
 export function generateStaticParams() {
   return getBlogParams();
@@ -18,7 +19,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     title: post.title,
     description: post.description,
     alternates: {
-      canonical: `https://cash4homefl.vercel.app/blog/${slug}`,
+      canonical: `${SITE_URL}/blog/${slug}`,
     },
   };
 }

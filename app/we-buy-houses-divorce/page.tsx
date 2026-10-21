@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { PageTemplate } from '@/components/PageTemplate';
 import { buildSituationPageProps } from '@/lib/page-content';
+import { SITE_URL } from '@/lib/site-url';
 
 const page = buildSituationPageProps('divorce')!;
 
@@ -10,12 +11,12 @@ export const metadata: Metadata = {
   openGraph: {
     title: page.title,
     description: page.lead,
-    url: 'https://cash4homefl.vercel.app/we-buy-houses-divorce',
+    url: `${SITE_URL}/we-buy-houses-divorce`,
     type: 'website',
     images: [{ url: '/images/og-image.jpg', width: 1200, height: 630, alt: page.title }],
   },
   alternates: {
-    canonical: 'https://cash4homefl.vercel.app/we-buy-houses-divorce',
+    canonical: `${SITE_URL}/we-buy-houses-divorce`,
   },
 };
 
