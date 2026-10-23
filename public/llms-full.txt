@@ -1,0 +1,61 @@
+# Cash4HomeFL — Business and website reference
+
+## Business
+
+Cash4HomeFL buys residential property for cash in Palm Beach County and Broward County, Florida. Homeowners can request an offer for a home in its current condition. Cash4HomeFL describes itself as a private cash buyer, not a licensed real estate broker.
+
+Website: https://cash4homefl.com
+Phone: (561) 220-9399
+Email: hello@cash4homefl.com
+Contact page: https://cash4homefl.com/contact
+About: https://cash4homefl.com/about
+
+## Selling process
+
+1. The homeowner provides the property address and contact information.
+2. The buyer reviews the property, condition and local market before making an offer.
+3. The homeowner decides whether to accept the offer.
+4. If both parties agree, they arrange closing on an agreed timeline.
+
+The website describes as-is purchases without repairs or realtor commissions. Offer amounts, eligibility, closing dates and other transaction terms require direct confirmation with the business; submitting an inquiry does not establish a purchase agreement.
+
+Process overview: https://cash4homefl.com/we-buy-houses
+Fast-sale information: https://cash4homefl.com/sell-my-house-fast
+Frequently asked questions: https://cash4homefl.com/faq
+
+## Coverage
+
+Primary counties:
+- Palm Beach County: https://cash4homefl.com/palm-beach-county
+- Broward County: https://cash4homefl.com/broward-county
+
+Examples of city pages:
+- West Palm Beach: https://cash4homefl.com/we-buy-houses/west-palm-beach
+- Boca Raton: https://cash4homefl.com/we-buy-houses/boca-raton
+- Boynton Beach: https://cash4homefl.com/we-buy-houses/boynton-beach
+- Delray Beach: https://cash4homefl.com/we-buy-houses/delray-beach
+- Fort Lauderdale: https://cash4homefl.com/we-buy-houses/fort-lauderdale
+- Coral Springs: https://cash4homefl.com/we-buy-houses/coral-springs
+
+The sitemap lists additional city and ZIP-code pages: https://cash4homefl.com/sitemap.xml
+
+## Situations described by the website
+
+As-is sales: https://cash4homefl.com/we-buy-houses-as-is
+Foreclosure: https://cash4homefl.com/we-buy-houses-foreclosure
+Probate and inheritance: https://cash4homefl.com/we-buy-houses-probate
+Divorce: https://cash4homefl.com/we-buy-houses-divorce
+Damaged property: https://cash4homefl.com/we-buy-houses-damaged
+Liens and back taxes: https://cash4homefl.com/we-buy-houses-liens
+Rental property: https://cash4homefl.com/we-buy-houses-rental
+
+## Other resources
+
+Seller guides: https://cash4homefl.com/blog
+Business-published seller stories: https://cash4homefl.com/reviews
+Privacy policy: https://cash4homefl.com/privacy
+Terms: https://cash4homefl.com/terms
+Concise reference: https://cash4homefl.com/llms.txt
+Crawler rules: https://cash4homefl.com/robots.txt
+
+This file summarizes the public website. Consult the linked pages for their full context and contact the business to confirm current transaction details.

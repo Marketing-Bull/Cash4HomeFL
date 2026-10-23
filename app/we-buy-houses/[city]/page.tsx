@@ -1,3 +1,4 @@
+import { socialImage } from '@/lib/social-metadata';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { PageTemplate } from '@/components/PageTemplate';
@@ -24,7 +25,7 @@ export async function generateMetadata({ params }: { params: Promise<{ city: str
       description: page.lead,
       url: `${SITE_URL}/we-buy-houses/${city}`,
       type: 'website',
-      images: [{ url: '/images/og-image.jpg', width: 1200, height: 630, alt: page.title }],
+      images: [socialImage],
     },
     alternates: {
       canonical: `${SITE_URL}/we-buy-houses/${city}`,

@@ -1,3 +1,4 @@
+import { socialImage } from '@/lib/social-metadata';
 import type { Metadata } from 'next';
 import { PageTemplate } from '@/components/PageTemplate';
 import { buildSituationPageProps } from '@/lib/page-content';
@@ -13,7 +14,7 @@ export const metadata: Metadata = {
     description: page.lead,
     url: `${SITE_URL}/we-buy-houses-probate`,
     type: 'website',
-    images: [{ url: '/images/og-image.jpg', width: 1200, height: 630, alt: page.title }],
+    images: [socialImage],
   },
   alternates: {
     canonical: `${SITE_URL}/we-buy-houses-probate`,

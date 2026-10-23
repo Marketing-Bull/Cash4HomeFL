@@ -1,93 +1,37 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useId, useRef, useState } from 'react';
 import Link from 'next/link';
+import type { NavigationLink } from '@/lib/navigation';
 
-type Item = { label: string; href: string };
-
-export function NavDropdown({
-  label,
-  href,
-  items,
-}: {
-  label: string;
-  href: string;
-  items: Item[];
-}) {
+export function NavDropdown({ label, items }: { label: string; items: NavigationLink[] }) {
   const [open, setOpen] = useState(false);
+  const panelId = useId();
   const containerRef = useRef<HTMLDivElement>(null);
-  const suppressNextFocus = useRef(false);
-
-  function close() {
-    setOpen(false);
-  }
-
+  const triggerRef = useRef<HTMLButtonElement>(null);
   return (
-    <div
-      className="nav-dropdown"
-      ref={containerRef}
+    <div className="nav-dropdown" ref={containerRef}
       onMouseEnter={() => setOpen(true)}
-      onMouseLeave={() => setOpen(false)}
-      onBlur={(e) => {
-        // Close when focus leaves the entire dropdown container.
-        if (!containerRef.current?.contains(e.relatedTarget as Node)) {
-          close();
+      onMouseLeave={() => { if (!containerRef.current?.contains(document.activeElement)) setOpen(false); }}
+      onBlur={(event) => { if (!event.currentTarget.contains(event.relatedTarget as Node)) setOpen(false); }}
+      onKeyDown={(event) => {
+        if (event.key === 'Escape') {
+          event.preventDefault();
+          setOpen(false);
+          triggerRef.current?.focus();
         }
-      }}
-      onKeyDown={(e) => {
-        if (e.key === 'Escape') {
-          // Suppress the focus handler so returning focus to trigger doesn't re-open.
-          suppressNextFocus.current = true;
-          close();
-          containerRef.current?.querySelector<HTMLElement>('a.nav-link')?.focus();
-        }
-      }}
-    >
-      <Link
-        className="nav-link nav-link--dropdown"
-        href={href}
-        aria-haspopup="menu"
-        aria-expanded={open}
-        onFocus={() => {
-          if (suppressNextFocus.current) { suppressNextFocus.current = false; return; }
-          setOpen(true);
-        }}
-      >
+      }}>
+      <button ref={triggerRef} className="nav-link nav-link--dropdown" type="button" aria-expanded={open} aria-controls={panelId} onClick={(event) => setOpen(value => event.detail === 0 ? !value : true)}>
         {label}
-        <svg
-          className={`dropdown-arrow${open ? ' dropdown-arrow--open' : ''}`}
-          viewBox="0 0 20 20"
-          fill="currentColor"
-          width="14"
-          height="14"
-          aria-hidden="true"
-        >
-          <path
-            fillRule="evenodd"
-            d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
-            clipRule="evenodd"
-          />
+        <svg className={`dropdown-arrow${open ? ' dropdown-arrow--open' : ''}`} viewBox="0 0 20 20" fill="currentColor" width="14" height="14" aria-hidden="true">
+          <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clipRule="evenodd" />
         </svg>
-      </Link>
-
-      {open && (
-        <div className="dropdown-panel" role="menu">
-          <div className="dropdown-section">
-            <span className="dropdown-label">Situations we help with</span>
-            {items.map((item) => (
-              <Link
-                key={item.href}
-                className="dropdown-link"
-                href={item.href}
-                role="menuitem"
-                onClick={close}
-              >
-                {item.label}
-              </Link>
-            ))}
-          </div>
-        </div>
-      )}
+      </button>
+      <div className="dropdown-panel" id={panelId} hidden={!open}>
+        <ul className="dropdown-section" aria-label={label}>
+          {items.map(item => <li key={item.href}><Link className="dropdown-link" href={item.href} onClick={() => setOpen(false)}>{item.label}</Link></li>)}
+        </ul>
+      </div>
     </div>
   );
 }

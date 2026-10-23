@@ -143,19 +143,11 @@ function buildCoreMoneyBulletList(): string[] {
 export function buildHomepageProps(): PageTemplateProps {
   const counties = getAllCounties().map((county) => county.name);
   const featuredCities = getTopCities(6).map((city) => city.name);
-  const featuredZips = getTopZipPages(6).map((zip) => zip.zip);
 
   return {
     eyebrow: 'Palm Beach County + Broward',
-    title: 'Cash Home Buyers in Palm Beach County & Broward',
-    lead:
-      'Sell your house fast for cash in South Florida. No repairs, no fees, no commissions — just a direct offer and a clean path forward.',
-    trust: ['Local South Florida focus', 'No repairs', 'No commissions', 'Close on your timeline'],
-    stats: [
-      { label: 'Core counties', value: counties.slice(0, 2).join(' + ') },
-      { label: 'Top city pages', value: featuredCities.join(' • ') },
-      { label: 'High-intent zip pages', value: featuredZips.join(' • ') },
-    ],
+    title: 'Sell your Florida house for cash',
+    lead: 'No repairs. No fees. Close on your timeline.',
     steps: commonSteps,
     bullets: buildCoreMoneyBulletList(),
     comparison: commonComparison,
