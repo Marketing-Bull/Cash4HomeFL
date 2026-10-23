@@ -77,7 +77,6 @@ const trustItems = [
   'No realtor commissions',
   'Close in 7–30 days',
   'Local South Florida buyer',
-  '100+ homes purchased',
 ];
 
 function TrustBar() {
@@ -103,7 +102,6 @@ function TrustBar() {
 /* ── Stats Band ── */
 function StatsBand() {
   const stats = [
-    { value: '100+', label: 'Homes purchased in South FL' },
     { value: '18 days', label: 'Average time to close' },
     { value: '$0', label: 'Commissions or hidden fees' },
     { value: '5 ★', label: 'Google-rated local buyer' },

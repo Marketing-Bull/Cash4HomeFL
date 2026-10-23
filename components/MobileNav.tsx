@@ -2,103 +2,58 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
+import type { NavigationItem } from '@/lib/navigation';
 
-type NavItem = { label: string; href: string };
-
-export function MobileNav({
-  primaryLinks,
-  situationLinks,
-}: {
-  primaryLinks: NavItem[];
-  situationLinks: NavItem[];
-}) {
+export function MobileNav({ items }: { items: NavigationItem[] }) {
   const [open, setOpen] = useState(false);
-  const drawerRef = useRef<HTMLDivElement>(null);
-  const btnRef = useRef<HTMLButtonElement>(null);
-
-  function close() {
-    setOpen(false);
-  }
-
-  // Esc closes the drawer.
+  const dialogRef = useRef<HTMLDialogElement>(null);
   useEffect(() => {
-    if (!open) return;
-    function onKey(e: KeyboardEvent) {
-      if (e.key === 'Escape') {
-        close();
-        btnRef.current?.focus();
-      }
-    }
-    document.addEventListener('keydown', onKey);
-    return () => document.removeEventListener('keydown', onKey);
+    const dialog = dialogRef.current;
+    if (!dialog) return;
+    if (!open) { dialog.close(); return; }
+    // The native top layer escapes the filtered header and makes the page inert.
+    dialog.showModal();
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    const desktop = window.matchMedia('(min-width: 981px)');
+    const closeOnDesktop = () => { if (desktop.matches) setOpen(false); };
+    desktop.addEventListener('change', closeOnDesktop);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      desktop.removeEventListener('change', closeOnDesktop);
+    };
   }, [open]);
-
-  // Prevent body scroll while drawer is open.
-  useEffect(() => {
-    document.body.style.overflow = open ? 'hidden' : '';
-    return () => { document.body.style.overflow = ''; };
-  }, [open]);
-
   return (
     <>
-      <button
-        ref={btnRef}
-        className="mobile-nav-btn"
-        aria-label={open ? 'Close navigation' : 'Open navigation'}
-        aria-expanded={open}
-        aria-controls="mobile-nav-drawer"
-        onClick={() => setOpen((v) => !v)}
-      >
-        {open ? (
-          // X icon
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" aria-hidden="true">
-            <line x1="18" y1="6" x2="6" y2="18" />
-            <line x1="6" y1="6" x2="18" y2="18" />
-          </svg>
-        ) : (
-          // Hamburger icon
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" aria-hidden="true">
-            <line x1="3" y1="6" x2="21" y2="6" />
-            <line x1="3" y1="12" x2="21" y2="12" />
-            <line x1="3" y1="18" x2="21" y2="18" />
-          </svg>
-        )}
+      <button className="mobile-nav-btn" type="button" aria-label="Open navigation" aria-expanded={open} aria-controls="mobile-nav-drawer" onClick={() => setOpen(true)}>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" /></svg>
       </button>
-
-      {open && (
-        <div
-          id="mobile-nav-drawer"
-          ref={drawerRef}
-          className="mobile-nav-drawer"
-          role="dialog"
-          aria-label="Navigation"
-          aria-modal="true"
-        >
-          <nav aria-label="Mobile navigation">
-            {primaryLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="mobile-nav-link"
-                onClick={close}
-              >
-                {link.label}
-              </Link>
-            ))}
-            <div className="mobile-nav-section-label">Situations we help with</div>
-            {situationLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="mobile-nav-link mobile-nav-link--sub"
-                onClick={close}
-              >
-                {link.label}
-              </Link>
-            ))}
-          </nav>
-        </div>
-      )}
+      <dialog ref={dialogRef} id="mobile-nav-drawer" className="mobile-nav-drawer" aria-label="Navigation" onCancel={() => setOpen(false)} onClose={() => setOpen(false)}
+        onKeyDown={(event) => {
+          if (event.key !== 'Tab') return;
+          const controls = Array.from(event.currentTarget.querySelectorAll<HTMLElement>('button, a[href], summary'))
+            .filter(control => control.getClientRects().length > 0);
+          const first = controls[0];
+          const last = controls[controls.length - 1];
+          if (event.shiftKey && document.activeElement === first) {
+            event.preventDefault();
+            last?.focus();
+          } else if (!event.shiftKey && document.activeElement === last) {
+            event.preventDefault();
+            first?.focus();
+          }
+        }}>
+        <div className="mobile-nav-header"><span>Menu</span><button type="button" className="mobile-nav-close" aria-label="Close navigation" onClick={() => setOpen(false)}>×</button></div>
+        <nav aria-label="Mobile navigation">
+          {items.map(item => 'children' in item ? (
+            <details className="mobile-nav-group" key={item.label}>
+              <summary>{item.label}</summary>
+              {item.children.map(link => <Link key={link.href} className="mobile-nav-link mobile-nav-link--sub" href={link.href} onClick={() => setOpen(false)}>{link.label}</Link>)}
+            </details>
+          ) : <Link key={item.href} className="mobile-nav-link" href={item.href} onClick={() => setOpen(false)}>{item.label}</Link>)}
+        </nav>
+        <a className="button mobile-nav-call" href="tel:+15612209399">Call (561) 220-9399</a>
+      </dialog>
     </>
   );
 }
