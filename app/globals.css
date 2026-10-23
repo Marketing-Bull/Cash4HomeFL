@@ -139,6 +139,8 @@ a { color: inherit; }
 }
 
 .hero-bg img {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -1590,6 +1592,24 @@ a { color: inherit; }
 
 /* ── Responsive ── */
 @media (max-width: 980px) {
+  .section--hero {
+    display: block;
+    min-height: 0;
+    background: var(--text);
+  }
+
+  /* Give the house its own visible area instead of cropping it behind the form. */
+  .hero-bg {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    max-height: 360px;
+  }
+
+  .hero-bg img { object-position: center 60%; }
+  .hero-bg::after { display: none; }
+  .hero-grid { padding: 1.75rem 0; gap: 1.5rem; }
+
   .hero-grid,
   .cta-grid,
   .footer__grid,
