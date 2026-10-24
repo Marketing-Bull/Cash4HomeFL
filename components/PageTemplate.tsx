@@ -4,6 +4,7 @@ import type { ReactNode } from 'react';
 import type { PageTemplateProps, FaqItem, StepItem, LinkItem } from '@/lib/page-types';
 import { LeadForm } from '@/components/LeadForm';
 import { ScrollToFormLink } from '@/components/ScrollToFormLink';
+import { SITE_URL } from '@/lib/site-url';
 
 /* ── Schema Markup ── */
 function BreadcrumbSchema({ items }: { items: LinkItem[] }) {
@@ -19,7 +20,7 @@ function BreadcrumbSchema({ items }: { items: LinkItem[] }) {
             '@type': 'ListItem',
             position: i + 1,
             name: item.label,
-            item: `https://cash4homefl.vercel.app${item.href}`,
+            item: `${SITE_URL}${item.href}`,
           })),
         }),
       }}
@@ -76,7 +77,6 @@ const trustItems = [
   'No realtor commissions',
   'Close in 7–30 days',
   'Local South Florida buyer',
-  '100+ homes purchased',
 ];
 
 function TrustBar() {
@@ -102,7 +102,6 @@ function TrustBar() {
 /* ── Stats Band ── */
 function StatsBand() {
   const stats = [
-    { value: '100+', label: 'Homes purchased in South FL' },
     { value: '18 days', label: 'Average time to close' },
     { value: '$0', label: 'Commissions or hidden fees' },
     { value: '5 ★', label: 'Google-rated local buyer' },
@@ -209,6 +208,7 @@ function SocialProofSection() {
               alt="Happy South Florida homeowners after selling their house for cash to Cash4HomeFL"
               width={800}
               height={600}
+              sizes="(max-width: 900px) 100vw, 600px"
               style={{ width: '100%', height: '100%', objectFit: 'cover' }}
             />
           </div>
@@ -281,6 +281,7 @@ export function PageTemplate({
   comparison,
   areas,
   nearbyLinks,
+  directory,
   faq,
   ctaLabel,
   finalCtaTitle,
@@ -298,11 +299,13 @@ export function PageTemplate({
       {/* ── Hero with full-bleed background image ── */}
       <section className="section--hero">
         <div className="hero-bg" aria-hidden="true">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
+          <Image
             src="/images/hero/hero-home-v2.jpg"
             alt=""
-            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 30%' }}
+            fill
+            priority
+            sizes="100vw"
+            quality={70}
           />
         </div>
         <div className="container hero-grid">
@@ -417,6 +420,20 @@ export function PageTemplate({
         <Section eyebrow="Explore more" title="Nearby pages and related routes" alt>
           <div className="link-grid">
             {nearbyLinks.map((link) => (
+              <Link className="card card--link" href={link.href} key={link.href}>
+                <span>{link.label}</span>
+                <span className="card__arrow">→</span>
+              </Link>
+            ))}
+          </div>
+        </Section>
+      ) : null}
+
+      {/* ── Directory (hub pages): plain anchors to every child page ── */}
+      {directory?.links.length ? (
+        <Section eyebrow={directory.eyebrow} title={directory.title}>
+          <div className="link-grid">
+            {directory.links.map((link) => (
               <Link className="card card--link" href={link.href} key={link.href}>
                 <span>{link.label}</span>
                 <span className="card__arrow">→</span>

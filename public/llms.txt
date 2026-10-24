@@ -1,0 +1,41 @@
+# Cash4HomeFL
+
+> Cash4HomeFL is a local cash home buyer serving Palm Beach County and Broward County, Florida. The site helps homeowners explore selling a property as-is and request a no-obligation cash offer.
+
+Official website: https://cash4homefl.com
+Phone: (561) 220-9399
+Email: hello@cash4homefl.com
+
+## Main pages
+
+- [About Cash4HomeFL](https://cash4homefl.com/about): Business overview and service area.
+- [How we buy houses](https://cash4homefl.com/we-buy-houses): Selling directly to a cash buyer.
+- [Sell a house fast](https://cash4homefl.com/sell-my-house-fast): Cash-sale process and timing.
+- [Request an offer](https://cash4homefl.com/contact): Property inquiry form and contact options.
+- [Frequently asked questions](https://cash4homefl.com/faq): Common seller questions.
+
+## Service areas
+
+- [Palm Beach County](https://cash4homefl.com/palm-beach-county)
+- [Broward County](https://cash4homefl.com/broward-county)
+- [West Palm Beach](https://cash4homefl.com/we-buy-houses/west-palm-beach)
+- [Fort Lauderdale](https://cash4homefl.com/we-buy-houses/fort-lauderdale)
+
+## Seller situations
+
+- [As-is properties](https://cash4homefl.com/we-buy-houses-as-is)
+- [Foreclosure](https://cash4homefl.com/we-buy-houses-foreclosure)
+- [Probate and inherited homes](https://cash4homefl.com/we-buy-houses-probate)
+- [Divorce](https://cash4homefl.com/we-buy-houses-divorce)
+- [Damaged properties](https://cash4homefl.com/we-buy-houses-damaged)
+- [Liens and back taxes](https://cash4homefl.com/we-buy-houses-liens)
+- [Rental properties](https://cash4homefl.com/we-buy-houses-rental)
+
+## Optional
+
+- [Seller guides](https://cash4homefl.com/blog): Articles about selling Florida real estate.
+- [Seller stories](https://cash4homefl.com/reviews): Testimonials published by the business.
+- [Extended reference](https://cash4homefl.com/llms-full.txt): Business details and seller-process summary.
+- [Sitemap](https://cash4homefl.com/sitemap.xml): Complete directory of public pages, including city and ZIP pages.
+- [Privacy policy](https://cash4homefl.com/privacy)
+- [Terms](https://cash4homefl.com/terms)

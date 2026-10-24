@@ -279,7 +279,7 @@ export default function ThankYouPage() {
             }}
           >
             <span style={{ color: 'var(--gold)' }}>★★★★★</span>{' '}
-            Trusted by 100+ South Florida homeowners · Local, family-run · No pressure, ever
+            Local, family-run · No pressure, ever
           </p>
 
           <div style={{ textAlign: 'center', marginTop: '1.5rem' }}>
