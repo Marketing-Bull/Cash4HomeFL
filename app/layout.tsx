@@ -7,6 +7,7 @@ import { DeferredAnalytics } from '@/components/DeferredAnalytics';
 import Script from 'next/script';
 import { ExitIntentModal } from '@/components/ExitIntentModal';
 import { SITE_URL } from '@/lib/site-url';
+import { BUSINESS_EMAIL, BUSINESS_PHONE, LOGO_URL, ORG_ID, ORG_REF } from '@/lib/schema';
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -34,14 +35,22 @@ export const metadata: Metadata = {
 const orgSchema = {
   "@context": "https://schema.org",
   "@type": "RealEstateAgent",
+  "@id": ORG_ID,
   "name": "Cash4HomeFL",
   "url": SITE_URL,
-  "logo": `${SITE_URL}/favicon.ico`,
+  "logo": {
+    "@type": "ImageObject",
+    "url": LOGO_URL,
+    "width": 512,
+    "height": 512,
+  },
   "description": "Cash home buyers for Palm Beach County and Broward County, Florida. We buy houses as-is — no repairs, no fees, no commissions.",
-  "telephone": "+156****9399",
+  "telephone": BUSINESS_PHONE,
+  "email": BUSINESS_EMAIL,
   "contactPoint": {
     "@type": "ContactPoint",
-    "telephone": "+156****9399",
+    "telephone": BUSINESS_PHONE,
+    "email": BUSINESS_EMAIL,
     "contactType": "sales",
     "areaServed": ["Palm Beach County", "Broward County"],
     "availableLanguage": ["English", "Spanish"],
@@ -97,7 +106,7 @@ const orgSchema = {
     },
   ],
   "priceRange": "$$",
-  "image": `${SITE_URL}/favicon.ico`,
+  "image": `${SITE_URL}/images/social-card.jpg`,
   "sameAs": [
     "https://www.facebook.com/cash4homefl",
     "https://www.instagram.com/cash4homefl",
@@ -123,14 +132,9 @@ const websiteSchema = {
   "name": "Cash4HomeFL",
   "url": SITE_URL,
   "description": "Cash home buyers for Palm Beach County and Broward County, Florida. We buy houses as-is — no repairs, no fees, no commissions.",
-  "publisher": {
-    "@type": "RealEstateAgent",
-    "name": "Cash4HomeFL",
-    "logo": {
-      "@type": "ImageObject",
-      "url": `${SITE_URL}/favicon.ico`,
-    },
-  },
+  // A plain Organization, not a second RealEstateAgent: Google flags a LocalBusiness-type
+  // publisher that has no address.
+  "publisher": ORG_REF,
   "potentialAction": {
     "@type": "SearchAction",
     "target": {
