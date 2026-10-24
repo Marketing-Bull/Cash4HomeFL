@@ -36,8 +36,9 @@ export function LeadForm({ defaults }: LeadFormProps) {
   }
 
   function handlePhoneChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const formatted = formatPhone(e.target.value);
-    setPhone(formatted);
+    // Formatting is deferred to blur — reformatting on every keystroke moves
+    // the cursor to the end and breaks editing digits in the middle.
+    setPhone(e.target.value);
     if (phoneError) setPhoneError('');
   }
 
@@ -47,7 +48,9 @@ export function LeadForm({ defaults }: LeadFormProps) {
   }
 
   function handlePhoneBlur() {
-    setPhoneError(validatePhone(phone));
+    const formatted = formatPhone(phone);
+    setPhone(formatted);
+    setPhoneError(validatePhone(formatted));
   }
 
   function handleEmailBlur() {
@@ -60,6 +63,13 @@ export function LeadForm({ defaults }: LeadFormProps) {
     setPhoneError(pErr);
     setEmailError(eErr);
     if (pErr || eErr) {
+      e.preventDefault();
+      return;
+    }
+    // The form has noValidate (so we can show custom phone/email messages),
+    // which also silently disables the address field's `required` attribute.
+    // Re-run native validation manually so an empty address still blocks submit.
+    if (!e.currentTarget.reportValidity()) {
       e.preventDefault();
     }
   }
