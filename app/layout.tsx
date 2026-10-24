@@ -4,6 +4,7 @@ import type { ReactNode } from 'react';
 import './globals.css';
 import { SiteFrame } from '@/components/SiteFrame';
 import { Analytics } from '@vercel/analytics/react';
+import Script from 'next/script';
 import { ExitIntentModal } from '@/components/ExitIntentModal';
 import { SITE_URL } from '@/lib/site-url';
 
@@ -157,6 +158,12 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <SiteFrame>{children}</SiteFrame>
         <ExitIntentModal />
         <Analytics />
+        {/* lazyOnload: injected after the window load event, once the page is idle, so it can't delay rendering. */}
+        <Script
+          src="https://analytics.ahrefs.com/analytics.js"
+          data-key="Qt+JioXXHu881T8kXxXvJA"
+          strategy="lazyOnload"
+        />
       </body>
     </html>
   );
