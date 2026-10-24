@@ -208,6 +208,7 @@ function SocialProofSection() {
               alt="Happy South Florida homeowners after selling their house for cash to Cash4HomeFL"
               width={800}
               height={600}
+              sizes="(max-width: 900px) 100vw, 600px"
               style={{ width: '100%', height: '100%', objectFit: 'cover' }}
             />
           </div>
@@ -280,6 +281,7 @@ export function PageTemplate({
   comparison,
   areas,
   nearbyLinks,
+  directory,
   faq,
   ctaLabel,
   finalCtaTitle,
@@ -297,10 +299,13 @@ export function PageTemplate({
       {/* ── Hero with full-bleed background image ── */}
       <section className="section--hero">
         <div className="hero-bg" aria-hidden="true">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
+          <Image
             src="/images/hero/hero-home-v2.jpg"
             alt=""
+            fill
+            priority
+            sizes="100vw"
+            quality={70}
           />
         </div>
         <div className="container hero-grid">
@@ -415,6 +420,20 @@ export function PageTemplate({
         <Section eyebrow="Explore more" title="Nearby pages and related routes" alt>
           <div className="link-grid">
             {nearbyLinks.map((link) => (
+              <Link className="card card--link" href={link.href} key={link.href}>
+                <span>{link.label}</span>
+                <span className="card__arrow">→</span>
+              </Link>
+            ))}
+          </div>
+        </Section>
+      ) : null}
+
+      {/* ── Directory (hub pages): plain anchors to every child page ── */}
+      {directory?.links.length ? (
+        <Section eyebrow={directory.eyebrow} title={directory.title}>
+          <div className="link-grid">
+            {directory.links.map((link) => (
               <Link className="card card--link" href={link.href} key={link.href}>
                 <span>{link.label}</span>
                 <span className="card__arrow">→</span>

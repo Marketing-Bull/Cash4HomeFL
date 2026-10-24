@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { ArticleTemplate } from '@/components/ArticleTemplate';
 import { getBlogParams, getBlogPostBySlug } from '@/lib/page-content';
-import { SITE_URL } from '@/lib/site-url';
+import { buildPageMetadata } from '@/lib/seo';
 
 export function generateStaticParams() {
   return getBlogParams();
@@ -15,13 +15,12 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     return { title: 'Blog post not found' };
   }
 
-  return {
+  return buildPageMetadata({
+    path: `/blog/${slug}`,
     title: post.title,
-    description: post.description,
-    alternates: {
-      canonical: `${SITE_URL}/blog/${slug}`,
-    },
-  };
+    description: post.metaDescription ?? post.description,
+    ogType: 'article',
+  });
 }
 
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {

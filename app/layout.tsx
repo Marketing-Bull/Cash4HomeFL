@@ -17,7 +17,6 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: SITE_URL,
     siteName: 'Cash4HomeFL',
     images: [socialImage],
   },
@@ -26,9 +25,8 @@ export const metadata: Metadata = {
     site: '@cash4homefl',
     images: [socialImage],
   },
-  alternates: {
-    canonical: SITE_URL,
-  },
+  // No site-wide canonical or og:url: those are per page (see buildPageMetadata in lib/seo.ts).
+  // A root-level value is inherited by any page that omits its own and points it at the homepage.
 };
 
 // Organization JSON-LD — RealEstateAgent schema for the whole site
