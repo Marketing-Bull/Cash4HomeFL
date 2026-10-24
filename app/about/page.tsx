@@ -1,17 +1,15 @@
 import type { Metadata } from 'next';
 import { ArticleTemplate } from '@/components/ArticleTemplate';
 import { buildAboutArticle } from '@/lib/page-content';
-import { SITE_URL } from '@/lib/site-url';
+import { buildPageMetadata } from '@/lib/seo';
 
 const page = buildAboutArticle();
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPageMetadata({
+  path: '/about',
   title: page.title,
-  description: page.description,
-  alternates: {
-    canonical: `${SITE_URL}/about`,
-  },
-};
+  description: page.metaDescription ?? page.description,
+});
 
 export default function AboutPage() {
   return <ArticleTemplate {...page} />;

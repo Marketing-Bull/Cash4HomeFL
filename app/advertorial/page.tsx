@@ -1,11 +1,13 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { buildPageMetadata } from '@/lib/seo';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPageMetadata({
+  path: '/advertorial',
   title: 'How I Sold My West Palm Beach Inherited House in 18 Days — Without Doing a Single Repair',
   description:
     'A South Florida homeowner walks through the decision to sell an inherited property for cash, the alternatives she considered, and what happened when she called a local cash buyer.',
-};
+});
 
 const heroImage = 'https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=1400&q=85';
 const chapter2Image = 'https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?w=900&q=80';

@@ -1,17 +1,15 @@
 import type { Metadata } from 'next';
 import { PageTemplate } from '@/components/PageTemplate';
 import { buildFaqPageProps } from '@/lib/page-content';
-import { SITE_URL } from '@/lib/site-url';
+import { buildPageMetadata } from '@/lib/seo';
 
 const page = buildFaqPageProps();
 
-export const metadata: Metadata = {
-  title: page.title,
-  description: page.lead,
-  alternates: {
-    canonical: `${SITE_URL}/faq`,
-  },
-};
+export const metadata: Metadata = buildPageMetadata({
+  path: '/faq',
+  title: page.metaTitle ?? page.title,
+  description: page.metaDescription ?? page.lead,
+});
 
 export default function FaqPage() {
   return <PageTemplate {...page} />;

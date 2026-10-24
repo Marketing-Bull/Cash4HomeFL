@@ -148,6 +148,7 @@ export function buildHomepageProps(): PageTemplateProps {
     eyebrow: 'Palm Beach County + Broward',
     title: 'Sell your Florida house for cash',
     lead: 'No repairs. No fees. Close on your timeline.',
+    metaDescription: 'Sell your Florida house for cash in Palm Beach County or Broward. No repairs, no fees, close on your timeline. Request a free, no-obligation offer.',
     steps: commonSteps,
     bullets: buildCoreMoneyBulletList(),
     comparison: commonComparison,
@@ -176,10 +177,16 @@ export function buildStatewidePageProps(kind: 'we-buy-houses' | 'sell-my-house-f
       ? 'Serving Palm Beach County, Broward, and the surrounding South Florida market with simple as-is cash offers.'
       : 'Need speed and certainty? Sell your Florida house for cash without repairs, commissions, or showings.';
 
+  const metaDescription =
+    kind === 'we-buy-houses'
+      ? 'We buy houses for cash across Palm Beach County and Broward, Florida. Sell as-is with no repairs, fees or commissions. Browse the cities we serve.'
+      : 'Need to sell your Florida house fast? Get a no-obligation cash offer in Palm Beach County or Broward. No repairs, no commissions. Find your zip code.';
+
   return {
     eyebrow: 'Florida service area',
     title,
     lead,
+    metaDescription,
     trust: ['Florida coverage', 'No repairs', 'No commissions', 'Fast offers'],
     stats: [
       { label: 'Primary counties', value: getAllCounties().map((county) => county.name).join(' • ') },
@@ -198,6 +205,18 @@ export function buildStatewidePageProps(kind: 'we-buy-houses' | 'sell-my-house-f
       toLink('FAQ', '/faq'),
       toLink('Reviews', '/reviews'),
     ],
+    directory:
+      kind === 'we-buy-houses'
+        ? {
+            eyebrow: 'Areas we serve',
+            title: 'We buy houses in these South Florida cities',
+            links: getAllCities().map((city) => toLink(city.name, `/we-buy-houses/${city.slug}`)),
+          }
+        : {
+            eyebrow: 'Areas we serve',
+            title: 'Sell my house fast by zip code',
+            links: getAllZipPages().map((zip) => toLink(`${zip.zip} — ${zip.primaryCity}`, `/sell-my-house-fast/${zip.zip}`)),
+          },
     faq: buildFaqItems('Florida'),
     finalCtaTitle: 'Request a Florida cash offer',
     finalCtaLead: 'Tell us about the property and we will review it quickly.',
@@ -229,7 +248,7 @@ export function buildCountyPageProps(countySlug: string): PageTemplateProps | un
     comparison: commonComparison,
     areas: buildAreaPillsFromList(cityNames.length ? cityNames : [county.name]),
     nearbyLinks: [
-      ...getCountyCityLinks(countySlug, 6),
+      ...getCountyCityLinks(countySlug, county.cities.length),
       toLink('Home', '/'),
       toLink('FAQ', '/faq'),
       toLink('Reviews', '/reviews'),
@@ -274,7 +293,7 @@ const cityCopyOverrides: Record<string, { lead: string; bullets: string[] }> = {
     bullets: [
       'Cash offers for Boca Raton properties in Boca Del Mar, Mizner Park, West Boca, and Royal Palm Yacht',
       'Sell inherited real estate in Boca Raton without months of traditional listing',
-      'Boca Raton condos and townhomes can sell to cash buyers without the HOA financing障碍',
+      'Boca Raton condos and townhomes can sell to cash buyers without the HOA financing hurdles',
       'Downsizers in Boca Raton can close fast without making repairs to a home they\'re leaving',
       'No listing commissions — what we offer is what you keep',
     ],
@@ -303,6 +322,8 @@ export function buildCityPageProps(citySlug: string): PageTemplateProps | undefi
     eyebrow: city.countyName,
     title: `We Buy Houses in ${city.name}, Florida`,
     lead: copyOverride?.lead ?? `Sell your ${city.name} house as-is for cash. We buy inherited homes, rentals, condos, and properties that need work.`,
+    // Kept separate from `lead`: the override leads are 500+ character intro paragraphs.
+    metaDescription: `Sell your ${city.name} house as-is for cash in ${city.countyName}. No repairs, fees or commissions. Get a fair offer and close on your timeline.`,
     trust: [city.countyName, formatZipList(city.zips), 'No repairs', 'Close on your timeline'],
     stats: [
       { label: 'Primary zip codes', value: formatZipList(city.zips) },
@@ -392,6 +413,11 @@ function getCitySlugFromPrimaryCity(primaryCity: string): string | undefined {
   return undefined;
 }
 
+// <title> overrides for situation pages whose H1 runs past a search result's width.
+const situationMetaTitles: Record<string, string> = {
+  rental: 'Sell a Tenant-Occupied House for Cash in Florida',
+};
+
 export function buildSituationPageProps(slug: string): PageTemplateProps | undefined {
   const situation = getSituationBySlug(slug);
   if (!situation) return undefined;
@@ -418,6 +444,7 @@ export function buildSituationPageProps(slug: string): PageTemplateProps | undef
   return {
     eyebrow: 'Seller situation',
     title: `Sell Your House for Cash When Facing ${situation.title}`,
+    metaTitle: situationMetaTitles[slug],
     lead: `If you need a fast, simple sale, we can review the property and make a no-obligation cash offer for ${situation.title.toLowerCase()} situations in South Florida.`,
     trust: ['No repairs', 'No commissions', 'Fast review', 'Local focus'],
     stats: [
@@ -443,6 +470,7 @@ export function buildFaqPageProps(): PageTemplateProps {
     eyebrow: 'FAQ',
     title: 'Frequently Asked Questions',
     lead: 'Answers to the most common seller questions about cash offers in South Florida.',
+    metaDescription: 'Answers to common seller questions about cash offers in Palm Beach County and Broward: closing time, repairs, fees, probate, tenants and more.',
     trust: ['South Florida sellers', 'No repairs', 'No commissions', 'Fast closings'],
     stats: [
       { label: 'Primary focus', value: 'Palm Beach County + Broward' },
@@ -478,6 +506,7 @@ export function buildContactPageProps(searchParams?: Record<string, string | str
     eyebrow: 'Contact',
     title: 'Send Your Property Details',
     lead: 'Use the form below or call/text if that is faster. We will review the property and get back to you.',
+    metaDescription: 'Send your property details to Cash4HomeFL for a free, no-obligation cash offer in Palm Beach County or Broward. No repairs, no fees. Call or text.',
     trust: ['Call or text', 'South Florida', 'No obligation'],
     stats: [
       { label: 'Phone', value: '(561) 220-9399' },
@@ -677,6 +706,7 @@ export function buildPrivacyArticle(): ArticleTemplateProps {
     eyebrow: 'Legal',
     title: 'Privacy policy scaffold',
     description: 'Replace this scaffold with attorney-reviewed privacy policy copy before launch.',
+    metaDescription: 'How Cash4HomeFL collects, uses and protects the information you share when requesting a cash offer for your Palm Beach County or Broward home.',
     paragraphs: [
       'This page should explain what information is collected from the contact form, how it is used, and how a homeowner can request removal or updates.',
       'The final privacy policy should be reviewed by counsel and aligned with any CRM, email, or analytics tools you later add.',
@@ -698,6 +728,7 @@ export function buildTermsArticle(): ArticleTemplateProps {
     eyebrow: 'Legal',
     title: 'Terms of service scaffold',
     description: 'Replace this scaffold with final terms after legal review.',
+    metaDescription: 'Terms of service for cash4homefl.com, covering use of the site, cash offer requests and contact forms for Palm Beach County and Broward sellers.',
     paragraphs: [
       'The terms page should set the basic rules for using the site, requesting an offer, and interacting with the forms or pages.',
       'Any final version should be reviewed with counsel so the language reflects the actual business, data handling, and contact flow.',
@@ -724,6 +755,7 @@ export const blogPosts: BlogPost[] = [
     eyebrow: 'Blog',
     title: 'Selling a House As-Is in Florida',
     description: 'How an as-is sale works, what buyers evaluate, and when a cash offer is a better fit.',
+    metaDescription: "Selling a house as-is in Florida? See how it works, what cash buyers evaluate, and when a no-repair cash offer in Palm Beach or Broward makes sense.",
     paragraphs: [
       'An as-is sale removes the repair project from the equation. That matters when the house needs too much work, the timeline is tight, or the seller does not want to manage contractors.',
       'Cash buyers typically look at condition, location, title, and resale math, then make an offer without requiring the property to be polished first.',
@@ -739,6 +771,7 @@ export const blogPosts: BlogPost[] = [
     eyebrow: 'Blog',
     title: 'Cash Buyer vs Realtor in Florida',
     description: 'A simple way to compare speed, certainty, fees, and repairs when deciding how to sell.',
+    metaDescription: "Cash buyer or realtor in Florida? Compare speed, certainty, fees and repairs to decide the best way to sell your Palm Beach or Broward home.",
     paragraphs: [
       'A traditional listing can work well when the home is polished and the seller wants market exposure. A cash sale is usually about speed and simplicity.',
       'If repairs, holding costs, vacancy, or tenant issues are part of the picture, a direct buyer can sometimes be the better business decision even if the headline price is lower.',
@@ -754,6 +787,7 @@ export const blogPosts: BlogPost[] = [
     eyebrow: 'Blog',
     title: 'How Inherited House Sales Work',
     description: 'What to expect when you are handling an inherited or probate-related property sale.',
+    metaDescription: "Selling an inherited house in Florida? Learn how probate, heirs and title affect the sale, and how a cash buyer can close in Palm Beach or Broward.",
     paragraphs: [
       'Inherited properties often come with emotional context, multiple decision-makers, and title work that has to be handled carefully.',
       'A direct cash buyer can be useful when the heirs want to simplify the sale, avoid repairs, or move the property on a faster timeline.',
@@ -769,6 +803,7 @@ export const blogPosts: BlogPost[] = [
     eyebrow: 'Blog',
     title: 'Florida Foreclosure Timeline',
     description: 'A quick overview of why timing matters and what options a seller may still have.',
+    metaDescription: "Facing foreclosure in Florida? See how the timeline works, why timing matters, and what a fast cash sale can do for homeowners in South Florida.",
     paragraphs: [
       'When foreclosure pressure starts to build, speed becomes the main variable. Every week matters because the options can narrow over time.',
       'A cash buyer will not solve every problem, but it can give a seller a faster path to a sale that is simpler than the traditional listing route.',
@@ -784,6 +819,7 @@ export const blogPosts: BlogPost[] = [
     eyebrow: 'Blog',
     title: 'How Fair Cash Offers Are Calculated',
     description: 'The main factors cash buyers consider when they make an offer.',
+    metaDescription: "How are cash offers for houses calculated? See what South Florida cash buyers weigh: condition, resale value, repairs, carrying costs and title.",
     paragraphs: [
       'A fair cash offer is usually built from the property’s condition, the likely resale value, the repair budget, carrying costs, and the margin needed for the buyer to take the risk.',
       'That is why two properties on the same street can receive different offers if one needs major work or has a title complication.',
@@ -799,6 +835,7 @@ export const blogPosts: BlogPost[] = [
     eyebrow: 'Blog',
     title: 'Selling a House with Tenants in Florida',
     description: 'What landlords should think through when a rental property needs to be sold fast.',
+    metaDescription: "Selling a tenant-occupied house in Florida? See how landlords in Palm Beach and Broward can sell fast to a cash buyer, with no showings and no repairs.",
     paragraphs: [
       'Tenant-occupied homes can be harder to show, harder to stage, and harder to move through the traditional process.',
       'A cash buyer may be a better fit if the landlord wants to avoid showings, reduce vacancy, or move past a difficult occupancy situation.',
@@ -814,6 +851,7 @@ export const blogPosts: BlogPost[] = [
     eyebrow: 'Blog',
     title: 'Selling a Condo Fast in South Florida',
     description: 'Why condo sales can be different and when a direct offer makes sense.',
+    metaDescription: "How to sell a condo fast in South Florida: HOA rules, paperwork and timelines, and when a cash offer in Palm Beach or Broward is the simpler route.",
     paragraphs: [
       'Condos often come with HOA rules, fees, and more paperwork than a simple single-family sale.',
       'If the condo needs work, has rental issues, or needs to move quickly, a direct buyer can simplify the process and keep things moving.',
@@ -829,6 +867,7 @@ export const blogPosts: BlogPost[] = [
     eyebrow: 'Blog',
     title: 'Selling a House After Divorce in Florida',
     description: 'A simple framework for reducing friction during a major life transition.',
+    metaDescription: "Need to sell a house after divorce in Florida? See how a fast cash sale in Palm Beach or Broward can cut stress, delays and showings for both sides.",
     paragraphs: [
       'Divorce creates a need for clarity. A property sale can become a source of additional stress if the process is slow, public, or complicated.',
       'A direct buyer can help reduce the number of decisions, shorten the timeline, and keep the sale focused on resolution rather than process.',
@@ -844,6 +883,7 @@ export const blogPosts: BlogPost[] = [
     eyebrow: 'Blog',
     title: 'Is We Buy Houses Legit?',
     description: 'How sellers can tell whether a cash home buyer is credible and worth talking to.',
+    metaDescription: "Are we-buy-houses companies legit? Learn the signs of a credible cash home buyer in South Florida and how to avoid scams before you sell.",
     paragraphs: [
       'Sellers are right to be cautious. The best buyers are transparent about how they evaluate property, how they communicate, and what happens next.',
       'Look for a real local presence, a clear process, proof from past sellers, and a phone number that actually gets answered.',

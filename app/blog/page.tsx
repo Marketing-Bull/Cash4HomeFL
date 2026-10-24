@@ -1,17 +1,15 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
 import { buildBlogIndexProps } from '@/lib/page-content';
-import { SITE_URL } from '@/lib/site-url';
+import { buildPageMetadata } from '@/lib/seo';
 
 const page = buildBlogIndexProps();
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPageMetadata({
+  path: '/blog',
   title: page.title,
   description: page.lead,
-  alternates: {
-    canonical: `${SITE_URL}/blog`,
-  },
-};
+});
 
 export default function BlogIndexPage() {
   return (
