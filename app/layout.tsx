@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
 import './globals.css';
 import { SiteFrame } from '@/components/SiteFrame';
-import { Analytics } from '@vercel/analytics/react';
+import { DeferredAnalytics } from '@/components/DeferredAnalytics';
 import Script from 'next/script';
 import { ExitIntentModal } from '@/components/ExitIntentModal';
 import { SITE_URL } from '@/lib/site-url';
@@ -157,7 +157,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <body>
         <SiteFrame>{children}</SiteFrame>
         <ExitIntentModal />
-        <Analytics />
+        <DeferredAnalytics />
         {/* lazyOnload: injected after the window load event, once the page is idle, so it can't delay rendering. */}
         <Script
           src="https://analytics.ahrefs.com/analytics.js"
