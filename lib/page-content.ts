@@ -495,6 +495,7 @@ export function buildSituationPageProps(slug: string): PageTemplateProps | undef
     eyebrow: 'Seller situation',
     title: `Sell Your House for Cash When Facing ${situation.title}`,
     metaTitle: situationMetaTitles[slug],
+    articlePath: `/we-buy-houses-${slug}`,
     lead: `If you need a fast, simple sale, we can review the property and make a no-obligation cash offer for ${situation.title.toLowerCase()} situations in South Florida.`,
     trust: ['No repairs', 'No commissions', 'Fast review', 'Local focus'],
     stats: [

@@ -63,6 +63,8 @@ export type PageTemplateProps = {
   contactHref?: string;
   formDefaults?: FormDefaults;
   breadcrumbs?: LinkItem[];
+  /** Site-relative path; when set, the page also emits Article JSON-LD (Ahrefs classes these pages as articles). */
+  articlePath?: string;
 };
 
 export type ArticleTemplateProps = {
