@@ -4,6 +4,7 @@ import type { ReactNode } from 'react';
 import type { PageTemplateProps, FaqItem, StepItem, LinkItem } from '@/lib/page-types';
 import { LeadForm } from '@/components/LeadForm';
 import { ScrollToFormLink } from '@/components/ScrollToFormLink';
+import { buildArticleSchema } from '@/lib/schema';
 import { SITE_URL } from '@/lib/site-url';
 
 /* ── Schema Markup ── */
@@ -24,6 +25,16 @@ function BreadcrumbSchema({ items }: { items: LinkItem[] }) {
           })),
         }),
       }}
+    />
+  );
+}
+
+function ArticleSchema({ path, headline, description }: { path?: string; headline: string; description: string }) {
+  if (!path) return null;
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(buildArticleSchema({ path, headline, description })) }}
     />
   );
 }
@@ -289,12 +300,15 @@ export function PageTemplate({
   contactHref,
   formDefaults,
   breadcrumbs,
+  articlePath,
+  metaDescription,
 }: PageTemplateProps) {
   return (
     <main className="page-shell">
       <BreadcrumbSchema items={breadcrumbs ?? []} />
       <FaqSchema faqs={faq ?? []} />
       <HowToSchema steps={steps ?? []} />
+      <ArticleSchema path={articlePath} headline={title} description={metaDescription ?? lead} />
 
       {/* ── Hero with full-bleed background image ── */}
       <section className="section--hero">

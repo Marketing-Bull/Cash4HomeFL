@@ -16,3 +16,27 @@ export const ORG_REF = {
   url: SITE_URL,
   logo: { '@type': 'ImageObject', url: LOGO_URL, width: 512, height: 512 },
 } as const;
+
+/** Date the pages and blog posts were first published (they carry no per-page dates yet). */
+export const PUBLISHED_DATE = '2026-06-09';
+
+type ArticleSchemaInput = {
+  type?: 'Article' | 'BlogPosting';
+  path: string;
+  headline: string;
+  description: string;
+};
+
+export function buildArticleSchema({ type = 'Article', path, headline, description }: ArticleSchemaInput) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': type,
+    headline,
+    description,
+    image: `${SITE_URL}/images/social-card.jpg`,
+    datePublished: PUBLISHED_DATE,
+    author: ORG_REF,
+    publisher: ORG_REF,
+    mainEntityOfPage: { '@type': 'WebPage', '@id': `${SITE_URL}${path}` },
+  };
+}
