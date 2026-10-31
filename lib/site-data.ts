@@ -159,7 +159,6 @@ export function getCoreLinks(): LinkItem[] {
     toLink('Palm Beach County', '/palm-beach-county'),
     toLink('Broward County', '/broward-county'),
     toLink('FAQ', '/faq'),
-    toLink('Reviews', '/reviews'),
     toLink('Contact', '/contact'),
   ];
 }

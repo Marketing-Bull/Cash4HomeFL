@@ -10,7 +10,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${base}/we-buy-houses`, changeFrequency: 'weekly', priority: 0.95 },
     { url: `${base}/sell-my-house-fast`, changeFrequency: 'weekly', priority: 0.95 },
     { url: `${base}/faq`, changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${base}/reviews`, changeFrequency: 'monthly', priority: 0.75 },
     { url: `${base}/contact`, changeFrequency: 'monthly', priority: 0.75 },
     { url: `${base}/about`, changeFrequency: 'monthly', priority: 0.6 },
     { url: `${base}/privacy`, changeFrequency: 'yearly', priority: 0.3 },
