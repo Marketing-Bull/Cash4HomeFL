@@ -35,7 +35,7 @@ const reassurances = [
   'No obligation, ever',
   '100% private',
   'No fees or repairs',
-  'Local & family-run',
+  'Local South Florida buyer',
 ];
 
 export default function ThankYouPage() {
@@ -278,8 +278,7 @@ export default function ThankYouPage() {
               margin: '2rem 0 0',
             }}
           >
-            <span style={{ color: 'var(--gold)' }}>★★★★★</span>{' '}
-            Local, family-run · No pressure, ever
+            Local · No pressure, ever
           </p>
 
           <div style={{ textAlign: 'center', marginTop: '1.5rem' }}>

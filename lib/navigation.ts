@@ -24,7 +24,6 @@ export const areaLinks: NavigationLink[] = [
 ];
 export const companyLinks: NavigationLink[] = [
   { label: 'About us', href: '/about' },
-  { label: 'Seller stories', href: '/reviews' },
   { label: 'FAQ', href: '/faq' },
   { label: 'Seller guides', href: '/blog' },
   { label: 'Contact', href: '/contact' },

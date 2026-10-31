@@ -113,9 +113,9 @@ function TrustBar() {
 /* ── Stats Band ── */
 function StatsBand() {
   const stats = [
-    { value: '18 days', label: 'Average time to close' },
+    { value: 'As-is', label: 'Sell in any condition' },
     { value: '$0', label: 'Commissions or hidden fees' },
-    { value: '5 ★', label: 'Google-rated local buyer' },
+    { value: 'Your date', label: 'You choose the closing day' },
   ];
   return (
     <div className="stats-band">
@@ -130,80 +130,6 @@ function StatsBand() {
         </div>
       </div>
     </div>
-  );
-}
-
-/* ── Featured Testimonials ── */
-const featuredTestimonials = [
-  {
-    name: 'Marcus T.',
-    city: 'West Palm Beach',
-    situation: 'Inherited rental',
-    quote: "They came out, looked at it, and handed me an offer within a week. I didn't have to lift a finger.",
-    outcome: 'Closed in 18 days, as-is',
-    initials: 'MT',
-    avatar: '/images/testimonials/marcus-t.jpg',
-  },
-  {
-    name: 'Sandra R.',
-    city: 'Boca Raton',
-    situation: 'Storm damage',
-    quote: 'Cash4HomeFL looked at the property on a Tuesday and I signed Friday. No repairs, no waiting.',
-    outcome: 'Closed in 11 days',
-    initials: 'SR',
-    avatar: '/images/testimonials/sandra-r.jpg',
-  },
-  {
-    name: 'Carmen M.',
-    city: 'Boynton Beach',
-    situation: 'Foreclosure prevention',
-    quote: "They worked fast enough that I was able to pay off the mortgage and walk away with cash instead of losing everything.",
-    outcome: 'Closed in 26 days, mortgage paid',
-    initials: 'CM',
-    avatar: '/images/testimonials/carmen-m.jpg',
-  },
-];
-
-function TestimonialsSection() {
-  return (
-    <section className="section section--alt">
-      <div className="container">
-        <div className="section-header">
-          <p className="eyebrow">Real sellers, real results</p>
-          <h2 className="section-title">What South Florida homeowners say</h2>
-          <p className="lead">Every situation is different. Here are a few sellers who chose a faster path.</p>
-        </div>
-        <div className="testimonials-grid">
-          {featuredTestimonials.map((t) => (
-            <div className="card card--testimonial" key={t.name}>
-              <div className="testimonial-stars">★★★★★</div>
-              <p className="testimonial-quote">&#8220;{t.quote}&#8221;</p>
-              <span className="testimonial-outcome">✓ {t.outcome}</span>
-              <div className="testimonial-author">
-                <div className="testimonial-avatar" style={{ overflow: 'hidden', padding: 0 }}>
-                  <Image
-                    src={t.avatar}
-                    alt={t.name}
-                    width={48}
-                    height={48}
-                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                  />
-                </div>
-                <div>
-                  <div className="testimonial-name">{t.name}</div>
-                  <div className="testimonial-meta">{t.city} · {t.situation}</div>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-        <div style={{ textAlign: 'center', marginTop: '2rem' }}>
-          <Link className="button button--ghost" href="/reviews">
-            Read all seller stories →
-          </Link>
-        </div>
-      </div>
-    </section>
   );
 }
 
@@ -382,8 +308,6 @@ export function PageTemplate({
       {/* ── Social Proof Split Section ── */}
       <SocialProofSection />
 
-      {/* ── Testimonials ── */}
-      <TestimonialsSection />
 
       {/* ── What You Get (Bullets) ── */}
       {bullets?.length ? (

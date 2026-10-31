@@ -30,15 +30,6 @@ export type FaqItem = {
   answer: string;
 };
 
-export type Review = {
-  name: string;
-  city: string;
-  situation: string;
-  quote: string;
-  outcome: string;
-  date: string;
-};
-
 export type PageTemplateProps = {
   eyebrow?: string;
   title: string;
@@ -78,5 +69,4 @@ export type ArticleTemplateProps = {
   relatedLinks?: LinkItem[];
   ctaLabel?: string;
   ctaHref?: string;
-  reviews?: Review[];
 };

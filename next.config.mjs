@@ -9,6 +9,8 @@ const nextConfig = {
       // points at /we-buy-houses-damaged-house (with -house suffix); the
       // real route is /we-buy-houses-damaged. 301 the suffix variant.
       { source: '/we-buy-houses-damaged-house', destination: '/we-buy-houses-damaged', permanent: true },
+      // Seller stories page removed (Oct 2026): the reviews on it were placeholders, not real sellers.
+      { source: '/reviews', destination: '/', permanent: true },
     ];
   },
 };
