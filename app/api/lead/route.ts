@@ -1,7 +1,8 @@
 import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
 
-const NOTIFY_TO = 'hello@getmarketingbull.com';
+// Lead notifications go to every address here; service@ is the Marketing Bull lead inbox.
+const NOTIFY_TO = ['hello@getmarketingbull.com', 'service@getmarketingbull.com'];
 
 export async function POST(request: Request) {
   const formData = await request.formData();
@@ -25,7 +26,8 @@ export async function POST(request: Request) {
   const submittedAt = new Date().toISOString();
 
   // ── Resend email notification ──────────────────────────────────────────────
-  const resendKey = process.env.RESEND_API_KEY;
+  // Vercel stores the key as RESEND_API on this project; accept either name.
+  const resendKey = process.env.RESEND_API_KEY ?? process.env.RESEND_API;
   if (resendKey) {
     const resend = new Resend(resendKey);
     const locationLine = [city, state, zip].filter(Boolean).join(', ');
@@ -33,7 +35,7 @@ export async function POST(request: Request) {
       await resend.emails.send({
         from: 'Cash4HomeFL Leads <leads@getmarketingbull.com>',
         to: NOTIFY_TO,
-        subject: `New lead: ${address || '(no address)'}`,
+        subject: `[Cash4HomeFL] New lead: ${address || '(no address)'}`,
         html: `
 <h2 style="margin:0 0 16px;font-family:sans-serif">New Cash4HomeFL Lead</h2>
 <table style="border-collapse:collapse;font-family:sans-serif;font-size:15px;width:100%;max-width:560px">
@@ -50,7 +52,7 @@ export async function POST(request: Request) {
       console.error('Resend email failed:', err);
     }
   } else {
-    console.warn('RESEND_API_KEY is not set — lead email not sent', { address });
+    console.warn('RESEND_API_KEY / RESEND_API is not set — lead email not sent', { address });
   }
 
   return thankYou();
