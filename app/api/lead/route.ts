@@ -32,7 +32,7 @@ export async function POST(request: Request) {
     const resend = new Resend(resendKey);
     const locationLine = [city, state, zip].filter(Boolean).join(', ');
     try {
-      await resend.emails.send({
+      const { error } = await resend.emails.send({
         from: 'Cash4HomeFL Leads <leads@getmarketingbull.com>',
         to: NOTIFY_TO,
         subject: `[Cash4HomeFL] New lead: ${address || '(no address)'}`,
@@ -48,6 +48,7 @@ export async function POST(request: Request) {
 </table>
         `.trim(),
       });
+      if (error) console.error('Resend email failed:', error.message);
     } catch (err) {
       console.error('Resend email failed:', err);
     }
